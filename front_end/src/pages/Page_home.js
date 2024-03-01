@@ -17,7 +17,11 @@
 
 // export default Home;
 import React, { Component } from "react";
-import axios from 'axios';  
+import axios from 'axios'; 
+import PopoverUser from "../components/Popover"; 
+import { NavbarDefault } from "../components/Navbar";
+import BookForm from "../components/BookForm";
+import Rooms from "../components/Rooms";
 
 class Home extends Component {
   constructor(props) {
@@ -58,23 +62,20 @@ class Home extends Component {
         key={item.id}
         className=""
       >
-        <span
-          className={` ${this.state.viewCompleted ? "completed-todo" : ""
-            }`}
-          title={item.description}
-        >
-          {item.title}
+        <span>
+          {item.username}
+          {item.password}
         </span>
         <span>
           <button
             onClick={() => this.editItem(item)}
-            className="btn btn-primiry"
+            className=' bg-red-500'
           >
             Edit
           </button>
           <button
             onClick={() => this.handleDelete(item)}
-            className="btn btn-primiry"
+            className="bg-blue"
           >
             Delete
           </button>
@@ -134,7 +135,8 @@ class Home extends Component {
   // -I- Start by visual effects to viewer
   render() {
     return (
-      <main className="content">
+      <><main className="content">
+        
         <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
         <div className="row ">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
@@ -142,7 +144,7 @@ class Home extends Component {
               <div className="">
                 <button onClick={this.createItem} className="btn btn-primary">
                   Add task
-                    </button>
+                </button>
               </div>
               <ul className="list-group list-group-flush">
                 {this.renderItems()}
@@ -154,10 +156,20 @@ class Home extends Component {
           <div
             activeItem={this.state.activeItem}
             toggle={this.toggle}
-            onSave={this.handleSubmit}
-          />
+            onSave={this.handleSubmit} />
         ) : null}
-      </main>
+                <NavbarDefault/>
+                <PopoverUser/>
+                <div className='container mx-auto relative'>
+        //       <div className=' bg-neutral-600 mt-4 p-4 
+        //       lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12'>
+//         <BookForm/>
+//       </div>
+//       <Rooms/>
+//     </div>
+      </main></>
+       
+      
     );
   }
 }
