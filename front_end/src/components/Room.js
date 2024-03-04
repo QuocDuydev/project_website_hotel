@@ -55,7 +55,7 @@ const Room = ({room}) => {
 
 {/*btn*/}
 <Link to={`/room/${id}`} 
-className="btn btn-secondary max-w-[240px] mx-auto">Booknow from ${price}</Link>
+className="btn btn-secondary max-w-[240px] mx-auto ">Booknow from ${price}</Link>
   </div>;
 };
 

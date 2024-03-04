@@ -1,10 +1,11 @@
 import "./index.css";
+import { createRoot } from 'react-dom/client';
 
 import Login from "./pages/Page_login.js";
 import Register from "./pages/Page_register.js";
 import Home from "./pages/Page_home.js";
 import RoomDetails from "./pages/Page_RoomDetails.js";
-import {createBrowserRouter, RouterProvider  } from 'react-router-dom';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 
 const router = createBrowserRouter([

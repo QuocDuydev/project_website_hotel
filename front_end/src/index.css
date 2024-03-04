@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
     body {
       @apply font-secondary text-primary;
@@ -16,7 +17,7 @@
       @apply text-2xl font-primary font-semibold tracking-[1px] mb-2;
     }
     .btn {
-      @apply text-[15px] tracking-[3px] font-tertiary uppercase text-white flex-1 transition-all px-8 flex justify-center items-center;
+      @apply text-[15px] tracking-[2px] font-tertiary uppercase text-white  transition-all px-8 flex justify-center items-center;
     }
     .btn-sm {
       @apply h-[48px];

@@ -18,11 +18,13 @@
 // export default Home;
 import React, { Component } from "react";
 import axios from 'axios'; 
-import PopoverUser from "../components/Popover"; 
-import { NavbarDefault } from "../components/Navbar";
+import { Navbars } from "../components/Navbar";
 import BookForm from "../components/BookForm";
 import Rooms from "../components/Rooms";
-
+import HeroSlider from "../components/HeroSlider";
+import Footer from "../components/Footer"
+import GridGallery from "../components/Grid-Galery"
+import CardDefault from "../components/Card"
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -75,7 +77,7 @@ class Home extends Component {
           </button>
           <button
             onClick={() => this.handleDelete(item)}
-            className="bg-blue"
+            className="bg-blue-500"
           >
             Delete
           </button>
@@ -135,38 +137,25 @@ class Home extends Component {
   // -I- Start by visual effects to viewer
   render() {
     return (
-      <><main className="content">
+      <><main className="content m-5">
         
-        <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
-        <div className="row ">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <div className="">
-                <button onClick={this.createItem} className="btn btn-primary">
-                  Add task
-                </button>
-              </div>
-              <ul className="list-group list-group-flush">
-                {this.renderItems()}
-              </ul>
-            </div>
-          </div>
-        </div>
-        {this.state.resgiter ? (
-          <div
-            activeItem={this.state.activeItem}
-            toggle={this.toggle}
-            onSave={this.handleSubmit} />
-        ) : null}
-                <NavbarDefault/>
-                <PopoverUser/>
+      
+        {/* <Header/> */}
+                <Navbars/>
+                {/* <CarouselCustomArrows/> */}
+                {/* <PopoverUser/> */}
+                <HeroSlider/>
+                
                 <div className='container mx-auto relative'>
-        //       <div className=' bg-neutral-600 mt-4 p-4 
-        //       lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12'>
-//         <BookForm/>
-//       </div>
-//       <Rooms/>
-//     </div>
+              <div className=' bg-neutral-600 mt-4 p-4 
+             lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12'>
+        {/* <BookForm/> */}
+      </div>
+      <CardDefault/>
+       <Rooms/>
+       <GridGallery/>
+       <Footer/>
+     </div>
       </main></>
        
       

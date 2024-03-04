@@ -56,55 +56,55 @@ class Registers extends Component {
     {
         const onSave = this.handleCreate;
         return (
-            <div class="max-w-md px-3 rounded-lg mx-auto overflow-hidden mt-4 bg-gray-200">
-                <h1 class="w-full px-4 mb-2 rounded border py-4  text-center text-4xl">REGISTER</h1>
-                <div class="flex flex-col mt-2 mb-5">
-                    <div class="relative"/>
-                        <h2 class="text-sm text-rigth font-semibold">Username</h2>
+            <div className="max-w-md px-3 rounded-lg mx-auto overflow-hidden mt-4 bg-gray-200">
+                <h1 className="w-full px-4 mb-2 rounded border py-4  text-center text-4xl">REGISTER</h1>
+                <div className="flex flex-col mt-2 mb-5">
+                    <div className="relative"/>
+                        <h2 className="text-sm text-rigth font-semibold">Username</h2>
                         <input type="text" 
                             name="username" 
-                            class="w-full px-4 mb-3 rounded border py-2" 
+                            className="w-full px-4 mb-3 rounded border py-2" 
                             value={this.state.activeItem.username}
                             onChange={this.handleChange}
                             placeholder="Username..."/>
                
-                    <div class="relative mb-3"/>
-                        <h2 class="text-sm text-rigth font-semibold" >Full Name</h2>
+                    <div className="relative mb-3"/>
+                        <h2 className="text-sm text-rigth font-semibold" >Full Name</h2>
                         <input type="text" 
                             name="name" 
-                            class="w-full px-4 mb-3 rounded border py-2" 
+                            className="w-full px-4 mb-3 rounded border py-2" 
                             value={this.state.activeItem.name}
                             onChange={this.handleChange}
                             placeholder="Full name..."/>
                         
-                    <div class="relative mb-3"/>
-                        <h2 class="text-sm text-rigth font-semibold" >Email</h2>
+                    <div className="relative mb-3"/>
+                        <h2 className="text-sm text-rigth font-semibold" >Email</h2>
                         <input type="text" 
                             name="email" 
-                            class="w-full px-4 mb-3 rounded border py-2" 
+                            className="w-full px-4 mb-3 rounded border py-2" 
                             value={this.state.activeItem.email}
                             onChange={this.handleChange}
                             placeholder="Email..."/>
 
-                    <div class="relative mb-3"/>
-                        <h2 class="text-sm text-rigth font-semibold" >Password</h2>
+                    <div className="relative mb-3"/>
+                        <h2 className="text-sm text-rigth font-semibold" >Password</h2>
                         <input type="password" 
                             name="password" 
-                            class="w-full px-4 mb-3 rounded border py-2" 
+                            className="w-full px-4 mb-3 rounded border py-2" 
                             value={this.state.activeItem.password}
                             onChange={this.handleChange}
                             placeholder="Password..."/>
 
-                    <div class="relative mb-3"/>
-                        <h2 class="text-sm text-rigth font-semibold" >Joined</h2>
+                    <div className="relative mb-3"/>
+                        <h2 className="text-sm text-rigth font-semibold" >Joined</h2>
                         <input type="date" 
                             name="joined" 
-                            class="w-full px-4 mb-3 rounded border py-2" 
+                            className="w-full px-4 mb-3 rounded border py-2" 
                             value={this.state.activeItem.joined}
                             onChange={this.handleChange}
                             placeholder="Joined..."/>
 
-                    <div class="relative mb-3"/>
+                    <div className="relative mb-3"/>
                     <Link to={`/login`}  className="py-1 mb-3 px-3 rounded text-center text-white bg-blue-500 shadow-lg shadow-blue-500/50">
                         <button 
                             type="submit" 
@@ -114,8 +114,8 @@ class Registers extends Component {
                                 Register
                         </button>
                     </Link>
-                        <a href="" class="text-sm text-rigth font-semibold text-blue-500">Forgot Password?</a>
-                        <p class="text-sm text-rigth font-semibold"> Already have accounts <Link to={'/login'} class="text-sm text-rigth font-semibold text-red-500"> Login</Link>  nows</p>
+                        <a href="" className="text-sm text-rigth font-semibold text-blue-500">Forgot Password?</a>
+                        <p className="text-sm text-rigth font-semibold"> Already have accounts <Link to={'/login'} class="text-sm text-rigth font-semibold text-red-500"> Login</Link>  nows</p>
                 </div>
             </div>
         )

@@ -13,9 +13,9 @@ const RoomProvider=({children})=>{
       setTotal(Number(adults[0])+Number(kids[0]));
 
     })
-    console.log(total)
-  console.log(rooms)
-  console.log(`adult is${adults} ,Kids is ${kids} and total is ${total}`)
+  //   console.log(total)
+  // console.log(rooms)
+  // console.log(`adult is${adults} ,Kids is ${kids} and total is ${total}`)
  const handleClick=(e)=>{
   setLoading(true);
   e.preventDefault();

@@ -6,7 +6,7 @@ import CheckIn from '../components/CheckIn';
 import CheckOut from '../components/CheckOut';
 import KidsDropdown from '../components/KidsDropdown';
 //scroll top Component
-import ScrollToTop from '../components/ScrollToTop'
+
 //context
 import {RoomContext} from '../context/RoomContext';
 //icons
