@@ -1,11 +1,13 @@
 import "./index.css";
 import { createRoot } from 'react-dom/client';
 
-import Login from "./pages/Page_login.js";
-import Register from "./pages/Page_register.js";
-import Home from "./pages/Page_home.js";
-import RoomDetails from "./pages/Page_RoomDetails.js";
+import Login from "./pages/Customer/Page_login.js";
+import Register from "./pages/Customer/Page_register.js";
+import Home from "./pages/Customer/Page_home.js";
+import RoomDetails from "./pages/Customer/Page_RoomDetails.js";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import AdminHome from "./pages/Admin/Page_AdminHome.js";
+import { CreateRoomForm } from "./pages/Admin/Page_AdminCustomer.js";
 
 
 const router = createBrowserRouter([
@@ -25,6 +27,15 @@ const router = createBrowserRouter([
     path: '/room/:id',
     element: <RoomDetails/>
   },
+  {
+    path: '/admin',
+    element: <AdminHome/>
+  },
+  {
+    path: '/admin/rooms',
+    element: <CreateRoomForm/>
+  },
+
 ]);
 function App() {
 

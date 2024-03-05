@@ -18,13 +18,13 @@
 // export default Home;
 import React, { Component } from "react";
 import axios from 'axios'; 
-import { Navbars } from "../components/Navbar";
-import BookForm from "../components/BookForm";
-import Rooms from "../components/Rooms";
-import HeroSlider from "../components/HeroSlider";
-import Footer from "../components/Footer"
-import GridGallery from "../components/Grid-Galery"
-import CardDefault from "../components/Card"
+import { Navbars } from "../../components/Navbar";
+import BookForm from "../../components/BookForm";
+import Rooms from "../../components/Rooms";
+import HeroSlider from "../../components/HeroSlider";
+import Footer from "../../components/Footer"
+import GridGallery from "../../components/Grid-Galery"
+import CardDefault from "../../components/Card"
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -137,20 +137,20 @@ class Home extends Component {
   // -I- Start by visual effects to viewer
   render() {
     return (
-      <><main className="content m-5">
-        
+      <>
+        <Navbars/>
+        <HeroSlider/>
+        <main className="content ">      
+          <div className='container mx-auto relative'>
+            {/* <div className=' bg-neutral-600 mt-4 p-4 
+                lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12'>
+            <BookForm/> 
+          </div> */}
+          <div>
+            <h3 className=" mt-[40px] text-2xl font-bold"> List Hotel Suggested</h3>
+            
+          </div>
       
-        {/* <Header/> */}
-                <Navbars/>
-                {/* <CarouselCustomArrows/> */}
-                {/* <PopoverUser/> */}
-                <HeroSlider/>
-                
-                <div className='container mx-auto relative'>
-              <div className=' bg-neutral-600 mt-4 p-4 
-             lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12'>
-        {/* <BookForm/> */}
-      </div>
       <CardDefault/>
        <Rooms/>
        <GridGallery/>

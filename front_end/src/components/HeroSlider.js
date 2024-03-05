@@ -41,9 +41,9 @@ const HeroSlider = () => {
         return (
           <SwiperSlide 
           key={index} 
-          className='h-full relative flex justify-center items-center'>
+          className=' h-full  flex justify-center items-center'>
             <div className='absolute top-0 w-full h-full'>
-              <img className='object-cover  w-full h-[80%]'
+              <img className='object-cover w-full h-[80%]'
               src={bg} 
                 alt=""/>
             </div>
