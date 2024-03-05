@@ -29,8 +29,8 @@ export function Sidebar_Admin() {
     };
  
   return (
-        <div className="">
-            <Card className=" block max-w-[15rem] p-4 h-full bg-white rounded border border-transparent" >
+        <div className="sticky top-0 z-10 h-max max-w-full rounded">
+            <Card className=" block max-w-[15rem] p-4 h-full bg-white rounded shadow-none" >
                     <List>
                         <Accordion
                             open={open === 1}
