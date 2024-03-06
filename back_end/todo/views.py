@@ -5,10 +5,15 @@ from rest_framework import status
 from rest_framework import viewsets
 from .serializers import UserSerializer
 from .models import User
-
+from .serializers import RoomSerializer
+from .models import Rooms
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+class RoomView(viewsets.ModelViewSet):
+    serializer_class = RoomSerializer
+    queryset = Rooms.objects.all()
 
 # @api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])

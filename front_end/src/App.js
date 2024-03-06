@@ -1,5 +1,4 @@
 import "./index.css";
-import { createRoot } from 'react-dom/client';
 
 import Login from "./pages/Customer/Page_login.js";
 import Register from "./pages/Customer/Page_register.js";
@@ -7,8 +6,9 @@ import Home from "./pages/Customer/Page_home.js";
 import RoomDetails from "./pages/Customer/Page_RoomDetails.js";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import AdminHome from "./pages/Admin/Page_AdminHome.js";
-import { CreateRoomForm } from "./pages/Admin/Page_AdminCustomer.js";
-
+import { CreateRoomForm } from "./pages/Admin/Page_CreateRoom.js";
+import ListRoom from "./pages/Admin/Page_ListRoom.js";
+import EditRoom from "./pages/Admin/Page_EditRoom.js";
 
 const router = createBrowserRouter([
   {
@@ -32,8 +32,16 @@ const router = createBrowserRouter([
     element: <AdminHome/>
   },
   {
-    path: '/admin/rooms',
+    path: '/admin/create-room',
     element: <CreateRoomForm/>
+  },
+  {
+    path: '/admin/list-room',
+    element: <ListRoom/>
+  },
+  {
+    path: '/admin/edit-room/:id',
+    element: <EditRoom/>
   },
 
 ]);

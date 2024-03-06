@@ -13,15 +13,12 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
   Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export function Headers(){
   const [openNav, setOpenNav] = React.useState(false);
@@ -34,13 +31,13 @@ export function Headers(){
   }, []);
  
   return (
-    <div className=" sticky top-0 z-10 h-max w-[99%] rounded-none">
-    <Navbar className="mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4 rounded border-none boxShadow-[ 0 2px 4px 0]">
+    <div className=" sticky max-w-screen-lg overflow-hidden z-10 rounded-none">
+    <Navbar className="mx-auto  px-4 py-2 lg:px-8 lg:py-4 rounded border-none boxShadow-[ 0 2px 4px 0]">
       <div className="container mx-auto flex flex-wrap items-center justify-between text-gray-900">
         <Typography
           as="a"
           href="#"
-          className="mr-4 cursor-pointer py-1.5 font-medium text-2xl"
+          className="mr-4 cursor-pointer py-1.5 font-medium text-xl"
         >
           Material Tailwind
         </Typography>
