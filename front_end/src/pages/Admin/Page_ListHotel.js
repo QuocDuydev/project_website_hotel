@@ -11,7 +11,7 @@ import {
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
-function ListRoom() {
+function ListHotel () {
     const [data, setData] = useState([]);
     const isConfirmed =  false;
     const refreshList = () => {
@@ -45,7 +45,7 @@ function ListRoom() {
                    <Header_Admin/>
                    <div className=" container mb-6 text-red-500">
                    <Typography variant="h4" color="blue-gray">
-                       List Rooms
+                       List Hotels
                    </Typography>
                    <div className=" max-w-full px-3 rounded-lg mt-2">      
                            <div class="container px-6 mx-auto grid relative ">
@@ -57,8 +57,8 @@ function ListRoom() {
                                         class="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                                     >
                                         <th class="px-4 py-3">Name</th>
-                                        <th class="px-4 py-3">Price</th>
-                                        <th class="px-4 py-3">Occupancy</th>
+                                        <th class="px-4 py-3">Location</th>
+                                        <th class="px-4 py-3">Total Rooms</th>
                                         <th class="px-4 py-3">Date Added</th>
                                         <th class="px-4 py-3">Actions</th>
                                     </tr>
@@ -83,7 +83,7 @@ function ListRoom() {
                                             <span
                                                 class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
                                             >
-                                                {item.roomoccupancy} - person
+                                                {item.roomoccupancy} - rooms
                                             </span>
                                         </td>
                                         <td class="px-4 py-3 text-sm" key={item.id}>
@@ -240,8 +240,7 @@ function ListRoom() {
                    
               </div>
                        
-              {/* <Headers/> */}
               </div>
          </>
         )
-    } export default ListRoom;
+    } export default ListHotel;

@@ -20,7 +20,7 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 
-export function Headers(){
+function Header_Admin(){
   const [openNav, setOpenNav] = React.useState(false);
  
   React.useEffect(() => {
@@ -46,8 +46,8 @@ export function Headers(){
           <div className="relative flex w-full gap-2 md:w-max">
             <Input
               type="search"
-              color="black"
-              className="rounded relative"
+              color="blacks"
+              className="rounded relative "
               containerProps={{
               className: "min-w-[350px]",
               }}
@@ -182,4 +182,4 @@ export function Headers(){
     </Navbar>
     </div>
   );
-}
+} export default Header_Admin;

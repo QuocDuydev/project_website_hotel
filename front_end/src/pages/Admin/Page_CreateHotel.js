@@ -12,14 +12,15 @@ import {
     Alert
   } from "@material-tailwind/react";
    
-function CreateRoomForm () {
+function CreateHotelForm () {
     const [activeItem, setActiveItem] = useState({
-      roomname: "",
-      roomimage: "",
+      hotelname: "",
+      hotelimage: "",
       descriptions: "",
-      roomprice: "",
-      roomnumber: "",
-      roomoccupancy: "",
+      totalroom: "",
+      roommap: "",
+      location: "",
+      rating: "",
       dateadded: "",
     });
     const [taskList, setTaskList] = useState([]);
@@ -106,7 +107,7 @@ function CreateRoomForm () {
               )}
                 <div className=" container m-4 text-red-500">
                 <Typography variant="h4" color="blue-gray">
-                    Create the Rooms
+                    Create the Hotels
                 </Typography>
                 <div className=" max-w-full px-3 rounded-lg mt-2">
                
@@ -120,15 +121,15 @@ function CreateRoomForm () {
                                 color="blue-gray"
                                 className="mb-2"
                               >
-                                Name Rooms
+                                Name Hotels
                               </Typography>
                               <Input
                                 type="text"
                                 size="lg"
-                                name="roomname"  
-                                value={activeItem.roomname}
+                                name="hotelname"  
+                                value={activeItem.hotelname}
                                 onChange={handleChange}
-                                placeholder="Enter name rooms..."
+                                placeholder="Enter name hotels..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                                 
                                 />
@@ -139,13 +140,13 @@ function CreateRoomForm () {
                                 color="blue-gray"
                                 className="mb-2 mt-4"
                               >
-                                Images Rooms
+                                Images Hotel
                               </Typography>
                               <Input
                                 type="file"
                                 multiple
                                 size="lg"
-                                name="roomimage"  
+                                name="hotelimage"  
                                 onChange={handleChange}
                                 placeholder="Choose file image..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -172,44 +173,45 @@ function CreateRoomForm () {
                                 
                               />
                             </div>
-                          </div>    
-                        <div className="mb-1 w-1/2 p-4">
-                          <div>
+                            <div>
                                 <Typography
                                   variant="h6"
                                   color="blue-gray"
                                   className="mb-2"
                                 >
-                                  Price Rooms
+                                  Total Rooms
                                 </Typography>
                                 <Input
                                   type="number"
                                   multiple
                                   size="lg"
-                                  name="roomprice"  
-                                  value={activeItem.roomprice}
+                                  name="totalroom"  
+                                  value={activeItem.totalroom}
                                   onChange={handleChange}
-                                  placeholder="Enter price rooms..."
+                                  placeholder="Enter total rooms..."
                                   className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
                                  
                                 />
                             </div>
+                          </div>    
+                        <div className="mb-1 w-1/2 p-4">
+                          
                             <div>
                               <Typography
                                 variant="h6"
                                 color="blue-gray"
                                 className="mb-2 mt-4"
                               >
-                                Numbers Rooms
+                                Rooms Maps
                               </Typography>
                               <Input
-                                type="number"
+                                type="text"
                                 multiple
                                 size="lg"
-                                name="roomnumber"  
-                                value={activeItem.roomnumber}
+                                name="roommap"  
+                                value={activeItem.roommap}
                                 onChange={handleChange}
-                                placeholder="Enter Numbers rooms..."
+                                placeholder="Enter Room Map..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                               
                               />
@@ -220,16 +222,36 @@ function CreateRoomForm () {
                                 color="blue-gray"
                                 className="mb-2 mt-4"
                               >
-                                Occupancy Rooms
+                                Location
+                              </Typography>
+                              <Input
+                                type="text"
+                                multiple
+                                size="lg"
+                                name="location"  
+                                value={activeItem.location}
+                                onChange={handleChange}
+                                placeholder="Enter Location hotel..."
+                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                               
+                              />
+                            </div>
+                            <div>
+                              <Typography
+                                variant="h6"
+                                color="blue-gray"
+                                className="mb-2 mt-4"
+                              >
+                                Ratings
                               </Typography>
                               <Input
                                 type="number"
                                 multiple
                                 size="lg"
-                                name="roomoccupancy"  
-                                value={activeItem.roomoccupancy}
+                                name="rating"  
+                                value={activeItem.rating}
                                 onChange={handleChange}
-                                placeholder="Enter Occupancy rooms..."
+                                placeholder="Enter rating hotel..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                                
                               />
@@ -273,4 +295,4 @@ function CreateRoomForm () {
       </>
       
     );
-} export default CreateRoomForm;
+} export default CreateHotelForm;

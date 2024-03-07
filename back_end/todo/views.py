@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,6 +15,10 @@ class UserView(viewsets.ModelViewSet):
 class RoomView(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     queryset = Rooms.objects.all()
+
+class RoomRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Rooms.objects.all()
+    serializer_class = RoomSerializer
 
 # @api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])

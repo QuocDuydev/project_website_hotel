@@ -12,10 +12,11 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronRightIcon, ChevronDownIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { HomeModernIcon } from "@heroicons/react/24/solid";
 
  
-export function Sidebar_Admin() {
+function Sidebar_Admin() {
     const [open, setOpen] = React.useState(0);
  
     const handleOpen = (value) => {
@@ -26,6 +27,14 @@ export function Sidebar_Admin() {
         <div className="sticky top-0 z-10 h-max max-w-full rounded">
             <Card className=" block max-w-[15rem] p-4 h-full bg-white rounded shadow-none" >
                     <List>
+                        <Link to="/admin">
+                            <ListItem>
+                                <ListItemPrefix>
+                                    <HomeIcon  className="h-6 w-6" />
+                                </ListItemPrefix>
+                                Dashboard
+                            </ListItem>
+                        </Link>
                         <Accordion
                             open={open === 1}
                             icon={<ChevronDownIcon
@@ -42,7 +51,7 @@ export function Sidebar_Admin() {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <Link to="/admin/list-room">
+                                    <Link to="/admin/list-customer">
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -53,7 +62,7 @@ export function Sidebar_Admin() {
                                    
                                 </List>
                                 <List className="p-0">
-                                    <Link to="/admin/create-room">
+                                    <Link to="/admin/create-customer">
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -81,18 +90,26 @@ export function Sidebar_Admin() {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        List Hotel
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Create Hotel
-                                    </ListItem>
+                                    <Link to="/admin/list-hotel">
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                            </ListItemPrefix>
+                                            List Hotel
+                                        </ListItem>
+                                    </Link>
+                                   
+                                </List>
+                                <List className="p-0">
+                                    <Link to="/admin/create-hotel">
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                            </ListItemPrefix>
+                                            Create Hotel
+                                        </ListItem>
+                                    </Link>
+                                   
                                 </List>
                             </AccordionBody>
                         </Accordion>   
@@ -112,18 +129,26 @@ export function Sidebar_Admin() {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        List Rooms
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Create Rooms
-                                    </ListItem>
+                                    <Link to="/admin/list-room">
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                            </ListItemPrefix>
+                                            List Rooms
+                                        </ListItem>
+                                    </Link>
+                                   
+                                </List>
+                                <List className="p-0">
+                                    <Link to="/admin/create-room">
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                            </ListItemPrefix>
+                                            Create Rooms
+                                        </ListItem>
+                                    </Link>
+                                   
                                 </List>
                             </AccordionBody>
                         </Accordion>
@@ -135,4 +160,4 @@ export function Sidebar_Admin() {
         </div>
 
   );
-}
+} export default Sidebar_Admin;

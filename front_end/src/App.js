@@ -6,10 +6,11 @@ import Home from "./pages/Customer/Page_home.js";
 import RoomDetails from "./pages/Customer/Page_RoomDetails.js";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import AdminHome from "./pages/Admin/Page_AdminHome.js";
-import { CreateRoomForm } from "./pages/Admin/Page_CreateRoom.js";
+import CreateRoomForm from "./pages/Admin/Page_CreateRoom.jsx";
 import ListRoom from "./pages/Admin/Page_ListRoom.js";
 import EditRoom from "./pages/Admin/Page_EditRoom.js";
-
+import CreateHotelForm from "./pages/Admin/Page_CreateHotel.js";
+import ListHotel from "./pages/Admin/Page_ListHotel.js";
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -43,6 +44,18 @@ const router = createBrowserRouter([
     path: '/admin/edit-room/:id',
     element: <EditRoom/>
   },
+  {
+    path: '/admin/create-hotel',
+    element: <CreateHotelForm/>
+  },
+  {
+    path: '/admin/list-hotel',
+    element: <ListHotel/>
+  },
+  // {
+  //   path: '/admin/edit-hotel/:id',
+  //   element: <EditHotel/>
+  // },
 
 ]);
 function App() {
