@@ -11,12 +11,12 @@ import {
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
-function ListHotel () {
+function ListCustomer() {
     const [data, setData] = useState([]);
     const isConfirmed =  false;
     const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/hotels/")
+        .get("http://localhost:8000/api/users/")
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
     };
@@ -29,7 +29,7 @@ function ListHotel () {
     const isConfirmed = window.confirm("Are you sure you want to delete?");
     if (isConfirmed) {
         axios
-            .delete(`http://localhost:8000/api/hotels/${item.id}/`)
+            .delete(`http://localhost:8000/api/users/${item.id}/`)
             .then((res) => refreshList())
             .catch((error) => console.log(error));
         };
@@ -45,7 +45,7 @@ function ListHotel () {
                    <Header_Admin/>
                    <div className=" container mb-6 text-red-500">
                    <Typography variant="h4" color="blue-gray">
-                       List Hotels
+                       List Rooms
                    </Typography>
                    <div className=" max-w-full px-3 rounded-lg mt-2">      
                            <div class="container px-6 mx-auto grid relative ">
@@ -56,10 +56,11 @@ function ListHotel () {
                                     <tr
                                         class="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                                     >
-                                        <th class="px-4 py-3">Name</th>
-                                        <th class="px-4 py-3">Location</th>
-                                        <th class="px-4 py-3">Total Rooms</th>
-                                        <th class="px-4 py-3">Date Added</th>
+                                        <th class="px-4 py-3">Full name</th>
+                                        <th class="px-4 py-3">Username</th>
+                                        <th class="px-4 py-3">Email</th>
+                                        <th class="px-4 py-3">Password</th>
+                                        <th class="px-4 py-3">Account type</th>
                                         <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
@@ -72,26 +73,25 @@ function ListHotel () {
                                         <td class="px-4 py-3" key={item.id}>
                                             <div class="flex items-center text-sm">
                                                 <div>
-                                                    <p class="font-semibold">{item.hotelname}</p>   
+                                                    <p class="font-semibold">{item.name}</p>   
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.location}
-                                        </td>
-                                        <td class="px-4 py-3 text-xs" key={item.id}>
-                                            <span
-                                                class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
-                                            >
-                                                {item.totalroom} - rooms
-                                            </span>
+                                            {item.username}
                                         </td>
                                         <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.dateadded}
+                                            {item.email}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm" key={item.id}>
+                                            {item.password}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm" key={item.id}>
+                                            {item.account_type}
                                         </td>
                                         <td class="px-4 py-3 ">
                                             <div class=" flex space-x-4 text-sm ml-10">
-                                                <Link to={`/admin/edit-hotel/${item.id}`}>
+                                                <Link to={`/admin/edit-customer/${item.id}`}>
                                                     <button
                                                         
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -240,7 +240,8 @@ function ListHotel () {
                    
               </div>
                        
+              {/* <Headers/> */}
               </div>
          </>
         )
-    } export default ListHotel;
+    } export default ListCustomer;

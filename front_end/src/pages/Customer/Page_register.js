@@ -12,6 +12,7 @@ class Registers extends Component {
                 namne: "",
                 email: "",
                 password: "",
+                account_type: "",
                 joined: "",
               },
               taskList: []
@@ -23,7 +24,7 @@ class Registers extends Component {
      
     refreshList = () => {
         axios   //Axios to send and receive HTTP requests
-          .get("http://localhost:8000/api/tasks/")
+          .get("http://localhost:8000/api/users/")
           .then(res => this.setState({ taskList: res.data }))
           .catch(err => console.log(err));
       };
@@ -39,7 +40,7 @@ class Registers extends Component {
     
     handleCreate = item => {   
         axios
-          .post(`http://localhost:8000/api/tasks/`,item ,{
+          .post(`http://localhost:8000/api/users/`,item ,{
             headers: {
                 'Content-Type': 'application/json',
                 // Add any other required headers

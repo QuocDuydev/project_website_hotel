@@ -8,9 +8,15 @@ from .serializers import UserSerializer
 from .models import User
 from .serializers import RoomSerializer
 from .models import Rooms
+from .serializers import HotelSerializer
+from .models import Hotels
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    
+class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class RoomView(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
@@ -19,6 +25,16 @@ class RoomView(viewsets.ModelViewSet):
 class RoomRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Rooms.objects.all()
     serializer_class = RoomSerializer
+
+class HotelView(viewsets.ModelViewSet):
+    serializer_class = HotelSerializer
+    queryset = Hotels.objects.all()
+
+class HotelRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Hotels.objects.all()
+    serializer_class = HotelSerializer
+
+
 
 # @api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])

@@ -32,7 +32,7 @@ function CreateHotelForm () {
   
     const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/rooms/")
+        .get("http://localhost:8000/api/hotels/")
         .then((response) => setTaskList(response.data))
         .catch((error) => console.log(error));
     };
@@ -59,17 +59,18 @@ function CreateHotelForm () {
   
     const handleCreate = () => {
       const formData = new FormData();
-      formData.append("roomname", activeItem.roomname);
-      formData.append("roomimage", activeItem.roomimage);
+      formData.append("hotelname", activeItem.hotelname);
+      formData.append("hotelimage", activeItem.hotelimage);
       formData.append("descriptions", activeItem.descriptions);
-      formData.append("roomprice", activeItem.roomprice);
-      formData.append("roomnumber", activeItem.roomnumber);
-      formData.append("roomoccupancy", activeItem.roomoccupancy);
+      formData.append("totalroom", activeItem.totalroom);
+      formData.append("roommap", activeItem.roommap);
+      formData.append("location", activeItem.location);
+      formData.append("rating", activeItem.rating);
       formData.append("dateadded", activeItem.dateadded);
   
       axios({
         method: 'post',
-        url: `http://localhost:8000/api/rooms/`,
+        url: `http://localhost:8000/api/hotels/`,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' }, // Make sure to set the content type
       })
@@ -82,7 +83,7 @@ function CreateHotelForm () {
   
           // Redirect to home page after 5 seconds
           setTimeout(() => {
-            navigate("/admin/list-room");
+            navigate("/admin/list-hotel");
           }, 1000);
           // Optionally, you can reset the form or perform additional actions after a successful update.
         })

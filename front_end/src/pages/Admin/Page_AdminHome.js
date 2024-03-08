@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import Sidebar_Admin  from "../../components/Admin/SideBar";
-
-export default function AdminHome () {
+import PrivateRoute from "../../context/PrivateRoute";
+function AdminHome () {
         return(
             <> 
              <div className=" flex h-screen">  
@@ -153,4 +153,4 @@ export default function AdminHome () {
            </>
         );
 
-}
+}export default  AdminHome;

@@ -23,12 +23,14 @@ from todo import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'tasks', views.UserView, 'task')
+router.register(r'users', views.UserView, 'user')
 router.register(r'rooms', views.RoomView, 'room')
+router.register(r'hotels', views.HotelView, 'hotel')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/rooms/<int:id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
+    path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='room-detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

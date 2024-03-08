@@ -24,7 +24,7 @@ const AdultsDropdown = () => {
 
       </Menu.Button>
       {/*item*/}
-      <Menu.Items className=' w-full flex  flex-col z-40  bg-white absolute w-full '>
+      <Menu.Items className=' flex  flex-col z-40  bg-white absolute w-full '>
         {lists.map((list,index)=>{
           return(
             <Menu.Item 
