@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import {
     Card,
     CardHeader,
@@ -5,36 +8,62 @@ import {
     CardFooter,
     Typography,
     Button,
+    Rating
   } from "@material-tailwind/react";
    
-  export function CardDefault() {
+  function CardDefault() {
+    const [data, setData] = useState([]);
+    const isConfirmed =  false;
+    const refreshList = () => {
+      axios
+        .get("http://localhost:8000/api/hotels/")
+        .then((res) => setData(res.data))
+        .catch((err) => console.log(err));
+    };
+  
+    useEffect(() => {
+      refreshList();
+    }, []);
+    const limitedData = data.slice(0, 4);
     return (
-    <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md mt-6 w-96"> 
-      <Card className=" p-4 text-center h-[100%]">
-        <CardHeader color="blue-gray" className="relative h-56">
-          <img
-            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-            alt="card-image"
-          />
-        </CardHeader>
-        <CardBody>
-          <Typography variant="h5" color="blue-gray" className="mb-2 mt-3">
-            UI/UX Review Check
-          </Typography>
-          <Typography>
-            The place is close to Barceloneta Beach and bus stop just 2 min by
-            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-            night life in Barcelona.
-          </Typography>
-          <Typography>
-           Price: 300.000vnd.
-          </Typography>
-        </CardBody>
-        <CardFooter className="pt-0 mt-5 ">
-          <Button className="text-red-500 bg-slate-200">Read More</Button>
-        </CardFooter>
-      </Card>
-      </div>
+     
+      <div className="grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
+      {limitedData.map((item) => (
+        <Card className="p-4 text-center bg-white shadow-md rounded-xl" key={item.id}>
+          <CardHeader color="blue-gray" className="relative h-56 overflow-hidden">
+            <img
+              src={item.hotelimage}
+              alt="card-image"
+              className="object-cover w-full h-full transform transition-transform hover:scale-110"
+            />
+          </CardHeader>
+          <CardBody className="flex flex-col justify-between h-1/2">
+            <div>
+              <Typography variant="h5" color="blue-gray" className="mb-2 mt-3">
+                {item.hotelname}
+              </Typography>
+
+              <Rating value={item.rating} unratedColor="red" ratedColor="red" readonly />
+            <div className=" flex mt-1">
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+              </svg>
+           
+              <Typography variant="h6" color="blue-gray" className="ml-1">{item.location}</Typography>
+              </div>
+            </div>
+            <CardFooter className="flex flex-col justify-between h-1/2 mt-5">
+              <Link to={`/hotel/${item.id}`}>
+                <Button className="text-white bg-blue-500 hover:bg-blue-700">Read More</Button>
+              </Link>
+            </CardFooter>
+          </CardBody>
+        </Card>
+      ))}
+    </div>
+     
     );
   }
   export default CardDefault;

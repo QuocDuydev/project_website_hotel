@@ -1,70 +1,74 @@
-import React from 'react';
-import {Swiper,SwiperSlide} from 'swiper/react';
-//import swiper style
-import 'swiper/css'
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Button } from "@material-tailwind/react";
 
-import 'swiper/css/effect-fade'
-import Img1 from '../assets/img/heroSlider/1.jpg';
-import Img2 from '../assets/img/heroSlider/2.jpg';
-import Img3 from '../assets/img/heroSlider/3.jpg';
-import { Autoplay, EffectFade } from 'swiper/modules';
-const slides=[
+const images = [
   {
-    title:'Your Luxury Hotel For Vacation',
-    bg:Img1,
-    btnText:'See Rooms Nows',
+    src: "https://dulich9.com/wp-content/uploads/2019/10/cac-dia-diem-du-lich-63-tinh-thanh-Viet-Nam-3.jpg",
+   
+    text: "Your Luxury Hotel For Vacation",
   },
   {
-    title:'Hotel with reasonable price',
-    bg:Img2,
-    btnText:'See Rooms Nows',
-  }
-  ,{
-    title:'Great Vacation Experience',
-    bg:Img3,
-    btnText:'See Rooms Nows',
-  }
-]
-const HeroSlider = () => {
+    src: "https://dulich9.com/wp-content/uploads/2019/10/cac-dia-diem-du-lich-63-tinh-thanh-Viet-Nam-8.jpg",
+  
+    text: "Hotel with reasonable price",
+  },
+  {
+    src: "https://dulich9.com/wp-content/uploads/2019/10/dia-diem-du-lich-63-tinh-thanh-14.jpeg",
+  
+    text: "Great Vacation Experience",
+  },
+];
+
+function CarouselDefault() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    beforeChange: (current, next) => setActiveIndex(next),
+  };
+
   return (
-    <Swiper
-    modules={[EffectFade,Autoplay]}
-    effect={'fade'}
-    loop={true}
-    autoplay={{
-      delay:5000,
-      disableOnInteraction:false
-    }}
-     className='heroSlider  h-[600px]   lg:h-[860px]'>
-      {slides.map((slide,index)=>{
-        const {title,bg,btnText}=slide;
-        return (
-          <SwiperSlide 
-          key={index} 
-          className=' h-full  flex justify-center items-center'>
-            <div className='absolute top-0 w-full h-full'>
-              <img className='object-cover w-full h-[80%]'
-              src={bg} 
-                alt=""/>
+    <div className=" h-96 relative overflow-hidden">
+      <Slider {...settings}>
+        {images.map((image, index) => (
+          <div key={index}  className="relative">
+          
+            <img
+              src={image.src}
+              alt={`image ${index + 1}`}
+              className="h-full w-full object-cover"
+            />
+           <div className="absolute inset-0 flex flex-col  items-center bg-black/50">
+              <h3 className="text-white text-2xl mt-5"> Wellcome to Website Booking </h3>
+              <h1 className="text-white text-4xl font-bold  m-10">{image.text}</h1>
+              <Button className=" bg-white text-black font-bold hover:bg-gray-500 hover:text-white">See Rooms Nows</Button>
             </div>
-              <div className='absolute w-full h-[80%] bg-black/70'>
-              <div className='z-20 text-white text-center m-40'>
-                <div className='uppercase font-tertiary tracking-[10px] mb-5 mt-5'>
-                Wellcome to Website Booking
-                </div>
-                  <h1 className='text-[25px] font-primary uppercase tracking-[10px] lg:text-[60px]  mb-5'>
-                    {title}
-                  </h1>
-                  <button className='btn btn-lg btn-primary  mx-auto' >{btnText}</button>
-              </div>
-            </div>
-          </SwiperSlide>
-        )
+           
+          </div>
+        ))}
+      </Slider>
+      <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+        {images.map((_, i) => (
+          <span
+            key={i}
+            className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+              activeIndex === i ? "w-8 bg-gray-200" : "w-4 bg-white/50"
+            }`}
+            onClick={() => setActiveIndex(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-      })}
-    </Swiper>
-
- );
-};
-
-export default HeroSlider;
+export default CarouselDefault;

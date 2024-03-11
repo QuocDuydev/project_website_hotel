@@ -10,37 +10,37 @@ import GridGallery from "../../components/Grid-Galery"
 import CardDefault from "../../components/Card"
 import AccordionCustomIcon from "../../components/Accordion";
 import GridLocation from "../../components/Grid-Location";
-function Home() {
- 
+import CardRoom from "../../components/Card_Room";
+import Filters from "../../components/Filter";
+function HotelDetails() {
+   
     return (
       <>
         <Navbars/>
-        <CarouselDefault/>
         <main className="content ">      
-          <div className='container mx-auto relative'>
-            {/* <div className=' bg-neutral-600 mt-4 p-4 
-                lg:shadow-xl lg:absolute lg:left-0 lg:right-0 lg:p-0  lg:-top-12'>
-            <BookForm/> 
-          </div> */}
+          <div className='container mx-auto'>
+             <BookForm/> 
+             <div className="grid grid-cols-4">
+                <div className="grid gap-4 relative bg-black col-span-1">
+                    <Filters />
+                </div>
+                <div className="grid gap-4 relative col-span-3 bg-red-400 m-4">
+                    <CardRoom />
+                </div>
+            </div>
+                            
           <div>
-            <h3 className=" mt-[40px] text-2xl font-bold"> List Hotel Suggested</h3>
+            <h3 className=" mt-[40px] text-2xl font-bold"> Similar Hotel List</h3>
             
           </div>
-      
-      <CardDefault/>
-       {/* <Rooms/> */}
-       <GridGallery/>
-       <GridLocation/>
-       <div>
-            <h3 className=" mt-[40px] text-2xl font-bold mb-2"> How does it work?</h3>
-            <AccordionCustomIcon/>
-          </div>
-      
+        
+         <CardDefault/>
+       
        <Footer/>
      </div>
       </main></>
        
       
     );
-  } export default Home;
+  } export default HotelDetails;
 

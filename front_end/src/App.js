@@ -16,6 +16,7 @@ import EditHotel from "./pages/Admin/Page_EditHotel.js";
 import ListCustomer from "./pages/Admin/Page_ListCustomer.js";
 import EditCustomer from "./pages/Admin/Page_EditCustomer.js";
 import CreateCustomerForm from "./pages/Admin/Page_CreateCustomer.js";
+import HotelDetails from "./pages/Customer/Page_HotelDetails.js";
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register/>
   },
+
+  // Interface Customer
   {
     path: '/',
     element: <Home/>
@@ -32,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: '/room/:id',
     element: <RoomDetails/>
+  },
+  {
+    path: '/hotel/:id',
+    element: <HotelDetails/>
   },
   {
     path: '/admin',
