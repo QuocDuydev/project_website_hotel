@@ -1,10 +1,14 @@
-import { Typography } from "@material-tailwind/react";
+import {
+
+  Typography,
+
+} from "@material-tailwind/react";
 import React from "react";
 export function GridGallery() {
     return (
         <> 
             <div className="mt-[40px] mb-4">
-                <Typography variant="h3">
+                <Typography variant="h4">
                     Trending destinations
                 </Typography>
                 <Typography variant="h5" className=" font-normal">

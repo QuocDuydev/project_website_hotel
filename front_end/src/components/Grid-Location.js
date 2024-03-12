@@ -1,6 +1,15 @@
-import { Typography } from "@material-tailwind/react";
+
 import {useState, useEffect} from "react";
 import axios from "axios";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+  Rating
+} from "@material-tailwind/react";
 export function GridLocation() {
   const [data, setData] = useState([]);
   const [locationCounts, setLocationCounts] = useState({}); 
@@ -29,7 +38,7 @@ export function GridLocation() {
     return (
         <> 
             <div className="mt-[40px] mb-4">
-                <Typography variant="h3">
+                <Typography variant="h4">
                   Explore Vietnam
                 </Typography>
                 <Typography variant="h5" className=" font-normal">

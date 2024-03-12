@@ -12,7 +12,9 @@ import AccordionCustomIcon from "../../components/Accordion";
 import GridLocation from "../../components/Grid-Location";
 import CardRoom from "../../components/Card_Room";
 import Filters from "../../components/Filter";
-function RoomDetails() {
+import CardHotel from "../../components/Card_Hotel";
+import SearchBox from "../../components/SearchBox";
+function ListHotels() {
    
     return (
       <>
@@ -25,7 +27,7 @@ function RoomDetails() {
                     <Filters />
                 </div>
                 <div className="grid gap-4 relative col-span-3  m-4">
-                    <CardRoom />
+                    <CardHotel />
                 </div>
             </div>
                             
@@ -42,5 +44,5 @@ function RoomDetails() {
        
       
     );
-  } export default RoomDetails;
+  } export default ListHotels;
 

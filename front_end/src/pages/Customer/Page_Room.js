@@ -12,7 +12,7 @@ import AccordionCustomIcon from "../../components/Accordion";
 import GridLocation from "../../components/Grid-Location";
 import CardRoom from "../../components/Card_Room";
 import Filters from "../../components/Filter";
-function RoomDetails() {
+function ListRooms() {
    
     return (
       <>
@@ -42,5 +42,5 @@ function RoomDetails() {
        
       
     );
-  } export default RoomDetails;
+  } export default ListRooms;
 

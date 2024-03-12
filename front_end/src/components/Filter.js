@@ -6,10 +6,17 @@ import {
     ListItemPrefix,
     Typography,
   } from "@material-tailwind/react";
-   
+import {FaExpandArrowsAlt} from 'react-icons/fa'
   export function Filters() {
     return (
-      <Card>
+      <Card className=" shadow-none  mt-4">
+        <Typography color="blue-gray" className="font-bold m-1 mb-3">
+                Filter by:
+        </Typography>
+        <Typography color="blue-gray" className="font-bold m-1">
+                Popular filter
+        </Typography>
+        <div className="border-2 rounded-md shadow-sm">
         <List>
           <ListItem className="p-0">
             <label
@@ -27,7 +34,7 @@ import {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                React.js
+                Ha Noi
               </Typography>
             </label>
           </ListItem>
@@ -47,7 +54,7 @@ import {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                Vue.js
+                Ho Chi Minh City
               </Typography>
             </label>
           </ListItem>
@@ -67,11 +74,253 @@ import {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                Svelte.js
+                Da Nang
               </Typography>
             </label>
           </ListItem>
         </List>
+        </div>
+        <Typography color="blue-gray" className="font-bold m-1">
+                Price filter
+        </Typography>
+        <div className="border-2 rounded-md shadow-sm">
+        <List>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-react"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-react"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+               100$ - 200$
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-vue"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-vue"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              200$ - 300$
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-svelte"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-svelte"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              300$ - 400$
+              </Typography>
+            </label>
+          </ListItem>
+        </List>
+        </div>
+        <Typography color="blue-gray" className="font-bold m-1">
+                Total Room filter
+        </Typography>
+        <div className="border-2 rounded-md shadow-sm">
+        <List>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-react"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-react"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              3 - rooms
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-vue"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-vue"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              5 - rooms
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-svelte"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-svelte"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              7 - rooms
+              </Typography>
+            </label>
+          </ListItem>
+        </List>
+        </div>
+        <Typography color="blue-gray" className="font-bold m-1">
+                Rating filter
+        </Typography>
+        <div className="border-2 rounded-md shadow-sm">
+        <List>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-react"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-react"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              1 - start
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-vue"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-vue"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              2 - start
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-svelte"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-svelte"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              3 - start
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-svelte"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-svelte"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              4 - start
+              </Typography>
+            </label>
+          </ListItem>
+          <ListItem className="p-0">
+            <label
+              htmlFor="vertical-list-svelte"
+              className="flex w-full cursor-pointer items-center px-3 py-2"
+            >
+              <ListItemPrefix className="mr-3">
+                <Checkbox
+                  id="vertical-list-svelte"
+                  ripple={false}
+                  className="hover:before:opacity-0"
+                  containerProps={{
+                    className: "p-0",
+                  }}
+                />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="font-medium">
+              5 - start
+              </Typography>
+            </label>
+          </ListItem>
+        </List>
+        </div>
       </Card>
     );
   }

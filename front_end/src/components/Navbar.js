@@ -28,9 +28,9 @@ export function Navbars() {
         color="blue-gray"
         className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200 "
       >
-        <a href="#" className="flex items-center">
+        <Link to="/list-hotel" className="flex items-center">
           Hotels
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -38,9 +38,9 @@ export function Navbars() {
         color="blue-gray"
         className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200"
       >
-        <a href="#" className="flex items-center">
+        <Link to="/list-room" className="flex items-center">
           Rooms
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -48,9 +48,9 @@ export function Navbars() {
         color="blue-gray"
         className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200"
       >
-        <a href="#" className="flex items-center">
-          Homestay
-        </a>
+        <Link to="/search-results" className="flex items-center">
+          Search
+        </Link>
       </Typography>
     </ul>
   );
@@ -129,10 +129,10 @@ export function Navbars() {
                 {navList}
             </div> 
             <div className="flex items-center gap-x-1">
-              <Button fullWidth variant="text" size="sm" className=" text-center bg-black ">
+              <Button fullWidth variant="text" size="sm" className=" text-center bg-black text-white ">
               <Link to="/login"><span>Log In</span></Link>
               </Button>
-              <Button fullWidth variant="gradient" size="sm" className="text-center bg-black">
+              <Button fullWidth variant="gradient" size="sm" className="text-center bg-black  text-white ">
               <Link to="/register"><span>Sign In</span></Link>
               </Button>
             </div>

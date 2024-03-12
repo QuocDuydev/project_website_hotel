@@ -1,49 +1,96 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 import {
     Card,
     CardBody,
     CardFooter,
     Typography,
     Button,
-    Tooltip
+    Tooltip,
+    Rating
   } from "@material-tailwind/react";
- function CardRoom() {
-    const [data, setData] = useState([]);
-    const isConfirmed =  false;
-    const refreshList = () => {
-      axios
-        .get("http://localhost:8000/api/rooms/")
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    };
-  
+function HotelComponent(){
+  const {id}  = useParams();
+  const [hotel, setHotel] = useState(
+    {
+      hotelname: "",
+    hotelimage: null,
+    descriptions: "",
+    totalroom: "",
+    roommap: "",
+    location: "",
+    rating: "",
+    dateadded: "",
+    }
+
+  );
     useEffect(() => {
-      refreshList();
-    }, []);
+        axios
+          .get(`http://localhost:8000/api/hotels/${id}/`)
+          .then((response) => {
+            setHotel(response.data);
+            // console.log(room.roomimage)
+          })
+          .catch((error) => {
+            console.error("Error fetching room data:", error);
+          });
+      }, [id]);
     return (
-      <div  >
-        {data.map((item) => (
-          <Card className=" w-full mx-auto mb-2 border-2">
-            
-            <CardBody className="m-3 flex">
-             
-                <img
-                  src={item.roomimage}
-                  className="h-30 w-1/3 rounded-lg object-cover object-center"
-                  />
-             
+        <div className='container mx-auto relative'>
+          <Card className=" w-full mx-auto mb-2 shadow-none mt-3">       
+            <CardBody className="m-3">
               <div className="m-3">
-                    <Typography variant="h5" color="blue-gray" className="mb-2 text-blue-800">
-                    {item.roomname}
+                <div className=" flex">
+                  <Typography variant="h4" color="blue-gray" className=" flex mb-2 text-blue-800">
+                    {hotel.hotelname} - {hotel.location}
+                  </Typography>
+                  <Typography className="flex mb-2">
+                  <Rating value={hotel.rating} unratedColor="red" ratedColor="red" readonly className="ml-4"/>
+                  </Typography>
+                </div>
+                <div className=" flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                  </svg>
+
+                  <Typography variant="h6" color="blue-gray" className="ml-1">{hotel.roommap}, {hotel.location}</Typography>
+                </div>
+                <div className="grid grid-cols-6">
+                  <div className="grid gap-4 relative col-span-2">
+                    <div className=" col-1">
+                      <img
+                      src={hotel.hotelimage}
+                      className="h-full max-w-full rounded-lg object-cover object-center mt-3"
+                      />
+                    </div>
+                    <div className=" col-1 mt-2">
+                      <img
+                      src={hotel.hotelimage}
+                      className="h-full max-w-full rounded-lg object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid gap-4 relative col-span-4 ml-3 mb-3">
+                      <img
+                      src={hotel.hotelimage}
+                      className="h-full max-w-full rounded-lg object-cover object-center mt-3"
+                      />
+                  </div>
+               </div>
+               <div>
+               <Typography variant="h4" className=" text-justify mt-3">
+                      Descriptions: 
                 </Typography>
-                <Typography className=" text-justify">
-                    {item.descriptions.slice(0,100)}
+                <Typography className=" text-justify mt-1">
+                      {hotel.descriptions}
                 </Typography>
-                <Typography className=" text-right mb-3 text-xl font-bold">
-                    $ {item.roomprice}
-                </Typography>
-        <div className="group inline-flex flex-wrap items-center gap-7 -mt-5 ">
+               </div>
+               
+               
+        <div className="group flex-wrap gap-5 mt-5 flex justify-center">
          
           <Tooltip content="Free wifi">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
@@ -61,7 +108,7 @@ import {
               </svg>
             </span>
           </Tooltip>
-          <Tooltip content="2 bedrooms">
+          <Tooltip content="Apartments">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,22 +174,79 @@ import {
           </Tooltip>
     
         </div>
-                <div className="flex justify-between items-center mt-3">
-                <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.roomoccupancy} - person</span>
-                    <Button className=" bg-black">Booking Nows</Button>
-                    
-               
-                </div>
                 
-                </div>
-            
-            </CardBody>
-          
-              
-          </Card>
-      ))}
     </div>
-      
-       
+            
+        <ul className="">
+          <li className="flex justify-center">
+          <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Apartments</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Very good breakfast</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Private parking</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Airport shuttle</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Pets allowed</span>
+            </li>
+          </li>
+
+          <li className="flex justify-center">
+          <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Free WiFi</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Private bathroom</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>View</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Bath</span>
+            </li>
+            <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2 ml-3">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Non-smoking rooms</span>
+            </li>
+          </li>
+           
+        </ul>
+            </CardBody>        
+          </Card>
+        </div>
     );
-  } export default CardRoom;
+} export default HotelComponent;

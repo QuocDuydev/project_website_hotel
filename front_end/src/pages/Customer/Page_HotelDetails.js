@@ -12,6 +12,7 @@ import AccordionCustomIcon from "../../components/Accordion";
 import GridLocation from "../../components/Grid-Location";
 import CardRoom from "../../components/Card_Room";
 import Filters from "../../components/Filter";
+import HotelComponent from "../../components/HotelDetails";
 function HotelDetails() {
    
     return (
@@ -19,26 +20,26 @@ function HotelDetails() {
         <Navbars/>
         <main className="content ">      
           <div className='container mx-auto'>
-             <BookForm/> 
-             <div className="grid grid-cols-4">
-                <div className="grid gap-4 relative bg-black col-span-1">
-                    <Filters />
-                </div>
-                <div className="grid gap-4 relative col-span-3 bg-red-400 m-4">
-                    <CardRoom />
-                </div>
-            </div>
-                            
+            
+          
+           <HotelComponent />    
+           <div>
+            <h3 className=" mt-[40px] text-2xl font-bold mb-5"> Availability Room</h3>
+            
+          </div>
+          <CardRoom/>            
           <div>
             <h3 className=" mt-[40px] text-2xl font-bold"> Similar Hotel List</h3>
             
           </div>
         
          <CardDefault/>
+        
        
        <Footer/>
      </div>
-      </main></>
+      </main>
+      </>
        
       
     );

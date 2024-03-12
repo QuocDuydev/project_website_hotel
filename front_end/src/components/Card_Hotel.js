@@ -1,25 +1,31 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     Card,
     CardBody,
     CardFooter,
     Typography,
     Button,
-    Tooltip
+    Tooltip,
+    Rating
   } from "@material-tailwind/react";
- function CardRoom() {
+ function CardHotel() {
     const [data, setData] = useState([]);
     const isConfirmed =  false;
     const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/rooms/")
+        .get("http://localhost:8000/api/hotels/")
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
     };
-  
+    const handelClick = () => {
+      refreshList();
+      window.scrollTo(0,0);
+   }
     useEffect(() => {
       refreshList();
+    
     }, []);
     return (
       <div  >
@@ -29,21 +35,21 @@ import {
             <CardBody className="m-3 flex">
              
                 <img
-                  src={item.roomimage}
+                  src={item.hotelimage}
                   className="h-30 w-1/3 rounded-lg object-cover object-center"
                   />
              
               <div className="m-3">
                     <Typography variant="h5" color="blue-gray" className="mb-2 text-blue-800">
-                    {item.roomname}
+                    {item.hotelname} - {item.location}
                 </Typography>
                 <Typography className=" text-justify">
                     {item.descriptions.slice(0,100)}
                 </Typography>
                 <Typography className=" text-right mb-3 text-xl font-bold">
-                    $ {item.roomprice}
+                     <Rating value={item.rating} unratedColor="red" ratedColor="red" readonly className="" />
                 </Typography>
-        <div className="group inline-flex flex-wrap items-center gap-7 -mt-5 ">
+        <div className="group inline-flex flex-wrap items-center gap-4  -mt-5 ">
          
           <Tooltip content="Free wifi">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
@@ -128,8 +134,8 @@ import {
     
         </div>
                 <div className="flex justify-between items-center mt-3">
-                <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.roomoccupancy} - person</span>
-                    <Button className=" bg-black">Booking Nows</Button>
+                <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.totalroom} - rooms</span>
+                    <Link to={`/hotel/${item.id}`} onClick={handelClick}><Button className=" bg-black">See availability</Button></Link>
                     
                
                 </div>
@@ -145,4 +151,4 @@ import {
       
        
     );
-  } export default CardRoom;
+  } export default CardHotel;
