@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {
     Card,
@@ -9,11 +9,15 @@ import {
     Button,
     Typography,
     Textarea,
-    Alert
+    Alert,
+    Select, 
+    Option
   } from "@material-tailwind/react";
    
 function CreateRoomForm () {
+    const { id } = useParams();
     const [activeItem, setActiveItem] = useState({
+      hotel: "",
       roomname: "",
       roomimage: "",
       descriptions: "",
@@ -22,19 +26,33 @@ function CreateRoomForm () {
       roomoccupancy: "",
       dateadded: "",
     });
+    const [hotels, setHotels] = useState({
+      hotelname: "",
+    });
     const [taskList, setTaskList] = useState([]);
     const navigate= useNavigate();
     const [CreateSuccess, setCreateSuccess] = useState(false);
+
     useEffect(() => {
-      refreshList();
-    }, []);
-  
-    const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/rooms/")
+        .get(`http://localhost:8000/api/hotels/${id}/`)
+        .then((response) => {
+          setHotels(response.data);
+          // Set the hotel name in the activeItem state
+          setActiveItem((prev) => ({ ...prev, hotel: response.data.hotelname }));
+          console.log("Hotel Name:", response.data.hotelname);
+        })
+        .catch((error) => {
+          console.error("Error fetching hotel data:", error);
+        });
+  
+      axios
+        .get(`http://localhost:8000/api/rooms/?hotel=${id}`)
         .then((response) => setTaskList(response.data))
         .catch((error) => console.log(error));
-    };
+    }, [id]);
+  
+    
   
     const handleChange = (e) => {
       const { name, type } = e.target;
@@ -133,6 +151,25 @@ function CreateRoomForm () {
                                 
                                 />
                             </div>
+                            <div>
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="mb-2 mt-4"
+                            >
+                              Choise Hotel
+                            </Typography>
+                            {/* <Select
+                            name="account_type"
+                            size="md"
+                            value={hotels.hotelname}
+                            className="rounded-md py-2 h-[40px] flex-auto items-center bg-white !border-t-blue-gray-200 focus:!border-t-gray-700"
+                            
+                            > */}
+                            <a className=" text-black">{hotels.hotelname}</a>
+                            
+                            {/* </Select> */}
+                          </div>
                             <div>
                               <Typography
                                 variant="h6"

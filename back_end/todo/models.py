@@ -34,7 +34,7 @@ class Hotels(models.Model):
     
 class Rooms(models.Model):
     id = models.AutoField(primary_key=True)
-    # hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
     roomname = models.CharField(max_length = 100)
     roomimage = models.ImageField(upload_to='room_images/')
     descriptions = models.TextField()
@@ -43,5 +43,5 @@ class Rooms(models.Model):
     roomoccupancy = models.IntegerField()
     dateadded = models.DateField()
     def __str__(self):
-        return f"{self.id},{self.roomname}, {self.roomimage}, {self.descriptions},{self.roomprice},{self.roomnumber},{self.roomoccupancy}, {self.dateadded}"
+        return f"{self.id}, {self.hotel}, {self.roomname}, {self.roomimage}, {self.descriptions},{self.roomprice},{self.roomnumber},{self.roomoccupancy}, {self.dateadded}"
     

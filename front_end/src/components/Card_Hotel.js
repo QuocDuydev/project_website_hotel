@@ -19,10 +19,7 @@ import {
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
     };
-    const handelClick = () => {
-      refreshList();
-      window.scrollTo(0,0);
-   }
+   
     useEffect(() => {
       refreshList();
     
@@ -135,7 +132,7 @@ import {
         </div>
                 <div className="flex justify-between items-center mt-3">
                 <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.totalroom} - rooms</span>
-                    <Link to={`/hotel/${item.id}`} onClick={handelClick}><Button className=" bg-black">See availability</Button></Link>
+                    <Link to={`/hotel/${item.id}`} ><Button className=" bg-black">See availability</Button></Link>
                     
                
                 </div>

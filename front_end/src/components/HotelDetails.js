@@ -12,19 +12,15 @@ import {
   } from "@material-tailwind/react";
 function HotelComponent(){
   const {id}  = useParams();
-  const [hotel, setHotel] = useState(
-    {
-      hotelname: "",
-    hotelimage: null,
-    descriptions: "",
-    totalroom: "",
-    roommap: "",
-    location: "",
-    rating: "",
-    dateadded: "",
-    }
-
-  );
+  const [hotel, setHotel] = useState({
+  hotelname: "",
+  hotelimage: null,
+  descriptions: "",
+  totalroom: "",
+  roommap: "",
+  location: "",
+  rating: "",
+  dateadded: "",});
     useEffect(() => {
         axios
           .get(`http://localhost:8000/api/hotels/${id}/`)
@@ -45,8 +41,13 @@ function HotelComponent(){
                   <Typography variant="h4" color="blue-gray" className=" flex mb-2 text-blue-800">
                     {hotel.hotelname} - {hotel.location}
                   </Typography>
-                  <Typography className="flex mb-2">
-                  <Rating value={hotel.rating} unratedColor="red" ratedColor="red" readonly className="ml-4"/>
+                  <Typography className="flex ml-4">
+                  <Rating
+                      value={hotel.rating}
+                      unratedColor="red"
+                      ratedColor="red"
+                      readonly
+                    /> {hotel.rating}
                   </Typography>
                 </div>
                 <div className=" flex">

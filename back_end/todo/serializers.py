@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rooms
-        fields =  ("id", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
+        fields =  ("id", "hotel","roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
 
 class HotelSerializer(serializers.ModelSerializer):
     class Meta:

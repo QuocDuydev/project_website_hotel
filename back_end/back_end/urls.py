@@ -31,6 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/rooms/<int:id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
-    path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='room-detail'),
+    path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
