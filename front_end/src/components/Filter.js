@@ -80,73 +80,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
           </ListItem>
         </List>
         </div>
-        <Typography color="blue-gray" className="font-bold m-1">
-                Price filter
-        </Typography>
-        <div className="border-2 rounded-md shadow-sm">
-        <List>
-          <ListItem className="p-0">
-            <label
-              htmlFor="vertical-list-react"
-              className="flex w-full cursor-pointer items-center px-3 py-2"
-            >
-              <ListItemPrefix className="mr-3">
-                <Checkbox
-                  id="vertical-list-react"
-                  ripple={false}
-                  className="hover:before:opacity-0"
-                  containerProps={{
-                    className: "p-0",
-                  }}
-                />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="font-medium">
-               100$ - 200$
-              </Typography>
-            </label>
-          </ListItem>
-          <ListItem className="p-0">
-            <label
-              htmlFor="vertical-list-vue"
-              className="flex w-full cursor-pointer items-center px-3 py-2"
-            >
-              <ListItemPrefix className="mr-3">
-                <Checkbox
-                  id="vertical-list-vue"
-                  ripple={false}
-                  className="hover:before:opacity-0"
-                  containerProps={{
-                    className: "p-0",
-                  }}
-                />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="font-medium">
-              200$ - 300$
-              </Typography>
-            </label>
-          </ListItem>
-          <ListItem className="p-0">
-            <label
-              htmlFor="vertical-list-svelte"
-              className="flex w-full cursor-pointer items-center px-3 py-2"
-            >
-              <ListItemPrefix className="mr-3">
-                <Checkbox
-                  id="vertical-list-svelte"
-                  ripple={false}
-                  className="hover:before:opacity-0"
-                  containerProps={{
-                    className: "p-0",
-                  }}
-                />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="font-medium">
-              300$ - 400$
-              </Typography>
-            </label>
-          </ListItem>
-        </List>
-        </div>
+       
         <Typography color="blue-gray" className="font-bold m-1">
                 Total Room filter
         </Typography>
