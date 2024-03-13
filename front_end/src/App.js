@@ -20,6 +20,7 @@ import HotelDetails from "./pages/Customer/Page_HotelDetails.js";
 import ListHotels from "./pages/Customer/Page_Hotel.js";
 import ListRooms from "./pages/Customer/Page_Room.js";
 import Booking from "./pages/Customer/Page_Booking";
+import ListSearch from "./pages/Customer/Page_Search.js";
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: '/booking',
     element: <Booking/>
+  },
+  {
+    path: '/search-results',
+    element: <ListSearch/>
   },
 
 

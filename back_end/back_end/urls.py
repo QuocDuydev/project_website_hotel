@@ -26,11 +26,13 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
 router.register(r'rooms', views.RoomView, 'room')
 router.register(r'hotels', views.HotelView, 'hotel')
+router.register(r'bookings', views.BookingView, 'booking')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/rooms/<int:id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
     path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
+     path('api/bookings/<int:id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

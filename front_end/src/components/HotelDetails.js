@@ -10,9 +10,11 @@ import {
     Tooltip,
     Rating
   } from "@material-tailwind/react";
+import CardRoom from "./Card_Room";
 function HotelComponent(){
   const {id}  = useParams();
-  const [hotel, setHotel] = useState({
+  const [rooms, setRooms] = useState([]);
+  const [hotels, setHotel] = useState({
   hotelname: "",
   hotelimage: null,
   descriptions: "",
@@ -21,17 +23,28 @@ function HotelComponent(){
   location: "",
   rating: "",
   dateadded: "",});
-    useEffect(() => {
-        axios
-          .get(`http://localhost:8000/api/hotels/${id}/`)
-          .then((response) => {
-            setHotel(response.data);
-            // console.log(room.roomimage)
-          })
-          .catch((error) => {
-            console.error("Error fetching room data:", error);
-          });
-      }, [id]);
+  useEffect(() => {
+    // Fetch hotel details
+    axios
+      .get(`http://localhost:8000/api/hotels/${id}/`)
+      .then((response) => {
+        console.log("Hotel Data:", response.data);
+        setHotel(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching hotel data:", error);
+      });
+  
+    // Fetch rooms for the hotel
+    axios
+      .get("http://localhost:8000/api/rooms/", { params: { hotel: id } })
+      .then((res) => {
+        setRooms(res.data); // Thêm dòng này để cập nhật danh sách phòng
+        console.log("Room Data:", res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+ 
     return (
         <div className='container mx-auto relative'>
           <Card className=" w-full mx-auto mb-2 shadow-none mt-3">       
@@ -39,15 +52,15 @@ function HotelComponent(){
               <div className="m-3">
                 <div className=" flex">
                   <Typography variant="h4" color="blue-gray" className=" flex mb-2 text-blue-800">
-                    {hotel.hotelname} - {hotel.location}
+                    {hotels.hotelname} - {hotels.location}
                   </Typography>
                   <Typography className="flex ml-4">
                   <Rating
-                      value={hotel.rating}
+                      value={hotels.rating}
                       unratedColor="red"
                       ratedColor="red"
                       readonly
-                    /> {hotel.rating}
+                    /> {hotels.rating}
                   </Typography>
                 </div>
                 <div className=" flex">
@@ -56,19 +69,19 @@ function HotelComponent(){
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                   </svg>
 
-                  <Typography variant="h6" color="blue-gray" className="ml-1">{hotel.roommap}, {hotel.location}</Typography>
+                  <Typography variant="h6" color="blue-gray" className="ml-1">{hotels.roommap}, {hotels.location}</Typography>
                 </div>
                 <div className="grid grid-cols-6">
                   <div className="grid gap-4 relative col-span-2">
                     <div className=" col-1">
                       <img
-                      src={hotel.hotelimage}
+                      src={hotels.hotelimage}
                       className="h-full max-w-full rounded-lg object-cover object-center mt-3"
                       />
                     </div>
                     <div className=" col-1 mt-2">
                       <img
-                      src={hotel.hotelimage}
+                      src={hotels.hotelimage}
                       className="h-full max-w-full rounded-lg object-cover object-center"
                       />
                     </div>
@@ -76,7 +89,7 @@ function HotelComponent(){
                   
                   <div className="grid gap-4 relative col-span-4 ml-3 mb-3">
                       <img
-                      src={hotel.hotelimage}
+                      src={hotels.hotelimage}
                       className="h-full max-w-full rounded-lg object-cover object-center mt-3"
                       />
                   </div>
@@ -86,7 +99,7 @@ function HotelComponent(){
                       Descriptions: 
                 </Typography>
                 <Typography className=" text-justify mt-1">
-                      {hotel.descriptions}
+                      {hotels.descriptions}
                 </Typography>
                </div>
                
@@ -248,6 +261,10 @@ function HotelComponent(){
         </ul>
             </CardBody>        
           </Card>
+        
+          <CardRoom  selectedHotelId={id} />
+         
+          
         </div>
     );
 } export default HotelComponent;

@@ -16,43 +16,45 @@ import {
    
 function CreateRoomForm () {
     const { id } = useParams();
-    const [activeItem, setActiveItem] = useState({
+    const [hotel, setHotel] = useState([]);
+    const [room, setRoom] = useState({
       hotel: "",
       roomname: "",
-      roomimage: "",
+      roomimage: null,
       descriptions: "",
       roomprice: "",
       roomnumber: "",
       roomoccupancy: "",
       dateadded: "",
     });
-    const [hotels, setHotels] = useState({
-      hotelname: "",
-    });
     const [taskList, setTaskList] = useState([]);
     const navigate= useNavigate();
     const [CreateSuccess, setCreateSuccess] = useState(false);
-
     useEffect(() => {
       axios
-        .get(`http://localhost:8000/api/hotels/${id}/`)
-        .then((response) => {
-          setHotels(response.data);
-          // Set the hotel name in the activeItem state
-          setActiveItem((prev) => ({ ...prev, hotel: response.data.hotelname }));
-          console.log("Hotel Name:", response.data.hotelname);
-        })
-        .catch((error) => {
-          console.error("Error fetching hotel data:", error);
-        });
+      .get(`http://localhost:8000/api/hotels/`)
+      .then((response) => {
+        setHotel(response.data);
+        
+        // console.log(room.roomimage)
+      })
+      .catch((error) => {
+        console.error("Error fetching room data:", error);
+      });
   
       axios
-        .get(`http://localhost:8000/api/rooms/?hotel=${id}`)
-        .then((response) => setTaskList(response.data))
-        .catch((error) => console.log(error));
-    }, [id]);
+        .get(`http://localhost:8000/api/rooms/${id}/`)
+        .then((response) => {
+          setRoom(response.data);
+          // console.log(room.roomimage)
+          setRoom((prevRoom) => ({ ...prevRoom, hotel: response.data.hotel_id }));
+        })
+        .catch((error) => {
+          console.error("Error fetching room data:", error);
+        });
   
-    
+      
+    }, [id]);
   
     const handleChange = (e) => {
       const { name, type } = e.target;
@@ -60,15 +62,15 @@ function CreateRoomForm () {
       if (type === "file" && e.target.files) {
         const file = e.target.files[0];
   
-        setActiveItem({
-          ...activeItem,
+        setRoom({
+          ...room,
           [name]: file,
         });
       } else {
         const value = e.target.value;
   
-        setActiveItem({
-          ...activeItem,
+        setRoom({
+          ...room,
           [name]: value,
         });
       }
@@ -76,13 +78,14 @@ function CreateRoomForm () {
   
     const handleCreate = () => {
       const formData = new FormData();
-      formData.append("roomname", activeItem.roomname);
-      formData.append("roomimage", activeItem.roomimage);
-      formData.append("descriptions", activeItem.descriptions);
-      formData.append("roomprice", activeItem.roomprice);
-      formData.append("roomnumber", activeItem.roomnumber);
-      formData.append("roomoccupancy", activeItem.roomoccupancy);
-      formData.append("dateadded", activeItem.dateadded);
+      formData.append("hotel", room.hotel);
+      formData.append("roomname", room.roomname);
+      formData.append("roomimage", room.roomimage);
+      formData.append("descriptions", room.descriptions);
+      formData.append("roomprice", room.roomprice);
+      formData.append("roomnumber", room.roomnumber);
+      formData.append("roomoccupancy", room.roomoccupancy);
+      formData.append("dateadded", room.dateadded);
   
       axios({
         method: 'post',
@@ -144,13 +147,14 @@ function CreateRoomForm () {
                                 type="text"
                                 size="lg"
                                 name="roomname"  
-                                value={activeItem.roomname}
+                                value={room.roomname}
                                 onChange={handleChange}
                                 placeholder="Enter name rooms..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                                 
                                 />
                             </div>
+                            
                             <div>
                             <Typography
                               variant="h6"
@@ -159,17 +163,24 @@ function CreateRoomForm () {
                             >
                               Choise Hotel
                             </Typography>
-                            {/* <Select
-                            name="account_type"
-                            size="md"
-                            value={hotels.hotelname}
-                            className="rounded-md py-2 h-[40px] flex-auto items-center bg-white !border-t-blue-gray-200 focus:!border-t-gray-700"
-                            
-                            > */}
-                            <a className=" text-black">{hotels.hotelname}</a>
-                            
-                            {/* </Select> */}
+                            <select
+                             type="text"
+                             size="lg"
+                             name="hotel"  
+                             value={room.hotel}
+                             onChange={handleChange}
+                             placeholder="Enter name rooms..."
+                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900 w-full border-2 px-2 py-2 rounded-md">
+                             
+                             <option value=""> Select a hotel</option>
+                             {hotel.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                  {item.hotelname}
+                                </option>
+                               ))}
+                              </select>
                           </div>
+                           
                             <div>
                               <Typography
                                 variant="h6"
@@ -202,7 +213,7 @@ function CreateRoomForm () {
                                 multiple
                                 size="lg"
                                 name="descriptions"  
-                                value={activeItem.descriptions}
+                                value={room.descriptions}
                                 onChange={handleChange}
                                 placeholder="Enter Descriptions about Rooms..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -224,7 +235,7 @@ function CreateRoomForm () {
                                   multiple
                                   size="lg"
                                   name="roomprice"  
-                                  value={activeItem.roomprice}
+                                  value={room.roomprice}
                                   onChange={handleChange}
                                   placeholder="Enter price rooms..."
                                   className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
@@ -244,7 +255,7 @@ function CreateRoomForm () {
                                 multiple
                                 size="lg"
                                 name="roomnumber"  
-                                value={activeItem.roomnumber}
+                                value={room.roomnumber}
                                 onChange={handleChange}
                                 placeholder="Enter Numbers rooms..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -264,7 +275,7 @@ function CreateRoomForm () {
                                 multiple
                                 size="lg"
                                 name="roomoccupancy"  
-                                value={activeItem.roomoccupancy}
+                                value={room.roomoccupancy}
                                 onChange={handleChange}
                                 placeholder="Enter Occupancy rooms..."
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -284,7 +295,7 @@ function CreateRoomForm () {
                                 multiple
                                 size="lg"
                                 name="dateadded"  
-                                value={activeItem.dateadded}
+                                value={room.dateadded}
                                 onChange={handleChange}
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                                

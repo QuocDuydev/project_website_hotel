@@ -4,12 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from .serializers import UserSerializer
-from .models import User
-from .serializers import RoomSerializer
-from .models import Rooms
-from .serializers import HotelSerializer
-from .models import Hotels
+from .serializers import UserSerializer, RoomSerializer, HotelSerializer, BookingSerializer
+from .models import User, Rooms, Hotels, Booking
+
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -33,6 +30,14 @@ class HotelView(viewsets.ModelViewSet):
 class HotelRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Hotels.objects.all()
     serializer_class = HotelSerializer
+
+class BookingView(viewsets.ModelViewSet):
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
+
+class BookingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
 
 
 

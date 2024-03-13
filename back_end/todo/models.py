@@ -30,7 +30,7 @@ class Hotels(models.Model):
     rating = models.IntegerField()
     dateadded = models.DateField()
     def __str__(self):
-        return f"{self.id},{self.hotelname}, {self.hotelimage}, {self.descriptions},{self.totalroom},{self.roommap},{self.location}, {self.rating}, {self.dateadded}"
+        return f"{self.hotelname}"
     
 class Rooms(models.Model):
     id = models.AutoField(primary_key=True)
@@ -43,5 +43,26 @@ class Rooms(models.Model):
     roomoccupancy = models.IntegerField()
     dateadded = models.DateField()
     def __str__(self):
-        return f"{self.id}, {self.hotel}, {self.roomname}, {self.roomimage}, {self.descriptions},{self.roomprice},{self.roomnumber},{self.roomoccupancy}, {self.dateadded}"
+        return f"{self.roomname}"
     
+class Booking(models.Model):
+    id = models.AutoField(primary_key=True)
+    hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+    name = models.CharField(max_length = 100)
+    email = models.CharField(max_length = 200)
+    phonenumber = models.IntegerField()
+    checkin = models.DateField()
+    checkout = models.DateField()
+    total = models.IntegerField()
+    STATUS_TYPES = [
+        ('active', 'Active'),
+        ('processing', 'Processing'), 
+    ]
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_TYPES,
+        default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
+    )
+    def __str__(self):
+        return f"{self.id},{self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.checkin}, {self.checkout},  {self.total}, {self.status},"   

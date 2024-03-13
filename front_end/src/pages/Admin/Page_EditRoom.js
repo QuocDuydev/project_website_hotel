@@ -15,7 +15,9 @@ import {
   
 function EditRoom () {
   const {id}  = useParams();
+  const [hotel, setHotel] = useState([]);
   const [room, setRoom] = useState({
+    hotel: "",
     roomname: "",
     roomimage: null,
     descriptions: "",
@@ -28,17 +30,32 @@ function EditRoom () {
   const navigate= useNavigate();
   useEffect(() => {
     axios
+    .get(`http://localhost:8000/api/hotels/`)
+    .then((response) => {
+      setHotel(response.data);
+      
+      // console.log(room.roomimage)
+    })
+    .catch((error) => {
+      console.error("Error fetching room data:", error);
+    });
+
+    axios
       .get(`http://localhost:8000/api/rooms/${id}/`)
       .then((response) => {
         setRoom(response.data);
         // console.log(room.roomimage)
+        
       })
       .catch((error) => {
         console.error("Error fetching room data:", error);
       });
+
+    
   }, [id]);
   const handleUpdate = () => {
     const formData = new FormData();
+    formData.append('hotel', room.hotel);
     formData.append('roomname', room.roomname);
     formData.append("roomimage", room.roomimage);
     formData.append('descriptions', room.descriptions);
@@ -87,6 +104,7 @@ function EditRoom () {
       setRoom((prevRoom) => ({ ...prevRoom, [name]: value }));
     };
   };
+  const selectedHotel = hotel.find((item) => item.id === room.hotel);
   return (
       <> 
       <div className=" flex h-screen overflow-hidden">  
@@ -128,11 +146,27 @@ function EditRoom () {
                               onChange={handleChange}
                               placeholder="Enter name rooms..."
                               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                              labelProps={{
-                                  className: "before:content-none after:content-none",
-                              }}
+                             
                               />
                             
+                          </div>
+                          <div>
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="mb-2 mt-4"
+                            >
+                              Hotel Name
+                            </Typography>
+                            <Input
+                              type="text"
+                              size="lg"
+                              name="hotel"
+                              value={selectedHotel ? selectedHotel.hotelname : ''}
+                              placeholder="Enter name rooms..."
+                              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                              readOnly // Make the input readOnly
+                            />
                           </div>
                           <div>
                             <Typography
