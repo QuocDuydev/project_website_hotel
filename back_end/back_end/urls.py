@@ -33,6 +33,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/rooms/<int:id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
     path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
-     path('api/bookings/<int:id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
+    path('api/bookings/<int:id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
+    path('api/hotels/<int:hotel_id>/rooms/', views.HotelRoomsListView.as_view(), name='hotel-rooms'),
+    path('api/hotels/<int:hotel_id>/rooms/<int:roomid>', views.RoomstoHotelListView.as_view(), name='rooms-to-hotels'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

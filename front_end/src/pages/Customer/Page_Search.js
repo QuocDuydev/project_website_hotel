@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Navbars } from "../../components/Navbar";
-import CardHotel from "../../components/Card_Hotel";
-import CardDefault from "../../components/Card";
-import Filters from "../../components/Filter";
 import Footer from "../../components/Footer";
 // import SearchBox from "../../components/SearchBox";
 import { Link } from "react-router-dom";
@@ -46,32 +43,37 @@ function ListSearch() {
         console.error("Error fetching hotels:", error);
       });
   }, []); // Empty dependency array ensures useEffect runs once on component mount
+  function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
 
-  // Filter hotels based on search term
   const filteredHotels = hotels.filter((hotel) => {
-    const matchesSearchTerm = hotel.hotelname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      hotel.location.toLowerCase().includes(searchTerm.toLowerCase());
-  
-    const matchesLocation = selectedLocation ? hotel.location.toLowerCase() === selectedLocation.toLowerCase() : true;
-    
-    // Modify the condition to check if the total rooms are within the range
+    const searchTermWithoutAccents = removeAccents(searchTerm.toLowerCase());
+    const hotelNameWithoutAccents = removeAccents(hotel.hotelname.toLowerCase());
+    const locationWithoutAccents = removeAccents(hotel.location.toLowerCase());
+
+    const matchesSearchTerm = hotelNameWithoutAccents.includes(searchTermWithoutAccents) ||
+      locationWithoutAccents.includes(searchTermWithoutAccents);
+
+    const matchesLocation = selectedLocation ? locationWithoutAccents === removeAccents(selectedLocation.toLowerCase()) : true;
+
     const matchesTotalRooms = isTotalRoomsInRange(hotel.totalroom, selectedTotalRoomsMin, selectedTotalRoomsMax);
     const matchesRating = selectedRating ? hotel.rating.toString() === selectedRating : true;
-  
+
     return matchesSearchTerm && matchesLocation && matchesTotalRooms && matchesRating;
   });
-  
+
   const handleLocationFilter = (location) => {
     setSelectedLocation((prevLocation) => (prevLocation === location ? '' : location));
   };
-  
+
   const handleTotalRoomsFilter = (totalRooms) => {
     const [min, max] = totalRooms.split('-');
-  
+
     // Convert min and max to integers
     const minRange = parseInt(min) || 0;
     const maxRange = parseInt(max) || Infinity;
-  
+
     if (
       minRange === parseInt(selectedTotalRoomsMin) &&
       maxRange === parseInt(selectedTotalRoomsMax)
@@ -85,8 +87,8 @@ function ListSearch() {
       setSelectedTotalRoomsMax(maxRange.toString());
     }
   };
-  
-  
+
+
   const handleRatingFilter = (rating) => {
     setSelectedRating((prevRating) => (prevRating === rating ? '' : rating));
   };
@@ -160,6 +162,7 @@ function ListSearch() {
                             id="vertical-list-vue"
                             ripple={false}
                             // checked={selectedLocation === 'Ho Chi Minh'}
+
                             onClick={() => handleLocationFilter('Ho Chi Minh')}
                             className="hover:before:opacity-0"
                             containerProps={{
@@ -402,10 +405,19 @@ function ListSearch() {
                           {hotel.hotelname} - {hotel.location}
                         </Typography>
                         <Typography className=" text-justify">
-                          {hotel.descriptions.slice(0, 100)}
+                          {hotel.descriptions.slice(0, 99)}
                         </Typography>
                         <Typography className=" text-right mb-3 text-xl font-bold">
-                          <Rating value={hotel.rating} unratedColor="red" ratedColor="red" readonly className="" />
+                          {hotel.hotelname && (
+                            <>
+                              <Rating
+                                value={hotel.rating}
+                                unratedColor="red"
+                                ratedColor="red"
+                                readonly
+                              />
+                            </>
+                          )}
                         </Typography>
                         <div className="group inline-flex flex-wrap items-center gap-4  -mt-5 ">
 

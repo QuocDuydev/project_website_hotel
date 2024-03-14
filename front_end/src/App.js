@@ -53,7 +53,7 @@ const router = createBrowserRouter([
     element: <HotelDetails/>
   },
   {
-    path: '/booking',
+    path: '/booking/:id/:roomid',
     element: <Booking/>
   },
   {

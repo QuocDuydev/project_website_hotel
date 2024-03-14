@@ -4,7 +4,7 @@ from .models import User, Rooms ,Hotels, Booking
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "username", "name", "email", "password", "account_type", "joined")
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ("id", "hotel", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
+    list_display = ("roomid", "hotel", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
 class HotelAdmin(admin.ModelAdmin):
     list_display = ("id", "hotelname", "hotelimage", "descriptions",  "totalroom", "roommap", "location", "rating", "dateadded")
 class BookingAdmin(admin.ModelAdmin):

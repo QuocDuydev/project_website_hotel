@@ -33,7 +33,7 @@ class Hotels(models.Model):
         return f"{self.hotelname}"
     
 class Rooms(models.Model):
-    id = models.AutoField(primary_key=True)
+    roomid = models.AutoField(primary_key=True)
     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
     roomname = models.CharField(max_length = 100)
     roomimage = models.ImageField(upload_to='room_images/')
