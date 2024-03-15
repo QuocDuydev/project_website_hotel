@@ -1,34 +1,124 @@
 // AuthContext.js
-import React, { createContext, useContext, useState } from 'react';
+
+import { createContext, useState, useEffect } from 'react';
+import jwt_decode from "jwt-decode";
+import { useHistory } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setAuthenticated] = useState(false);
+export const AuthProvider = ({children}) => {
+    let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
+    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
+    let [loading, setLoading] = useState(true);
+    let [loggedIn, setLoggedIn] = useState(false);
+    let [isReloading, setIsReloading] = useState(false); 
+    const history = useHistory();
 
-  const login = () => {
-    // Implement your login logic here
-    setAuthenticated(true);
-  };
+    let loginUser = async (e )=> {
+        e.preventDefault();
+        let response = await fetch('http://127.0.0.1:8000/login/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+        });
+        let data = await response.json();
 
-  const logout = () => {
-    // Implement your logout logic here
-    setAuthenticated(false);
-  };
+        if(response.status === 200){
+            setAuthTokens(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('authTokens', JSON.stringify(data));
+            setLoggedIn(true);
+            history.push('/');
+            window.confirm("Login Successfully")
+            if (!isReloading) {
+              setIsReloading(true);
+              window.location.reload();
+            }
+        }else{
+          window.confirm("Error")
+        }
+    };
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
+    let logoutUser = () => {
+        setAuthTokens(null);
+        setUser(null);
+        localStorage.removeItem('authTokens');
+        history.push('/login');
+        setLoggedIn(false);
+        if (!isReloading) {
+          setIsReloading(true);
+          // window.location.reload();
+        }
+        
+    };
 
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
 
-  return context;
-};
+    let updateToken = async ()=> {
+        let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'refresh':authTokens?.refresh})
+        });
+
+        let data = await response.json();
+        
+        if (response.status === 200){
+            setAuthTokens(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('authTokens', JSON.stringify(data));
+        }else{
+            logoutUser();
+        }
+
+        if(loading){
+            setLoading(false);
+        }
+    };
+
+    let contextData = {
+        user:user,
+        authTokens:authTokens,
+        loginUser:loginUser,
+        logoutUser:logoutUser,
+    };
+
+
+    useEffect(()=> {
+
+        if(loading){
+            updateToken();
+        }
+
+        let fourMinutes = 1000 * 60 * 4;
+
+        let interval =  setInterval(()=> {
+            if(authTokens){
+                updateToken();
+            }
+        }, fourMinutes);
+        return ()=> clearInterval(interval);
+
+    }, [authTokens, loading]);
+
+    // Kiểm tra nếu đã đăng nhập và không phải trang đăng nhập, thì chuyển hướng đến trang chủ
+    useEffect(() => {
+        if (authTokens) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
+        }
+    }, [authTokens]);
+
+    return(
+        <AuthContext.Provider value={contextData} >
+            {children}
+        </AuthContext.Provider>
+    );
+}; 
+
+export default AuthContext;

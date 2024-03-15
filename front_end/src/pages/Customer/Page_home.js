@@ -1,5 +1,5 @@
 // export default Home;
-import React, { Component } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import axios from 'axios';
 import { Navbars } from "../../components/Navbar";
 import BookForm from "../../components/BookForm";
@@ -10,8 +10,8 @@ import GridGallery from "../../components/Grid-Galery"
 import CardDefault from "../../components/Card"
 import AccordionCustomIcon from "../../components/Accordion";
 import GridLocation from "../../components/Grid-Location";
+import AuthContext from "../../context/AuthContext";
 function Home() {
-
   return (
     <>
       <Navbars />

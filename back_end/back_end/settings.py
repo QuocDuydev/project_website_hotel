@@ -95,7 +95,10 @@ REST_FRAMEWORK = {
  
 }
 
-
+AUTHENTICATION_BACKENDS = [
+    'todo.authentication_backends.CustomUserAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

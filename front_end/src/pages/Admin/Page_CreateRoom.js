@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
-import { useNavigate, useParams} from "react-router-dom";
+import { useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import {
     Card,
@@ -28,7 +28,7 @@ function CreateRoomForm () {
       dateadded: "",
     });
     const [taskList, setTaskList] = useState([]);
-    const navigate= useNavigate();
+    const history= useHistory();
     const [CreateSuccess, setCreateSuccess] = useState(false);
     useEffect(() => {
       axios
@@ -102,7 +102,7 @@ function CreateRoomForm () {
   
           // Redirect to home page after 5 seconds
           setTimeout(() => {
-            navigate("/admin/list-room");
+            history.push("/admin/list-room");
           }, 1000);
           // Optionally, you can reset the form or perform additional actions after a successful update.
         })

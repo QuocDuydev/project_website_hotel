@@ -1,11 +1,16 @@
 
 from django.conf import Settings
 from rest_framework import serializers
-from .models import User, Rooms, Hotels, Booking
+from .models import Users, Rooms, Hotels, Booking
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username', 'name', 'email', 'password', 'account_type' ,'joined')
+        model = Users
+        fields = '__all__'
 
 class HotelSerializer(serializers.ModelSerializer):
     

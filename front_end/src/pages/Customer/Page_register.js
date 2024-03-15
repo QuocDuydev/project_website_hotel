@@ -14,6 +14,7 @@ class Registers extends Component {
                 password: "",
                 account_type: "",
                 joined: "",
+                user: ""
               },
               taskList: []
         };

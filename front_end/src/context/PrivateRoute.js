@@ -1,16 +1,13 @@
-import React from 'react';
-import { Route, useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Assuming you have an AuthContext for managing authentication
+import { Route, Redirect } from 'react-router-dom'
+import { useContext } from 'react'
+import AuthContext from '../context/AuthContext'
 
-const PrivateRoute = ({ element, ...props }) => {
-  const { isAuthenticated } = useAuth(); // Adjust accordingly based on your AuthContext
-  const navigate = useNavigate();
-
-  return isAuthenticated ? (
-    <Route {...props} element={element} />
-  ) : (
-    navigate("/login")
-  );
-};
+const PrivateRoute = ({children, ...rest}) => {
+    let {user} = useContext(AuthContext)
+    return(
+        <Route {...rest}>{!user ? <Redirect to="/login"/> :   children}</Route>
+        
+    )
+}
 
 export default PrivateRoute;

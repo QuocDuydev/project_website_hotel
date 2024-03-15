@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import {
     Card,
@@ -24,7 +24,7 @@ function CreateHotelForm () {
       dateadded: "",
     });
     const [taskList, setTaskList] = useState([]);
-    const navigate= useNavigate();
+    const history= useHistory();
     const [CreateSuccess, setCreateSuccess] = useState(false);
     useEffect(() => {
       refreshList();
@@ -83,7 +83,7 @@ function CreateHotelForm () {
   
           // Redirect to home page after 5 seconds
           setTimeout(() => {
-            navigate("/admin/list-hotel");
+            history.push("/admin/list-hotel");
           }, 1000);
           // Optionally, you can reset the form or perform additional actions after a successful update.
         })

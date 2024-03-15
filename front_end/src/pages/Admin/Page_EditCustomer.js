@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
@@ -27,7 +27,7 @@ function EditCustomer () {
   });
   const [defaultAccountType, setDefaultAccountType] = useState("");
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const navigate= useNavigate();
+  const history= useHistory();
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/users/${id}/`)
@@ -67,7 +67,7 @@ function EditCustomer () {
 
         // Redirect to home page after 1 seconds
         setTimeout(() => {
-          navigate("/admin/list-customer");
+          history.push("/admin/list-customer");
         }, 1000);  
       })
       .catch((error) => {
