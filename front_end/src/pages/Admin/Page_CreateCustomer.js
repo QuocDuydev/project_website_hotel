@@ -47,9 +47,9 @@ function CreateCustomerForm () {
     formData.append('account_type', user.account_type);
     formData.append('joined', user.joined);
     
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    // }
+     for (var pair of formData.entries()) {
+       console.log(pair[0] + ', ' + pair[1]);
+     }
     axios({
       method: 'post',
       url: `http://localhost:8000/api/users/`,
