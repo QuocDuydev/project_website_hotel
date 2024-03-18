@@ -52,6 +52,7 @@ class Booking(models.Model):
     name = models.CharField(max_length = 100)
     email = models.CharField(max_length = 200)
     phonenumber = models.IntegerField()
+    address = models.CharField()
     checkin = models.DateField()
     checkout = models.DateField()
     total = models.IntegerField()
@@ -65,4 +66,4 @@ class Booking(models.Model):
         default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
     )
     def __str__(self):
-        return f"{self.id},{self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.checkin}, {self.checkout},  {self.total}, {self.status},"   
+        return f"{self.id},{self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.status},"   

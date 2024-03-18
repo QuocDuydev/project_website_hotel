@@ -1,43 +1,59 @@
-// AuthContext.js
 
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import jwt_decode from "jwt-decode";
-import { useHistory } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-    let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
-    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
+export function useAuth() {
+    return useContext(AuthContext);
+}
+export const AuthProvider = ({ children }) => {
+    let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
+    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
     let [loading, setLoading] = useState(true);
     let [loggedIn, setLoggedIn] = useState(false);
-    let [isReloading, setIsReloading] = useState(false); 
-    const history = useHistory();
-
-    let loginUser = async (e )=> {
+    const navigate = useNavigate();
+    const [data, setData] = useState([]);
+    let loginUser = async (e) => {
         e.preventDefault();
-        let response = await fetch('http://127.0.0.1:8000/login/', {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
+        let response = await fetch('http://localhost:8000/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+            body: JSON.stringify({ 'username': e.target.username.value, 'password': e.target.password.value })
         });
         let data = await response.json();
 
-        if(response.status === 200){
-            setAuthTokens(data);
-            setUser(jwt_decode(data.access));
-            localStorage.setItem('authTokens', JSON.stringify(data));
-            setLoggedIn(true);
-            history.push('/');
-            window.confirm("Login Successfully")
-            if (!isReloading) {
-              setIsReloading(true);
-              window.location.reload();
+        if (response.status === 200) {
+            // Lấy thông tin người dùng từ API
+            try {
+                const userDetailsResponse = await axios.get("http://localhost:8000/api/users/");
+                const userDetails = userDetailsResponse.data;
+
+                setAuthTokens(data);
+                setUser(jwt_decode(data.access));
+                localStorage.setItem('authTokens', JSON.stringify(data));
+                setLoggedIn(true);
+                alert("Login Successfully!");
+
+                const isAllowedAccess = userDetails.find(user => user.id === jwt_decode(data.access).user_id && (user.account_type === 'admin' || user.account_type === 'superadmin'));
+
+                console.log(isAllowedAccess);
+                
+                if (isAllowedAccess) {
+                    
+                    navigate('/admin');
+                } else {
+                    
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
             }
-        }else{
-          window.confirm("Error")
+        } else {
+            alert("The Username or Password is incorrect !!")
         }
     };
 
@@ -46,62 +62,58 @@ export const AuthProvider = ({children}) => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem('authTokens');
-        history.push('/login');
+        navigate('/');
         setLoggedIn(false);
-        if (!isReloading) {
-          setIsReloading(true);
-          // window.location.reload();
-        }
-        
+
     };
 
 
-    let updateToken = async ()=> {
+    let updateToken = async () => {
         let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify({'refresh':authTokens?.refresh})
+            body: JSON.stringify({ 'refresh': authTokens?.refresh })
         });
 
         let data = await response.json();
-        
-        if (response.status === 200){
+
+        if (response.status === 200) {
             setAuthTokens(data);
             setUser(jwt_decode(data.access));
             localStorage.setItem('authTokens', JSON.stringify(data));
-        }else{
+        } else {
             logoutUser();
         }
 
-        if(loading){
+        if (loading) {
             setLoading(false);
         }
     };
 
     let contextData = {
-        user:user,
-        authTokens:authTokens,
-        loginUser:loginUser,
-        logoutUser:logoutUser,
+        user: user,
+        authTokens: authTokens,
+        loginUser: loginUser,
+        logoutUser: logoutUser,
     };
 
 
-    useEffect(()=> {
+    useEffect(() => {
 
-        if(loading){
+        if (loading) {
             updateToken();
         }
 
         let fourMinutes = 1000 * 60 * 4;
 
-        let interval =  setInterval(()=> {
-            if(authTokens){
+        let interval = setInterval(() => {
+            if (authTokens) {
                 updateToken();
             }
         }, fourMinutes);
-        return ()=> clearInterval(interval);
+        return () => clearInterval(interval);
 
     }, [authTokens, loading]);
 
@@ -114,11 +126,11 @@ export const AuthProvider = ({children}) => {
         }
     }, [authTokens]);
 
-    return(
+    return (
         <AuthContext.Provider value={contextData} >
             {children}
         </AuthContext.Provider>
     );
-}; 
+};
 
 export default AuthContext;

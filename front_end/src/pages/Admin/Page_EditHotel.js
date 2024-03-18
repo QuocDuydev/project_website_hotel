@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
 import axios from "axios";
@@ -26,7 +25,7 @@ function EditHotel () {
     dateadded: "",
   });
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const history= useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/hotels/${id}/`)
@@ -66,7 +65,7 @@ function EditHotel () {
 
         // Redirect to home page after 1 seconds
         setTimeout(() => {
-          history.push("/admin/list-hotel");
+          navigate("/admin/list-hotel");
         }, 1000);  
       })
       .catch((error) => {

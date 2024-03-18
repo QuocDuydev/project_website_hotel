@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Home from "./Page_home";
+import Home from "./Page_Home";
 import axios from "axios";
 import {Link} from'react-router-dom';
 class Registers extends Component {

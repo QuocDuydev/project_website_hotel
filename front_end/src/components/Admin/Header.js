@@ -1,4 +1,6 @@
-import React from "react";
+import React , {useContext}from "react";
+import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 import {
   Navbar,
   MobileNav,
@@ -29,6 +31,7 @@ function Header_Admin(){
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
   }, []);
+  let { user, logoutUser } = useContext(AuthContext)
  
   return (
     <div className=" sticky max-w-screen-lg overflow-hidden z-10 rounded-none">
@@ -88,7 +91,34 @@ function Header_Admin(){
                       <ListItemPrefix>
                           <PowerIcon className="h-5 w-5" />
                       </ListItemPrefix>
-                      Log Out
+                      {!user && (
+                <>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/register">Sign In</Link>
+                    </Button>
+                </>
+            )}
+            {user && (
+                <Button
+                    onClick={logoutUser}
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                    <Link to="/">Log Out</Link>
+                </Button>
+            )}
                   </ListItem>
           </List>
               </PopoverContent>
@@ -173,7 +203,34 @@ function Header_Admin(){
                   <ListItemPrefix>
                       <PowerIcon className="h-5 w-5" />
                   </ListItemPrefix>
-                  Log Out
+                  {!user && (
+                <>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/register">Sign In</Link>
+                    </Button>
+                </>
+            )}
+            {user && (
+                <Button
+                    onClick={logoutUser}
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                    <Link to="/">Log Out</Link>
+                </Button>
+            )}
               </ListItem>
       </List>
                  

@@ -71,33 +71,34 @@ export function Navbars() {
         <div className="flex items-center gap-4 ">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className=" flex items-center gap-4 ">
-          {user ? (
-                   <Button
-                   onClick={logoutUser}
-                   variant="gradient"
-                   size="sm"
-                   className="hidden lg:inline-block  pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                 >
-                   <Link to="/">Log Out
-                    </Link>
-                 </Button>
-                ) : (
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block  pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-            >
-              <Link to="/login">Log In
-               </Link>
-            </Button>
-             )}
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-            >
-              <Link to="/register"><span>Sign In</span></Link>
-            </Button>
+          {!user && (
+                <>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/register">Sign In</Link>
+                    </Button>
+                </>
+            )}
+            {user && (
+                <Button
+                    onClick={logoutUser}
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                    <Link to="/">Log Out</Link>
+                </Button>
+            )}
           </div>
           <IconButton
             variant="text"
@@ -144,12 +145,34 @@ export function Navbars() {
           {navList}
         </div>
         <div className="flex items-center gap-x-1">
-          <Button fullWidth variant="text" size="sm" className=" text-center bg-black text-white ">
-            <Link to="/login"><span>Log In</span></Link>
-          </Button>
-          <Button fullWidth variant="gradient" size="sm" className="text-center bg-black  text-white ">
-            <Link to="/register"><span>Sign In</span></Link>
-          </Button>
+        {!user && (
+                <>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                    >
+                        <Link to="/register">Sign In</Link>
+                    </Button>
+                </>
+            )}
+            {user && (
+                <Button
+                    onClick={logoutUser}
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                    <Link to="/">Log Out</Link>
+                </Button>
+            )}
         </div>
 
       </Collapse>

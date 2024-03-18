@@ -59,7 +59,6 @@ function ListCustomer() {
                                         <th class="px-4 py-3">Name</th>
                                         <th class="px-4 py-3">Username</th>
                                         <th class="px-4 py-3">Email</th>
-                                        <th class="px-4 py-3">Password</th>
                                         <th class="px-4 py-3">Account type</th>
                                         <th class="px-4 py-3">Actions</th>
                                     </tr>
@@ -83,9 +82,7 @@ function ListCustomer() {
                                         <td class="px-4 py-3 text-sm" key={item.id}>
                                             {item.email}
                                         </td>
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.password}
-                                        </td>
+                                       
                                         <td class="px-4 py-3 text-sm" key={item.id}>
                                             {item.account_type}
                                         </td>

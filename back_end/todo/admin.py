@@ -8,7 +8,7 @@ class RoomAdmin(admin.ModelAdmin):
 class HotelAdmin(admin.ModelAdmin):
     list_display = ("id", "hotelname", "hotelimage", "descriptions",  "totalroom", "roommap", "location", "rating", "dateadded")
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("id", "hotel","room", "name", "email", "phonenumber", "checkin", "checkout", "total", "status")
+    list_display = ("id", "hotel","room", "name", "email", "phonenumber","address", "checkin", "checkout", "total", "status")
 admin.site.register(Users, UserAdmin)
 admin.site.register(Hotels, HotelAdmin)
 admin.site.register(Rooms, RoomAdmin)

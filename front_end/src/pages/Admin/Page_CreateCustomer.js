@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
@@ -26,7 +25,7 @@ function CreateCustomerForm () {
     joined: "",
   });
   const [CreateSuccess, setCreateSuccess] = useState(false);
-  const history= useHistory();
+  // const history= useHistory();
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/users/${id}/`)
@@ -66,7 +65,7 @@ function CreateCustomerForm () {
 
         // Redirect to home page after 1 seconds
         setTimeout(() => {
-          history.push("/admin/list-customer");
+          // history.push("/admin/list-customer");
         }, 1000);  
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import {
   Card,
@@ -12,7 +12,6 @@ import {
   Select,
   Option
 } from "@material-tailwind/react";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 function Login() {
   // const [loginData, setLoginData] = useState({
   //   username: "",
@@ -66,29 +65,30 @@ function Login() {
 
   const { loginUser } = useContext(AuthContext);
 
-  const handleLogin = async (e) => {
+  // const handleLogin = async (e) => {
 
-    try {
-      // Gửi yêu cầu đăng nhập đến máy chủ
-      const response = await loginUser;
+  //   try {
+  //     // Gửi yêu cầu đăng nhập đến máy chủ
+  //     const response = await loginUser;
 
-      // Kiểm tra kết quả từ máy chủ
-      if (response.success) {
+  //     // Kiểm tra kết quả từ máy chủ
+  //     if (response.success) {
         
-        // Đăng nhập thành công, có thể chuyển hướng hoặc hiển thị thông báo thành công
-        <Redirect to ="/"/>
-      } else {
-        // Đăng nhập không thành công, hiển thị thông báo lỗi
-        alert(response.message);
-      }
-    } catch (error) {
-      // Xử lý lỗi nếu có
-      console.error('Error logging in:', error);
-      alert('An error occurred while logging in');
-    }
-  };
+  //       // Đăng nhập thành công, có thể chuyển hướng hoặc hiển thị thông báo thành công
+  //       <Redirect to ="/"/>
+  //     } else {
+  //       // Đăng nhập không thành công, hiển thị thông báo lỗi
+  //       console.log(response.message);
+  //     }
+  //   } catch (error) {
+  //     // Xử lý lỗi nếu có
+  //     console.error('Error logging in:', error);
+  //   }
+  // };
+  
   return (
     <div>
+      
       <form onSubmit={loginUser}>
         <div className="max-w-md px-3 rounded-lg mx-auto overflow-hidden mt-4 bg-gray-200">
           <h1 className="w-full px-4 mb-2 rounded border py-4 text-center text-4xl">LOGIN</h1>
@@ -112,7 +112,7 @@ function Login() {
               />
             </div>
             <div className="relative mb-3">
-              <Button onClick={handleLogin}
+              <Button 
                 className="mx-auto w-1/2 bg-red-600 uppercase" fullWidth type="submit">
                 Login
               </Button>
