@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Navbars } from "../../components/Navbar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useAuth } from "../../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import {
   Card,
   Input,
@@ -28,9 +28,9 @@ function Booking() {
     rating: "",
     dateadded: "",
   });
-  const { user } = useAuth();
+  const token = localStorage.getItem("authTokens"); // Lấy token lưu trữ
+  const { authTokens } = useContext(AuthContext);
   const [booking, setBooking] = useState({
-    user: user ? user.id : null,
     hotel: hotel_id,
     room: room_id,
     name: "",
@@ -45,60 +45,81 @@ function Booking() {
   const [CreateSuccess, setCreateSuccess] = useState(false);
   // const history= useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const handleCreate = () => {
-    const formData = new FormData();
-    formData.append('user', booking.user);
-    formData.append('hotel', booking.hotel);
-    formData.append("room", booking.room);
-    formData.append('name', booking.name);
-    formData.append('email', booking.email);
-    formData.append('phonenumber', booking.phonenumber);
-    formData.append("address", booking.address);
-    formData.append('checkin', formatDate(booking.checkin));
-    formData.append('checkout', formatDate(booking.checkout));
-    formData.append('total', totalPrice);
-    formData.append('status', booking.status);
 
-    const token = localStorage.getItem('authTokens');
 
-    // Kiểm tra xem token có tồn tại không
-    if (token) {
-      // Giải mã token để lấy thông tin người dùng
-      const decodedToken = jwt_decode(token);
-    
-      // Kiểm tra xem decodedToken có chứa thông tin người dùng hay không
-      if (decodedToken && decodedToken.id) {
-        const userId = decodedToken.user_id;
-        console.log("User ID:", userId);
-      }
-    
-      // Gửi yêu cầu API với token trong header Authorization
-      axios({
-        method: 'post',
-        url: `http://localhost:8000/api/bookings/`,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
+  const handleCreate = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('hotel', booking.hotel);
+      formData.append('room', booking.room);
+      formData.append('name', booking.name);
+      formData.append('email', booking.email);
+      formData.append('phonenumber', booking.phonenumber);
+      formData.append('address', booking.address);
+      formData.append('checkin', formatDate(booking.checkin));
+      formData.append('checkout', formatDate(booking.checkout));
+      formData.append('total', totalPrice);
+      formData.append('status', booking.status);
+
+      const response = await axios.post(
+        `http://localhost:8000/api/bookings/`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${authTokens.access}`,
+            
+          },
         }
-      })
-        .then((response) => {
-          console.log("Create successful:", response.data);
-          setCreateSuccess(true);
-          setTimeout(() => {
-            navigate("/list-booking")
-            setCreateSuccess(false);
-          }, 1000);
-        })
-        .catch((error) => {
-          console.error("Create failed:", error);
-          // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
-        });
-    } else {
-      console.error("Access token not found");
-      // Xử lý khi không tìm thấy mã thông báo
+      );
+
+      console.log('Create successful:', response.data);
+      setCreateSuccess(true);
+      setTimeout(() => {
+        navigate('/list-booking');
+        setCreateSuccess(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Create failed:', error);
+      // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
     }
   };
+  // const handleCreates = () => {
+  //   const formData = new FormData();
+  //   formData.append('user', user.id);
+  //   formData.append('hotel', booking.hotel);
+  //   formData.append("room", booking.room);
+  //   formData.append('name', booking.name);
+  //   formData.append('email', booking.email);
+  //   formData.append('phonenumber', booking.phonenumber);
+  //   formData.append("address", booking.address);
+  //   formData.append('checkin', formatDate(booking.checkin));
+  //   formData.append('checkout', formatDate(booking.checkout));
+  //   formData.append('total', totalPrice);
+  //   formData.append('status', booking.status);
+
+  //   axios({
+  //     method: 'post',
+  //     url: `http://localhost:8000/api/bookings/`,
+  //     data: formData,
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //       'Authorization': `Bearer ${localStorage.getItem('authTokens')}`
+  //     }
+  //   })
+  //     .then((response) => {
+  //       console.log("Create successful:", response.data);
+  //       setCreateSuccess(true);
+  //       setTimeout(() => {
+  //         navigate("/list-booking");
+  //         setCreateSuccess(false);
+  //       }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Create failed:", error);
+  //       // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
+  //     });
+  // };
 
 
   const formatDate = (date) => {

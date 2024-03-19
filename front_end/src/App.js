@@ -4,7 +4,7 @@ import Login from "./pages/Customer/Page_login.js";
 import Register from "./pages/Customer/Page_register.js";
 import Home from "./pages/Customer/Page_Home.js";
 // import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AuthProvider, useAuth } from "./context/AuthContext.js";
+import { AuthProvider } from "./context/AuthContext.js";
 import AdminHome from "./pages/Admin/Page_AdminHome.js";
 import CreateRoomForm from "./pages/Admin/Page_CreateRoom.js";
 import ListRoom from "./pages/Admin/Page_ListRoom.js";
@@ -49,7 +49,7 @@ function App() {
   const PrivateRoute = ({ element }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
-    const { userType } = useAuth();
+ 
     useEffect(() => {
       const fetchUserType = async () => {
         try {
@@ -68,17 +68,17 @@ function App() {
       // Hiển thị một màn hình đang tải hoặc một phần tử khác
       return <Loading />;
     }
-    if (isAdmin || userType === "admin") {
-      return element;
-    } else if (userType !== "admin") {
-      return <Navigate to="/error" />;
+    // if (isAdmin || userType === "admin") {
+    //   return element;
+    // } else if (userType !== "admin") {
+    //   return <Navigate to="/error" />;
       
-    }      
+    // }      
     // Nếu là admin, cho phép truy cập
     return element;
   };
   const AdminRoute = ({ element }) => {
-    const { userType } = useAuth();
+
     const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
   
@@ -102,12 +102,12 @@ function App() {
       return <Loading />;
     }
   
-    if (isAdmin || userType === "admin") {
-      return element;
-    } else {
-      // Nếu người dùng không phải là admin, điều hướng về trang error
-      return <Navigate to="/error" />;
-    }
+    // if (isAdmin || userType === "admin") {
+    //   return element;
+    // } else {
+    //   // Nếu người dùng không phải là admin, điều hướng về trang error
+    //   return <Navigate to="/error" />;
+    // }
   };
   
   return (

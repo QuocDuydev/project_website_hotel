@@ -92,6 +92,13 @@ class BookingView(viewsets.ModelViewSet):
 class BookingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # Lấy user_id từ tài khoản đang đăng nhập
+        user = request.user
+        serializer.save(user_id=user)  
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     # permission_classes = [IsAuthenticated]
 
     # def create(self, request):
