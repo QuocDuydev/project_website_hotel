@@ -13,7 +13,7 @@ import {
   } from "@material-tailwind/react";
   
 function EditRoom () {
-  const {id}  = useParams();
+  const {room_id}  = useParams();
   const [hotel, setHotel] = useState([]);
   const [room, setRoom] = useState({
     hotel: "",
@@ -40,7 +40,7 @@ function EditRoom () {
     });
 
     axios
-      .get(`http://localhost:8000/api/rooms/${id}/`)
+      .get(`http://localhost:8000/api/rooms/${room_id}/`)
       .then((response) => {
         setRoom(response.data);
         // console.log(room.roomimage)
@@ -51,7 +51,7 @@ function EditRoom () {
       });
 
     
-  }, [id]);
+  }, [room_id]);
   const handleUpdate = () => {
     const formData = new FormData();
     formData.append('hotel', room.hotel);
@@ -67,7 +67,7 @@ function EditRoom () {
     // }
     axios({
       method: 'put',
-      url: `http://localhost:8000/api/rooms/${id}/`,
+      url: `http://localhost:8000/api/rooms/${room_id}/`,
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' }, 
     })
@@ -103,7 +103,7 @@ function EditRoom () {
       setRoom((prevRoom) => ({ ...prevRoom, [name]: value }));
     };
   };
-  const selectedHotel = hotel.find((item) => item.id === room.hotel);
+  const selectedHotel = hotel.find((item) => item.hotel_id === room.hotel);
   return (
       <> 
       <div className=" flex h-screen overflow-hidden">  

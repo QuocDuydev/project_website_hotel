@@ -29,7 +29,7 @@ function ListRoom() {
     const isConfirmed = window.confirm("Are you sure you want to delete?");
     if (isConfirmed) {
         axios
-            .delete(`http://localhost:8000/api/rooms/${item.id}/`)
+            .delete(`http://localhost:8000/api/rooms/${item.room_id}/`)
             .then((res) => refreshList())
             .catch((error) => console.log(error));
         };
@@ -68,29 +68,29 @@ function ListRoom() {
                                      {data.map((item) => (
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         
-                                        <td class="px-4 py-3" key={item.id}>
+                                        <td class="px-4 py-3" key={item.room_id}>
                                             <div class="flex items-center text-sm">
                                                 <div>
                                                     <p class="font-semibold">{item.roomname}</p>   
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
+                                        <td class="px-4 py-3 text-sm" key={item.room_id}>
                                             $ {item.roomprice}
                                         </td>
-                                        <td class="px-4 py-3 text-xs" key={item.id}>
+                                        <td class="px-4 py-3 text-xs" key={item.room_id}>
                                             <span
                                                 class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
                                             >
                                                 {item.roomoccupancy} - person
                                             </span>
                                         </td>
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
+                                        <td class="px-4 py-3 text-sm" key={item.room_id}>
                                             {item.dateadded}
                                         </td>
                                         <td class="px-4 py-3 ">
                                             <div class=" flex space-x-4 text-sm ml-10">
-                                                <Link to={`/admin/edit-room/${item.id}`}>
+                                                <Link to={`/admin/edit-room/${item.room_id}`}>
                                                     <button
                                                         
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"

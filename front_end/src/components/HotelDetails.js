@@ -11,7 +11,7 @@ import {
   Rating
 } from "@material-tailwind/react";
 function HotelComponent() {
-  const { id } = useParams();
+  const { hotel_id } = useParams();
   const [rooms, setRooms] = useState([]);
   const [hotels, setHotels] = useState({
     hotelname: "",
@@ -32,7 +32,7 @@ function HotelComponent() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${id}/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`)
       .then((response) => {
         console.log("Hotel Data:", response.data);
         setHotels(response.data);
@@ -44,7 +44,7 @@ function HotelComponent() {
 
     // Fetch rooms for the hotel
     axios
-      .get(`http://localhost:8000/api/hotels/${id}/rooms/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/`)
       .then((response) => {
         setRooms(response.data);
         console.log("Room Data:", response.data);
@@ -60,7 +60,7 @@ function HotelComponent() {
     //     })
     //     .catch((err) => console.log(err));
     // }
-  }, [id]);
+  }, [hotel_id]);
 
   return (
     <div className='container mx-auto relative'>
@@ -287,7 +287,7 @@ function HotelComponent() {
         Availability Room
       </Typography>
       {rooms.map(rooms => (
-        <div key={rooms.id}>
+        <div key={rooms.room_id}>
           <Card className="w-full mx-auto mb-2 border-2">
             <CardBody className="m-3 flex">
               <img
@@ -390,8 +390,8 @@ function HotelComponent() {
                 </div>
                 <div className="flex justify-between items-center mt-3">
                   <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{rooms.roomoccupancy} - person</span>
-                  <Link to={`/booking/${id}/${rooms.roomid}`}>
-                    <Button className=" bg-black" onClick={() => handleSetRoomId(rooms.roomid)}>Booking Nows</Button>
+                  <Link to={`/booking/${hotel_id}/${rooms.room_id}`}>
+                    <Button className=" bg-black" onClick={() => handleSetRoomId(rooms.room_id)}>Booking Nows</Button>
                   </Link>
                 </div>
               </div>

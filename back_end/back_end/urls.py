@@ -36,10 +36,10 @@ urlpatterns = [
     path('login/', views.CustomTokenObtainPairView.as_view(), name='login'),
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/rooms/<int:id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
-    path('api/hotels/<int:id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
-    path('api/bookings/<int:id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
+    path('api/rooms/<int:room_id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
+    path('api/hotels/<int:hotel_id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
+    path('api/bookings/<int:booking_id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
     path('api/hotels/<int:hotel_id>/rooms/', views.HotelRoomsListView.as_view(), name='hotel-rooms'),
-    path('api/hotels/<int:hotel_id>/rooms/<int:roomid>', views.RoomstoHotelListView.as_view(), name='rooms-to-hotels'),
+    path('api/hotels/<int:hotel_id>/rooms/<int:room_id>', views.RoomstoHotelListView.as_view(), name='rooms-to-hotels'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

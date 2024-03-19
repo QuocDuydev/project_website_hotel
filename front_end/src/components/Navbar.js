@@ -28,20 +28,10 @@ export function Navbars() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200 "
-      >
-        <Link to="/list-hotel" className="flex items-center">
-          Hotels
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
         className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200"
       >
-        <Link to="/list-room" className="flex items-center">
-          Rooms
+        <Link to="/list-booking" className="flex items-center">
+          Bookings
         </Link>
       </Typography>
       <Typography

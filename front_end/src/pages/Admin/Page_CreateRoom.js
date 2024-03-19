@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
-import { useParams} from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {
     Card,
@@ -10,8 +10,6 @@ import {
     Typography,
     Textarea,
     Alert,
-    Select, 
-    Option
   } from "@material-tailwind/react";
    
 function CreateRoomForm () {
@@ -28,7 +26,8 @@ function CreateRoomForm () {
       dateadded: "",
     });
     const [taskList, setTaskList] = useState([]);
-    // const history= useHistory();
+
+    const navigate= useNavigate();
     const [CreateSuccess, setCreateSuccess] = useState(false);
     useEffect(() => {
       axios
@@ -102,7 +101,7 @@ function CreateRoomForm () {
   
           // Redirect to home page after 5 seconds
           setTimeout(() => {
-            // history.push("/admin/list-room");
+            navigate("/admin/list-room");
           }, 1000);
           // Optionally, you can reset the form or perform additional actions after a successful update.
         })
@@ -174,7 +173,7 @@ function CreateRoomForm () {
                              
                              <option value=""> Select a hotel</option>
                              {hotel.map((item) => (
-                                <option key={item.id} value={item.id}>
+                                <option key={item.hotel_id} value={item.hotel_id}>
                                   {item.hotelname}
                                 </option>
                                ))}

@@ -16,17 +16,17 @@ class HotelSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Hotels
-        fields =  ("id", "hotelname", "hotelimage", "descriptions",  "totalroom", "roommap", "location", "rating", "dateadded")
+        fields =  '__all__'
 
 class RoomSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Rooms
-        fields = ("roomid", "hotel", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
+        fields = '__all__'
 
     
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields =  ("id", "hotel","room", "name", "email", "phonenumber", "address","checkin", "checkout", "total", "status")
+        fields = '__all__'
 

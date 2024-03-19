@@ -3,12 +3,16 @@ from .models import Users, Rooms ,Hotels, Booking
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "username", "name", "email", "password", "account_type", "joined")
-class RoomAdmin(admin.ModelAdmin):
-    list_display = ("roomid", "hotel", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
+
 class HotelAdmin(admin.ModelAdmin):
-    list_display = ("id", "hotelname", "hotelimage", "descriptions",  "totalroom", "roommap", "location", "rating", "dateadded")
+    list_display = ("hotel_id", "hotelname", "hotelimage", "descriptions",  "totalroom", "roommap", "location", "rating", "dateadded")
+
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ("room_id", "hotel", "roomname", "roomimage", "descriptions", "roomprice", "roomnumber", "roomoccupancy", "dateadded")
+
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("id", "hotel","room", "name", "email", "phonenumber","address", "checkin", "checkout", "total", "status")
+    list_display = ("booking_id","user","hotel","room", "name", "email", "phonenumber","address", "checkin", "checkout", "total", "status")
+    
 admin.site.register(Users, UserAdmin)
 admin.site.register(Hotels, HotelAdmin)
 admin.site.register(Rooms, RoomAdmin)

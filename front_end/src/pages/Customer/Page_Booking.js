@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { Navbars } from "../../components/Navbar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useAuth } from "../../context/AuthContext";
 import {
   Card,
   Input,
@@ -13,7 +15,8 @@ import {
   Alert
 } from "@material-tailwind/react";
 function Booking() {
-  const { id, roomid } = useParams();
+  const { hotel_id, room_id } = useParams();
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [hotels, setHotels] = useState({
     hotelname: "",
@@ -25,9 +28,11 @@ function Booking() {
     rating: "",
     dateadded: "",
   });
+  const { user } = useAuth();
   const [booking, setBooking] = useState({
-    hotel: id,
-    room: roomid,
+    user: user ? user.id : null,
+    hotel: hotel_id,
+    room: room_id,
     name: "",
     email: "",
     phonenumber: "",
@@ -42,6 +47,7 @@ function Booking() {
   const [totalPrice, setTotalPrice] = useState(0);
   const handleCreate = () => {
     const formData = new FormData();
+    formData.append('user', booking.user);
     formData.append('hotel', booking.hotel);
     formData.append("room", booking.room);
     formData.append('name', booking.name);
@@ -52,46 +58,63 @@ function Booking() {
     formData.append('checkout', formatDate(booking.checkout));
     formData.append('total', totalPrice);
     formData.append('status', booking.status);
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
 
-    // Gửi dữ liệu đặt phòng và tổng tiền tới endpoint API
-    axios({
-      method: 'post',
-      url: `http://localhost:8000/api/bookings/`,
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then((response) => {
-        console.log("Create successful:", response.data);
-        setCreateSuccess(true);
-        setTimeout(() => {
-          setCreateSuccess(false);
-        }, 1000);
-        // Redirect tới trang thành công hoặc thông báo thành công
+    const token = localStorage.getItem('authTokens');
+
+    // Kiểm tra xem token có tồn tại không
+    if (token) {
+      // Giải mã token để lấy thông tin người dùng
+      const decodedToken = jwt_decode(token);
+    
+      // Kiểm tra xem decodedToken có chứa thông tin người dùng hay không
+      if (decodedToken && decodedToken.id) {
+        const userId = decodedToken.user_id;
+        console.log("User ID:", userId);
+      }
+    
+      // Gửi yêu cầu API với token trong header Authorization
+      axios({
+        method: 'post',
+        url: `http://localhost:8000/api/bookings/`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        }
       })
-      .catch((error) => {
-        console.error("Create failed:", error);
-        // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
-      });
-  }
+        .then((response) => {
+          console.log("Create successful:", response.data);
+          setCreateSuccess(true);
+          setTimeout(() => {
+            navigate("/list-booking")
+            setCreateSuccess(false);
+          }, 1000);
+        })
+        .catch((error) => {
+          console.error("Create failed:", error);
+          // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
+        });
+    } else {
+      console.error("Access token not found");
+      // Xử lý khi không tìm thấy mã thông báo
+    }
+  };
 
 
   const formatDate = (date) => {
     if (!date) return '';
-    
+
     const year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-  
+
     // Thêm số 0 phía trước nếu tháng hoặc ngày là một chữ số
     month = month < 10 ? '0' + month : month;
     day = day < 10 ? '0' + day : day;
-  
+
     return `${year}-${month}-${day}`;
   };
-  
+
   // Hàm tính tổng tiền dựa trên giá phòng và số đêm lưu trú
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,12 +137,12 @@ function Booking() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${id}/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`)
       .then((response) => {
         // console.log("Hotel Data:", response.data);
         setHotels(response.data);
         window.scrollTo(0, 0);
-        console.log(roomid)
+        console.log(room_id)
       })
       .catch((error) => {
         console.error("Error fetching hotel data:", error);
@@ -127,13 +150,13 @@ function Booking() {
 
     // Fetch rooms for the hotel
     axios
-      .get(`http://localhost:8000/api/hotels/${id}/rooms/${roomid}`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/${room_id}`)
       .then((response) => {
         setRooms(response.data[0]);
         console.log("Room Data:", response.data);
       })
       .catch((err) => console.log(err));
-  }, [id, roomid]);
+  }, [hotel_id, room_id]);
 
   return (
     <>

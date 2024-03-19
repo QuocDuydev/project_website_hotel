@@ -61,7 +61,7 @@ function CardDefault() {
                 </div>
               </div>
               <CardFooter className="flex flex-col justify-between h-1/2 mt-5">
-                <Link to={`/hotel/${item.id}`}>
+                <Link to={`/hotel/${item.hotel_id}`}>
                   <Button className="text-white bg-blue-500 hover:bg-blue-700">Read More</Button>
                 </Link>
               </CardFooter>

@@ -21,8 +21,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token['username'] = user.username
-   
-
         return token
 
 
@@ -94,6 +92,38 @@ class BookingView(viewsets.ModelViewSet):
 class BookingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    # permission_classes = [IsAuthenticated]
+
+    # def create(self, request):
+    #     # Trích xuất dữ liệu từ yêu cầu
+    #     hotel_id = request.data.get('hotel_id')
+    #     room_id = request.data.get('room_id')
+    #     name = request.data.get('name')
+    #     email = request.data.get('email')
+    #     phonenumber = request.data.get('phonenumber')
+    #     address = request.data.get('address')
+    #     checkin = request.data.get('checkin')
+    #     checkout = request.data.get('checkout')
+    #     total = request.data.get('total')
+    #     status = request.data.get('status')
+
+    #     # Tạo một bản ghi Booking mới
+    #     booking = Booking.objects.create(
+    #         hotel_id=hotel_id,
+    #         room_id=room_id,
+    #         name=name,
+    #         email=email,
+    #         phonenumber=phonenumber,
+    #         address=address,
+    #         checkin=checkin,
+    #         checkout=checkout,
+    #         total=total,
+    #         status=status
+    #     )
+
+    #     # Serialize dữ liệu và trả về
+    #     serializer = BookingSerializer(booking)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class HotelRoomsListView(APIView):
     def get(self, request, hotel_id, format=None):
@@ -102,7 +132,7 @@ class HotelRoomsListView(APIView):
         return Response(serializer.data)
     
 class RoomstoHotelListView(APIView):
-    def get(self, request, hotel_id,roomid, format=None):
-        rooms = Rooms.objects.filter(hotel_id=hotel_id, roomid=roomid)
+    def get(self, request, hotel_id,room_id, format=None):
+        rooms = Rooms.objects.filter(hotel_id=hotel_id, room_id=room_id)
         serializer = RoomSerializer(rooms, many=True, context={'request': request})
         return Response(serializer.data)

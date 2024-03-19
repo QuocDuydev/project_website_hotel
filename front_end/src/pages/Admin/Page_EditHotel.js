@@ -13,7 +13,7 @@ import {
   } from "@material-tailwind/react";
   
 function EditHotel () {
-  const {id}  = useParams();
+  const {hotel_id}  = useParams();
   const [room, setRoom] = useState({
     hotelname: "",
     hotelimage: null,
@@ -28,7 +28,7 @@ function EditHotel () {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/hotels/${id}/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`)
       .then((response) => {
         setRoom(response.data);
         // console.log(room.roomimage)
@@ -36,7 +36,7 @@ function EditHotel () {
       .catch((error) => {
         console.error("Error fetching room data:", error);
       });
-  }, [id]);
+  }, [hotel_id]);
   const handleUpdate = () => {
     const formData = new FormData();
     formData.append("hotelname", room.hotelname);
@@ -52,7 +52,7 @@ function EditHotel () {
     // }
     axios({
       method: 'put',
-      url: `http://localhost:8000/api/hotels/${id}/`,
+      url: `http://localhost:8000/api/hotels/${hotel_id}/`,
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' }, 
     })

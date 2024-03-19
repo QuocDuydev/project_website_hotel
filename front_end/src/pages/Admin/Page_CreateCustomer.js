@@ -38,6 +38,7 @@ function CreateCustomerForm () {
         console.error("Error fetching room data:", error);
       });
   }, [id]);
+  const token = localStorage.getItem('authTokens');
   const handleCreate = () => {
     const formData = new FormData();
     formData.append('username', user.username);
@@ -54,7 +55,7 @@ function CreateCustomerForm () {
       method: 'post',
       url: `http://localhost:8000/api/users/`,
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }, 
+      headers: { 'Content-Type': 'multipart/form-data',  'Authorization': `Bearer ${token}`}, 
     })
       .then((response) => {
         console.log("Create successful:", response.data);
