@@ -139,8 +139,8 @@ function EditBooking() {
         const { name, value } = e.target;
         setBooking((prevBooking) => ({ ...prevBooking, [name]: value }));
     };
-    const selectedHotel = hotel.find((item) => item.id === booking.hotel);
-    const selectedRoom = room.find((items) => items.roomid === booking.room);
+    const selectedHotel = hotel.find((item) => item.hotel_id === booking.hotel);
+    const selectedRoom = room.find((items) => items.room_id === booking.room);
     return (
         <>
             <Navbars />
@@ -316,14 +316,14 @@ function EditBooking() {
                                                     color="blue-gray"
                                                     className="mb-2 mt-3"
                                                 >
-                                                    Name Rooms
+                                                    Number Rooms
                                                 </Typography>
 
                                                 <Input
                                                     type="text"
                                                     size="lg"
                                                     name="room"
-                                                    value={selectedRoom ? selectedRoom.roomname : ''}
+                                                    value={selectedRoom ? selectedRoom.roomnumber : ''}
                                                     onChange={handleChange}
                                                     placeholder="Enter name rooms..."
                                                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"

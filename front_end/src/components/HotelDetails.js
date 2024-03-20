@@ -26,7 +26,7 @@ function HotelComponent() {
     dateadded: "",
   });
   const [roomId, setRoomId] = useState(null);
-
+  const [bookedRoomIds, setBookedRoomIds] = useState([]);
   const handleSetRoomId = (roomId) => {
     setRoomId(roomId);
   };
@@ -34,11 +34,11 @@ function HotelComponent() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/` , {
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    })
+      })
       .then((response) => {
         console.log("Hotel Data:", response.data);
         setHotels(response.data);
@@ -49,27 +49,33 @@ function HotelComponent() {
       });
 
     // Fetch rooms for the hotel
-    axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/` , {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-      .then((response) => {
-        setRooms(response.data);
-        console.log("Room Data:", response.data);
-      })
-      .catch((err) => console.log(err));
+    axios.get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/`)
+      .then(response => {
+        const roomsData = response.data;
+        // Lấy danh sách các phòng đã booking của người dùng hiện tại từ API
+        axios.get(`http://localhost:8000/api/list-booking/`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        })
+          .then(response => {
+            const bookedRoomIds = response.data.map(booking => booking.room);
+            setBookedRoomIds(bookedRoomIds);
 
-    // if (roomId) {
-    //   axios
-    //     .get(`http://localhost:8000/api/hotels/${id}/rooms/${roomid}`)
-    //     .then((response) => {
-    //       setRoomId(response.data);
-    //       console.log("Room Data:", response.data);
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
+            // Lọc ra danh sách các phòng chưa được booking
+            const availableRooms = roomsData.filter(room => !bookedRoomIds.includes(room.room_id));
+            setRooms(availableRooms);
+            console.log(availableRooms);
+          })
+          .catch(error => {
+            console.error('Error fetching bookings:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Error fetching rooms:', error);
+      });
+
   }, [hotel_id]);
 
   return (
@@ -133,8 +139,6 @@ function HotelComponent() {
                 {hotels.descriptions}
               </Typography>
             </div>
-
-
             <div className="group flex-wrap gap-5 mt-5 flex justify-center">
 
               <Tooltip content="Free wifi">
@@ -219,9 +223,7 @@ function HotelComponent() {
               </Tooltip>
 
             </div>
-
           </div>
-
           <ul className="">
             <li className="flex justify-center">
               <li class="flex items-center space-x-2 mb-2 border-2 px-3 py-2">

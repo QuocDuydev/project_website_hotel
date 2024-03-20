@@ -1,15 +1,14 @@
-// import React from "react";
-// import { Route, Navigate } from "react-router-dom";
-// // import { useAuth } from "./AuthContext";
+import { Route, Navigate } from 'react-router-dom';
 
-// function PrivateRoute({ element, ...rest }) {
-//   // const { loggedIn } = useAuth();
-
-//   return loggedIn ? (
-//     <Route {...rest} element={element} />
-//   ) : (
-//     <Navigate to="/login" />
-//   );
-// }
-
-// export default PrivateRoute;
+const AdminRoute = ({ component: Component, isAdmin, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      isAdmin ? (
+        <Component {...props} />
+      ) : (
+        <Navigate to="/error" />
+      )
+    }
+  />
+); export default AdminRoute;

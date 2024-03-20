@@ -25,7 +25,7 @@ import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PrivateRoute from "./context/PrivateRoute.js";
+import AdminRoute from "./context/PrivateRoute.js";
 import Header from "./components/Customer/Header.js";
 import Registers from "./pages/Customer/Page_register.js";
 import Error from "./pages/Page_Error.js";
@@ -33,83 +33,83 @@ import axios from "axios";
 import EditBooking from "./pages/Customer/Page_EditBooking.js";
 
 function App() {
-  const checkUserType = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/users/");
-      const users = response.data;
-      console.log("Dữ liệu người dùng:", users);
-  
-      const isAdmin = users.some((user) => user.account_type === "admin");
-      return isAdmin ? "admin" : "user";
-    } catch (error) {
-      console.error("Lỗi khi lấy danh sách người dùng:", error);
-      return "user";
-    }
-  };
-  const PrivateRoute = ({ element }) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAdmin, setIsAdmin] = useState(false);
- 
-    useEffect(() => {
-      const fetchUserType = async () => {
-        try {
-          const fetchedUserType = await checkUserType();
-          setIsAdmin(fetchedUserType === "admin");
-        } catch (error) {
-          console.error("Lỗi khi kiểm tra loại tài khoản:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-  
-      fetchUserType();
-    }, []);
-    if (isLoading) {
-      // Hiển thị một màn hình đang tải hoặc một phần tử khác
-      return <Loading />;
-    }
-    // if (isAdmin || userType === "admin") {
-    //   return element;
-    // } else if (userType !== "admin") {
-    //   return <Navigate to="/error" />;
-      
-    // }      
-    // Nếu là admin, cho phép truy cập
-    return element;
-  };
-  const AdminRoute = ({ element }) => {
+  // const checkUserType = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:8000/api/users/");
+  //     const users = response.data;
+  //     console.log("Dữ liệu người dùng:", users);
 
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchUserType = async () => {
-        try {
-          const fetchedUserType = await checkUserType();
-          setIsAdmin(fetchedUserType === "admin");
-        } catch (error) {
-          console.error("Lỗi khi kiểm tra loại tài khoản:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-  
-      fetchUserType();
-    }, []);
-  
-    if (isLoading) {
-      // Hiển thị một màn hình đang tải hoặc một phần tử khác
-      return <Loading />;
-    }
-  
-    // if (isAdmin || userType === "admin") {
-    //   return element;
-    // } else {
-    //   // Nếu người dùng không phải là admin, điều hướng về trang error
-    //   return <Navigate to="/error" />;
-    // }
-  };
-  
+  //     const isAdmin = users.some((user) => user.account_type === "admin");
+  //     return isAdmin ? "admin" : "user";
+  //   } catch (error) {
+  //     console.error("Lỗi khi lấy danh sách người dùng:", error);
+  //     return "user";
+  //   }
+  // };
+  // const PrivateRoute = ({ element }) => {
+  //   const [isLoading, setIsLoading] = useState(true);
+  //   const [isAdmin, setIsAdmin] = useState(false);
+
+  //   useEffect(() => {
+  //     const fetchUserType = async () => {
+  //       try {
+  //         const fetchedUserType = await checkUserType();
+  //         setIsAdmin(fetchedUserType === "admin");
+  //       } catch (error) {
+  //         console.error("Lỗi khi kiểm tra loại tài khoản:", error);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     };
+
+  //     fetchUserType();
+  //   }, []);
+  //   if (isLoading) {
+  //     // Hiển thị một màn hình đang tải hoặc một phần tử khác
+  //     return <Loading />;
+  //   }
+  //   // if (isAdmin || userType === "admin") {
+  //   //   return element;
+  //   // } else if (userType !== "admin") {
+  //   //   return <Navigate to="/error" />;
+
+  //   // }      
+  //   // Nếu là admin, cho phép truy cập
+  //   return element;
+  // };
+  // const AdminRoute = ({ element }) => {
+
+  //   const [isAdmin, setIsAdmin] = useState(false);
+  //   const [isLoading, setIsLoading] = useState(true);
+
+  //   useEffect(() => {
+  //     const fetchUserType = async () => {
+  //       try {
+  //         const fetchedUserType = await checkUserType();
+  //         setIsAdmin(fetchedUserType === "admin");
+  //       } catch (error) {
+  //         console.error("Lỗi khi kiểm tra loại tài khoản:", error);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     };
+
+  //     fetchUserType();
+  //   }, []);
+
+  //   if (isLoading) {
+  //     // Hiển thị một màn hình đang tải hoặc một phần tử khác
+  //     return <Loading />;
+  //   }
+
+  //   // if (isAdmin || userType === "admin") {
+  //   //   return element;
+  //   // } else {
+  //   //   // Nếu người dùng không phải là admin, điều hướng về trang error
+  //   //   return <Navigate to="/error" />;
+  //   // }
+  // // };
+
   return (
     <Router>
       <AuthProvider>
@@ -124,17 +124,21 @@ function App() {
           <Route path="/booking/:hotel_id/:room_id" element={<Booking />} />
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />
           <Route path="/search-results" element={<ListSearch />} />
-
-          <Route path="/admin" element={<PrivateRoute element={<AdminHome />} />} />
-          <Route path="/admin/create-room" element={<PrivateRoute element={<CreateRoomForm />} />} />
-          <Route path="/admin/list-room" element={<PrivateRoute element={<ListRoom />} />} />
-          <Route path="/admin/edit-room/:room_id" element={<PrivateRoute element={<EditRoom />} />}  />
-          <Route path="/admin/create-hotel" element={<PrivateRoute element={<CreateHotelForm />} />}/>
-          <Route path="/admin/list-hotel" element={<PrivateRoute element={<ListHotel />} />} />
-          <Route path="/admin/edit-hotel/:hotel_id" element={<PrivateRoute element={<EditHotel />} />} />
-          <Route path="/admin/list-customer" element={<PrivateRoute element={<ListCustomer />} />} />
-          <Route path="/admin/edit-customer/:id" element={<PrivateRoute element={<EditCustomer />} />}  />
-          <Route path="/admin/create-customer"  element={<PrivateRoute element={<CreateCustomerForm />} />} />
+          {/* <AdminRoute
+            path="/admin"
+            component={AdminHome}
+            isAdmin={userRole === 'admin'}
+          /> */}
+          {/* <Route path="/admin" element={<PrivateRoute element={<AdminHome />} />} /> */}
+          <Route path="/admin/create-room"  element={<CreateRoomForm />}/>
+          <Route path="/admin/list-room"  element={<ListRoom />}/>
+          <Route path="/admin/edit-room/:room_id"  element={<EditRoom />}/>
+          <Route path="/admin/create-hotel"  element={<CreateHotelForm />}/>
+          <Route path="/admin/list-hotel"  element={<ListHotel />}/>
+          <Route path="/admin/edit-hotel/:hotel_id"  element={<EditHotel />}/>
+          <Route path="/admin/list-customer"  element={<ListCustomer />}  />
+          <Route path="/admin/edit-customer/:id"  element={<EditCustomer />}/>
+          <Route path="/admin/create-customer"  element={<CreateCustomerForm />}/>
         </Routes>
       </AuthProvider>
     </Router>

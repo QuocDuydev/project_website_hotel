@@ -35,7 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('apis/', include('todo.urls')),
-    path('api/listbooking/', views.ListBookingView.as_view(), name='list-booking'),
+    path('api/list-booking/', views.ListBookingView.as_view(), name='list-booking'),
     path('api/token/', views.MyTokenObtainView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/rooms/<int:room_id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
