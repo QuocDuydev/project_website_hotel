@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
 import axios from "axios";
+import { useAccessToken } from "../../components/ultiti";
 import {
     Card,
     Input,
@@ -14,26 +15,37 @@ import { Link } from "react-router-dom";
 function ListCustomer() {
     const [data, setData] = useState([]);
     const isConfirmed =  false;
+    let token = useAccessToken()
     const refreshList = () => {
-      axios
-        .get("http://localhost:8000/api/users/")
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    };
-  
-    useEffect(() => {
-      refreshList();
-    }, []);
-  
-    const handleDelete = (item) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete?");
-    if (isConfirmed) {
         axios
-            .delete(`http://localhost:8000/api/users/${item.id}/`)
-            .then((res) => refreshList())
-            .catch((error) => console.log(error));
-        };
-    }
+            .get("http://localhost:8000/api/users/", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then((res) => setData(res.data))
+            .catch((err) => console.log(err));
+    };
+    
+    const handleDelete = (item) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete?");
+        if (isConfirmed) {
+            axios
+                .delete(`http://localhost:8000/api/users/${item.id}/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then((res) => refreshList())
+                .catch((error) => console.log(error));
+        }
+    };
+    
+    useEffect(() => {
+        
+            refreshList();
+       
+    }, []);
   
         return(
            <> 
@@ -45,7 +57,7 @@ function ListCustomer() {
                    <Header_Admin/>
                    <div className=" container mb-6 text-red-500">
                    <Typography variant="h4" color="blue-gray">
-                       List Rooms
+                       List Customers
                    </Typography>
                    <div className=" max-w-full px-3 rounded-lg mt-2">      
                            <div class="container px-6 mx-auto grid relative ">

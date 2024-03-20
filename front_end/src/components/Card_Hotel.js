@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAccessToken } from "./ultiti";
 import {
     Card,
     CardBody,
@@ -11,11 +12,17 @@ import {
     Rating
   } from "@material-tailwind/react";
  function CardHotel() {
+  let token = useAccessToken()
     const [data, setData] = useState([]);
     const isConfirmed =  false;
     const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/hotels/")
+        .get("http://localhost:8000/api/hotels/", {
+          headers: {
+
+            'Authorization': `Bearer ${token}`
+          }
+        })
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
     };
@@ -132,7 +139,7 @@ import {
         </div>
                 <div className="flex justify-between items-center mt-3">
                 <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.totalroom} - rooms</span>
-                    <Link to={`/hotel/${item.id}`} ><Button className=" bg-black">See availability</Button></Link>
+                    <Link to={`/hotel/${item.hotel_id}`} ><Button className=" bg-black">See availability</Button></Link>
                     
                
                 </div>

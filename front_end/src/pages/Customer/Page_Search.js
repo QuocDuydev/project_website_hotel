@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Navbars } from "../../components/Navbar";
 import Footer from "../../components/Footer";
-// import SearchBox from "../../components/SearchBox";
+import { useAccessToken } from "../../components/ultiti";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -27,6 +27,7 @@ const isTotalRoomsInRange = (totalRooms, min, max) => {
   return totalRooms >= minRange && totalRooms <= maxRange;
 };
 function ListSearch() {
+  let token = useAccessToken()
   const [searchTerm, setSearchTerm] = useState('');
   const [hotels, setHotels] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -35,7 +36,11 @@ function ListSearch() {
   const [selectedRating, setSelectedRating] = useState('');
   useEffect(() => {
     // Fetch hotels data here
-    axios.get("http://localhost:8000/api/hotels/")
+    axios.get("http://localhost:8000/api/hotels/", {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  } )
       .then((res) => {
         setHotels(res.data);
       })
@@ -505,7 +510,7 @@ function ListSearch() {
                         </div>
                         <div className="flex justify-between items-center mt-3">
                           <span className="mx-auto px-2 py-2 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{hotel.totalroom} - rooms</span>
-                          <Link to={`/hotel/${hotel.id}`} ><Button className=" bg-black">See availability</Button></Link>
+                          <Link to={`/hotel/${hotel.hotel_id}`} ><Button className=" bg-black">See availability</Button></Link>
 
 
                         </div>

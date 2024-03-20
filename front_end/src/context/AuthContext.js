@@ -2,7 +2,6 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -17,40 +16,50 @@ export const AuthProvider = ({ children }) => {
     const [data, setData] = useState([]);
     let loginUser = async (e) => {
         e.preventDefault();
-        let response = await fetch('http://localhost:8000/login/', {
+        let response = await fetch('http://localhost:8000/api/token/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 'username': e.target.username.value, 'password': e.target.password.value })
         });
-        let data = await response.json();
 
         if (response.status === 200) {
-            // Lấy thông tin người dùng từ API
+            let data = await response.json();
             try {
-                const userDetailsResponse = await axios.get("http://localhost:8000/api/users/");
-                const userDetails = userDetailsResponse.data;
+                // Lấy thông tin người dùng từ API
+                const userDetailsResponse = await fetch('http://localhost:8000/api/users/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ` + String(data.access),
+                    }
+                });
 
-                setAuthTokens(data);
-                setUser(jwt_decode(data.access));
-                localStorage.setItem('authTokens', JSON.stringify(data));
-                setLoggedIn(true);
-                alert("Login Successfully!");
+                const userDetails = await userDetailsResponse.json();
 
-                const isAllowedAccess = userDetails.find(user => user.id === jwt_decode(data.access).user_id && (user.account_type === 'admin' || user.account_type === 'superadmin'));
+                if (userDetailsResponse.status === 200) {
+                    const loggedInUser = jwt_decode(data.access);
+                    setAuthTokens(data);
+                    setUser(loggedInUser);
+                    localStorage.setItem('authTokens', JSON.stringify(data));
+                    setLoggedIn(true);
+                    alert("Login Successfully!");
 
-                console.log(isAllowedAccess);
-                
-                if (isAllowedAccess) {
-                    
-                    navigate('/admin');
+                    // Kiểm tra loại tài khoản
+                    const isAllowedAccess = userDetails.find(user => user.id === loggedInUser.user_id && (user.account_type === 'admin' || user.account_type === 'superadmin'));
+
+                    if (isAllowedAccess) {
+                        navigate('/admin');
+                    } else {
+                        navigate('/');
+                    }
                 } else {
-                    
-                    navigate('/');
+                    throw new Error("Failed to fetch user details");
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+                alert("Error logging in");
             }
         } else {
             alert("The Username or Password is incorrect !!")

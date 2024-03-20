@@ -2,19 +2,23 @@
 from django.conf import Settings
 from rest_framework import serializers
 from .models import Users, Rooms, Hotels, Booking
-
-class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField()
+from django.contrib.auth import get_user_model
+UserModel = get_user_model()
+class UserSignupSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = '__all__'
+    def create(self, clean_data):
+        user_obj = UserModel.objects.create_user(email=clean_data['email'],username=clean_data['username'], password=clean_data['password'])
+        user_obj.email = clean_data['email']
+        user_obj.save()
+        return user_obj 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = '__all__'
-        def create(self, clean_data):
-            user_obj = Users.objects.create_user(username=clean_data['username'], password=clean_data['password'])
-            user_obj.save()
-            return user_obj 
+        
 
 class HotelSerializer(serializers.ModelSerializer):
     

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAccessToken } from "./ultiti";
 import {
   Card,
   CardHeader,
@@ -12,11 +13,16 @@ import {
 } from "@material-tailwind/react";
 
 function CardDefault() {
+  let token = useAccessToken()
   const [data, setData] = useState([]);
   const isConfirmed = false;
   const refreshList = () => {
     axios
-      .get("http://localhost:8000/api/hotels/")
+      .get("http://localhost:8000/api/hotels/" , {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    } )
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };

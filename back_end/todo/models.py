@@ -1,12 +1,37 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.utils import timezone
+class AppUserManager(BaseUserManager):
+    def create_user(self, username,email, password=None):
+        if not email:
+            raise ValueError('Vui long dien email')
+        if not password:
+            raise ValueError('Vui long dien password')
+        username = self.normalize_email(username)
+        user = self.model(username=username)
+        user.set_password(password)
+        user.save()
+        return user
+    def create_superuser(self,email, password):
+        if password is None:
+            raise TypeError('Superusers must have a password.')
 
-class Users(models.Model):
+        user = self.create_user(email, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return user
+class Users(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length = 100)
-    name = models.CharField(max_length = 100)
+    username = models.CharField(max_length = 100, unique=True)
+    name = models.CharField(max_length = 100, default = False)
     email = models.CharField(max_length = 200)
     password = models.CharField(max_length = 100)
-    joined = models.DateField()
+    joined = models.DateField(default=timezone.now)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    USERNAME_FIELD = 'username'
     ACCOUNT_TYPES = [
         ('user', 'Người dùng'),
         ('admin', 'Quản trị viên'),
@@ -17,8 +42,28 @@ class Users(models.Model):
         choices=ACCOUNT_TYPES,
         default='user',  # Giá trị mặc định có thể là 'user' hoặc 'admin'
     )
+    objects = AppUserManager()
     def __str__(self):
-        return f"{self.username}"
+        return self.username
+# class Users(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     username = models.CharField(max_length = 100)
+#     name = models.CharField(max_length = 100)
+#     email = models.CharField(max_length = 200)
+#     password = models.CharField(max_length = 100)
+#     joined = models.DateField()
+#     ACCOUNT_TYPES = [
+#         ('user', 'Người dùng'),
+#         ('admin', 'Quản trị viên'),
+#         ('superadmin', 'Quản trị viên cấp cao'),
+#     ]
+#     account_type = models.CharField(
+#         max_length=10,
+#         choices=ACCOUNT_TYPES,
+#         default='user',  # Giá trị mặc định có thể là 'user' hoặc 'admin'
+#     )
+#     def __str__(self):
+#         return f"{self.username}"
 class Hotels(models.Model):
     hotel_id = models.AutoField(primary_key=True)
     hotelname = models.CharField(max_length = 100)

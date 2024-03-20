@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header_Admin from "../../components/Admin/Header";
 import Sidebar_Admin from "../../components/Admin/SideBar";
+import { useAccessToken } from "../../components/ultiti";
 import axios from "axios";
 import {
     Card,
@@ -12,11 +13,16 @@ import {
 import { Link } from "react-router-dom";
 
 function ListHotel() {
+    let token = useAccessToken()
     const [data, setData] = useState([]);
     const isConfirmed = false;
     const refreshList = () => {
         axios
-            .get("http://localhost:8000/api/hotels/")
+            .get("http://localhost:8000/api/hotels/", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then((res) => setData(res.data))
             .catch((err) => console.log(err));
     };
@@ -29,7 +35,11 @@ function ListHotel() {
         const isConfirmed = window.confirm("Are you sure you want to delete?");
         if (isConfirmed) {
             axios
-                .delete(`http://localhost:8000/api/hotels/${item.hotel_id}/`)
+                .delete(`http://localhost:8000/api/hotels/${item.hotel_id}/`,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 .then((res) => refreshList())
                 .catch((error) => console.log(error));
         };

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-
+import { useAccessToken } from "../../components/ultiti";
 import { useParams, useNavigate } from "react-router-dom";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
@@ -28,9 +28,14 @@ function EditCustomer () {
   const [defaultAccountType, setDefaultAccountType] = useState("");
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const navigate = useNavigate();
+  let token = useAccessToken()
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/users/${id}/`)
+      .get(`http://localhost:8000/api/users/${id}/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
       .then((response) => {
         setUser(response.data);
         setDefaultAccountType(response.data.account_type);
@@ -41,13 +46,13 @@ function EditCustomer () {
       });
   }, [id]);
   const handleUpdate = () => {
-    const formData = new FormData();
-    formData.append('username', user.username);
-    formData.append("name", user.name);
-    formData.append('email', user.email);
-    formData.append('password', user.password);
-    formData.append('account_type', user.account_type);
-    formData.append('joined', user.joined);
+    // const formData = new FormData();
+    // formData.append('username', user.username);
+    // formData.append("name", user.name);
+    // formData.append('email', user.email);
+    // formData.append('password', user.password);
+    // formData.append('account_type', user.account_type);
+    // formData.append('joined', user.joined);
     
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ', ' + pair[1]);
@@ -55,8 +60,9 @@ function EditCustomer () {
     axios({
       method: 'put',
       url: `http://localhost:8000/api/users/${id}/`,
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }, 
+      data:   user,
+      headers: { 'Content-Type': 'multipart/form-data', 
+            'Authorization': `Bearer ${token}`}, 
     })
       .then((response) => {
         console.log("Update successful:", response.data);
@@ -172,28 +178,6 @@ function EditCustomer () {
                           </div>
                         </div>    
                       <div className="mb-1 w-1/2 p-4">
-                        <div>
-                              <Typography
-                                variant="h6"
-                                color="blue-gray"
-                                className="mb-2"
-                              >
-                                Password
-                              </Typography>
-                              
-                              <Input
-                                type="text"
-                                multiple
-                                size="lg"
-                                name="password"  
-                                value={user.password}
-                                onChange={handleChange}
-                                placeholder="Enter Password..."
-                                className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
-                                
-                              />
-                              
-                          </div>
                           <div>
                             <Typography
                               variant="h6"

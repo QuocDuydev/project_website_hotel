@@ -87,21 +87,28 @@ DATABASES = {
 }
 
 REST_FRAMEWORK = {
-    
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAdminUser',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-    
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
- 
+    ),
 }
-
-AUTHENTICATION_BACKENDS = [
-    'todo.authentication_backends.CustomUserAuthBackend',
-    'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+CORS_ALLOW_HEADERS = [
+    'X-CSRFTOKEN',
+    'Content-Type',
+    'Authorization',
 ]
+# AUTHENTICATION_BACKENDS = [
+#     'todo.authentication_backends.CustomUserAuthBackend',
+#     'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+# ]
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -127,7 +134,7 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=90),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
@@ -171,7 +178,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -181,6 +195,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+AUTH_USER_MODEL = "todo.Users"
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / "media"

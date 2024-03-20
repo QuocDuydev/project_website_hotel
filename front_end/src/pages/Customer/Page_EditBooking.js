@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header_Admin from "../../components/Admin/Header";
 import Sidebar_Admin from "../../components/Admin/SideBar";
+import { useAccessToken } from "../../components/ultiti";
 import axios from "axios";
 import {
     Card,
@@ -14,12 +15,14 @@ import {
 import { Navbars } from "../../components/Navbar";
 
 function EditBooking() {
-    const { id, roomid } = useParams();
+    let token = useAccessToken()
+    const { booking_id } = useParams();
     const [hotel, setHotel] = useState([]);
     const [room, setRoom] = useState([]);
     const [booking, setBooking] = useState({
-        hotel: id,
-        room: roomid,
+        user: "",
+        hotel: "",
+        room: "",
         name: "",
         email: "",
         phonenumber: "",
@@ -33,7 +36,11 @@ function EditBooking() {
     const navigate = useNavigate();
     useEffect(() => {
         axios
-            .get(`http://localhost:8000/api/hotels/`)
+            .get(`http://localhost:8000/api/hotels/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            } )
             .then((response) => {
                 setHotel(response.data);
 
@@ -43,7 +50,11 @@ function EditBooking() {
             });
 
         axios
-            .get(`http://localhost:8000/api/rooms/`)
+            .get(`http://localhost:8000/api/rooms/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            } )
             .then((response) => {
                 setRoom(response.data);
 
@@ -54,7 +65,11 @@ function EditBooking() {
             });
 
         axios
-            .get(`http://localhost:8000/api/bookings/${id}/`)
+            .get(`http://localhost:8000/api/bookings/${booking_id}/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            } )
             .then((response) => {
                 setBooking(response.data);
 
@@ -64,7 +79,7 @@ function EditBooking() {
             });
 
 
-    }, [id]);
+    }, [booking_id]);
     const formatDate = (date) => {
         if (!date) return '';
 
@@ -80,6 +95,7 @@ function EditBooking() {
     };
     const handleUpdate = () => {
         const formData = new FormData();
+        formData.append('user', booking.user);
         formData.append('hotel', booking.hotel);
         formData.append("room", booking.room);
         formData.append('name', booking.name);
@@ -97,9 +113,10 @@ function EditBooking() {
 
         axios({
             method: 'put',
-            url: `http://localhost:8000/api/bookings/${id}/`,
+            url: `http://localhost:8000/api/bookings/${booking_id}/ `,
             data: formData,
-            headers: { 'Content-Type': 'multipart/form-data' },
+            headers: { 'Content-Type': 'multipart/form-data' ,
+            'Authorization': `Bearer ${token}`},
         })
             .then((response) => {
                 console.log("Update successful:", response.data);
@@ -110,7 +127,7 @@ function EditBooking() {
 
                 // Redirect to home page after 1 seconds
                 setTimeout(() => {
-                    navigate("/list-room");
+                    navigate("/list-booking");
                 }, 1000);
             })
             .catch((error) => {

@@ -122,7 +122,7 @@ function App() {
           <Route path="/list-booking" element={<ListBooking />} />
           <Route path="/hotel/:hotel_id" element={<HotelDetails />} />
           <Route path="/booking/:hotel_id/:room_id" element={<Booking />} />
-          <Route path="/edit-booking/:hotel_id" element={<EditBooking />} />
+          <Route path="/edit-booking/:booking_id" element={<EditBooking />} />
           <Route path="/search-results" element={<ListSearch />} />
 
           <Route path="/admin" element={<PrivateRoute element={<AdminHome />} />} />

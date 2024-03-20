@@ -30,11 +30,13 @@ router.register(r'rooms', views.RoomView, 'room')
 router.register(r'hotels', views.HotelView, 'hotel')
 router.register(r'bookings', views.BookingView, 'booking')
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('login/', views.CustomTokenObtainPairView.as_view(), name='login'),
-    path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('apis/', include('todo.urls')),
+    path('api/listbooking/', views.ListBookingView.as_view(), name='list-booking'),
+    path('api/token/', views.MyTokenObtainView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/rooms/<int:room_id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
     path('api/hotels/<int:hotel_id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),

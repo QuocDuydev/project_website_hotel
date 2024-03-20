@@ -14,42 +14,43 @@ import CardRoom from "../../components/Card_Room";
 import Filters from "../../components/Filter";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
+import jwt_decode from "jwt-decode";
+import { useAccessToken } from "../../components/ultiti";
 function ListBooking() {
-  const [data, setData] = useState([]);
-  const [hotel, setHotel] = useState([]);
-  const isConfirmed = false;
-  const refreshList = () => {
-    axios
-      .get("http://localhost:8000/api/bookings/")
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  };
- 
+  const token = useAccessToken();
+  const [booking, setBookings] = useState([]);
+
   useEffect(() => {
     axios
-    .get(`http://localhost:8000/api/hotels/`)
-    .then((response) => {
-      setHotel(response.data);
-      
-      // console.log(room.roomimage)
-    })
-    .catch((error) => {
-      console.error("Error fetching room data:", error);
-    });
+      .get(`http://localhost:8000/api/bookings/`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        setBookings(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, [token]);
 
-    refreshList();
-  }, []);
-
-  const handleDelete = (item) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete?");
-    if (isConfirmed) {
-      axios
-        .delete(`http://localhost:8000/api/bookings/${item.id}/`)
-        .then((res) => refreshList())
-        .catch((error) => console.log(error));
-    };
-  }
-  const selectedHotel = hotel.find((hotelid) => hotelid.id === data.hotel);
+  // const handleDelete = (item) => {
+  //   const isConfirmed = window.confirm("Are you sure you want to delete?");
+  //   if (isConfirmed) {
+  //     axios
+  //       .delete(`http://localhost:8000/api/bookings/${item.id}/`, {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`
+  //         }
+  //       })
+  //       .then((res) => {
+  //         setData(res.data);
+  //         setLoading(true);
+  //       })
+  //       .catch((error) => console.log(error));
+  //   };
+  // }
+  // const selectedHotel = hotel.find((hotelid) => hotelid.id === data.hotel);
   return (
     <>
       <Navbars />
@@ -79,8 +80,8 @@ function ListBooking() {
                       <tbody
                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center"
                       >
-                        {data.map((item) => (
-                          <tr class="text-gray-700 dark:text-gray-400">
+                        {booking.map((item) => (
+                          <tr class="text-gray-700 dark:text-gray-400" >
 
                             <td class="px-4 py-3" >
                               <div class="flex items-center text-sm">
@@ -89,25 +90,25 @@ function ListBooking() {
                                 </div>
                               </div>
                             </td>
-                            <td class="px-4 py-3 text-sm" key={item.id}>
+                            <td class="px-4 py-3 text-sm" >
                               {item.checkin}
                             </td>
-                            <td class="px-4 py-3 text-sm" key={item.id}>
+                            <td class="px-4 py-3 text-sm">
                               {item.checkout}
                             </td>
-                            <td class="px-4 py-3 text-xs" key={item.id}>
+                            <td class="px-4 py-3 text-xs" >
                               <span
                                 class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
                               >
                                 {item.total} $
                               </span>
                             </td>
-                            <td class="px-4 py-3 text-sm" key={item.id}>
+                            <td class="px-4 py-3 text-sm" >
                               {item.status}
                             </td>
                             <td class="px-4 py-3 ">
                               <div class=" flex space-x-4 text-sm ml-10">
-                                <Link to={`/edit-booking/${item.id}`}>
+                                <Link to={`/edit-booking/${item.booking_id}`}>
                                   <button
 
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -127,7 +128,7 @@ function ListBooking() {
                                 </Link>
 
                                 <button
-                                  onClick={() => handleDelete(item)}
+                                  // onClick={() => handleDelete(item)}
                                   class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                   aria-label="Delete"
                                 >

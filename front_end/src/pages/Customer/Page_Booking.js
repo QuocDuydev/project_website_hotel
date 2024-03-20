@@ -6,6 +6,8 @@ import { Navbars } from "../../components/Navbar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AuthContext from "../../context/AuthContext";
+import jwtDecode from "jwt-decode";
+import { useAccessToken } from "../../components/ultiti";
 import {
   Card,
   Input,
@@ -28,9 +30,11 @@ function Booking() {
     rating: "",
     dateadded: "",
   });
-  const token = localStorage.getItem("authTokens"); // Lấy token lưu trữ
-  const { authTokens } = useContext(AuthContext);
+  const token = useAccessToken(); // Lấy token lưu trữ
+  const decodedToken = jwt_decode(token);
+  const userId = decodedToken.user_id;
   const [booking, setBooking] = useState({
+    user: userId,
     hotel: hotel_id,
     room: room_id,
     name: "",
@@ -50,6 +54,7 @@ function Booking() {
   const handleCreate = async () => {
     try {
       const formData = new FormData();
+      formData.append('user', booking.user);
       formData.append('hotel', booking.hotel);
       formData.append('room', booking.room);
       formData.append('name', booking.name);
@@ -67,8 +72,8 @@ function Booking() {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${authTokens.access}`,
-            
+            'Authorization': `Bearer ${token}`,
+
           },
         }
       );
@@ -158,7 +163,11 @@ function Booking() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => {
         // console.log("Hotel Data:", response.data);
         setHotels(response.data);
@@ -171,7 +180,11 @@ function Booking() {
 
     // Fetch rooms for the hotel
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/${room_id}`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/${room_id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => {
         setRooms(response.data[0]);
         console.log("Room Data:", response.data);

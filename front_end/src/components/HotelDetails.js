@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from 'react-router-dom';
+import { useAccessToken } from "./ultiti";
 import {
   Card,
   CardBody,
@@ -11,6 +12,7 @@ import {
   Rating
 } from "@material-tailwind/react";
 function HotelComponent() {
+  let token = useAccessToken()
   const { hotel_id } = useParams();
   const [rooms, setRooms] = useState([]);
   const [hotels, setHotels] = useState({
@@ -32,7 +34,11 @@ function HotelComponent() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/` , {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
       .then((response) => {
         console.log("Hotel Data:", response.data);
         setHotels(response.data);
@@ -44,7 +50,11 @@ function HotelComponent() {
 
     // Fetch rooms for the hotel
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/`)
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/` , {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
       .then((response) => {
         setRooms(response.data);
         console.log("Room Data:", response.data);

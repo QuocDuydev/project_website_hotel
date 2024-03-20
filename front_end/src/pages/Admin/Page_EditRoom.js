@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import  Header_Admin  from "../../components/Admin/Header";
 import  Sidebar_Admin  from "../../components/Admin/SideBar";
+import { useAccessToken } from "../../components/ultiti";
 import axios from "axios";
 import {
     Card,
@@ -13,6 +14,7 @@ import {
   } from "@material-tailwind/react";
   
 function EditRoom () {
+  let token = useAccessToken()
   const {room_id}  = useParams();
   const [hotel, setHotel] = useState([]);
   const [room, setRoom] = useState({
@@ -29,7 +31,11 @@ function EditRoom () {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-    .get(`http://localhost:8000/api/hotels/`)
+    .get(`http://localhost:8000/api/hotels/`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
     .then((response) => {
       setHotel(response.data);
       
@@ -40,7 +46,11 @@ function EditRoom () {
     });
 
     axios
-      .get(`http://localhost:8000/api/rooms/${room_id}/`)
+      .get(`http://localhost:8000/api/rooms/${room_id}/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
       .then((response) => {
         setRoom(response.data);
         // console.log(room.roomimage)
@@ -69,7 +79,9 @@ function EditRoom () {
       method: 'put',
       url: `http://localhost:8000/api/rooms/${room_id}/`,
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }, 
+      headers: { 'Content-Type': 'multipart/form-data' ,
+            'Authorization': `Bearer ${token}`
+       }, 
     })
       .then((response) => {
         console.log("Update successful:", response.data);
