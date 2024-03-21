@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
 
                     if (isAllowedAccess) {
                         navigate('/admin');
+                        console.log(isAllowedAccess);
                     } else {
                         navigate('/');
                     }

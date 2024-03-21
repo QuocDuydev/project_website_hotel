@@ -34,11 +34,7 @@ function HotelComponent() {
   useEffect(() => {
     // Fetch hotel details
     axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      .get(`http://localhost:8000/api/hotels/${hotel_id}/`,)
       .then((response) => {
         console.log("Hotel Data:", response.data);
         setHotels(response.data);
@@ -298,7 +294,8 @@ function HotelComponent() {
         className=" mt-[40px] font-bold mb-5">
         Availability Room
       </Typography>
-      {rooms.map(rooms => (
+      {rooms.length > 0 ? (
+      rooms.map(rooms => (
         <div key={rooms.room_id}>
           <Card className="w-full mx-auto mb-2 border-2">
             <CardBody className="m-3 flex">
@@ -410,7 +407,13 @@ function HotelComponent() {
             </CardBody>
           </Card>
         </div>
-      ))}
+      ))) : (
+        <div>
+          <h3 colSpan="6" className="px-4 py-3 text-center text-red-600 font-semibold">
+          Please log in or sign up to view the list of rooms and make a booking!
+          </h3>
+        </div>)}
+      
     </div>
   );
 } export default HotelComponent;

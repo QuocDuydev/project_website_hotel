@@ -17,12 +17,7 @@ import {
     const isConfirmed =  false;
     const refreshList = () => {
       axios
-        .get("http://localhost:8000/api/hotels/", {
-          headers: {
-
-            'Authorization': `Bearer ${token}`
-          }
-        })
+        .get("http://localhost:8000/api/hotels/", )
         .then((res) => setData(res.data))
         .catch((err) => console.log(err));
     };

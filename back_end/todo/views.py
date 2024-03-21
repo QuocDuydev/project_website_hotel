@@ -5,9 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import  IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -30,7 +30,7 @@ class MyTokenObtainView(TokenObtainPairView):
      serializer_class = MyTokenObtainPairSerializer
 
 class UserSignup(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = [permissions.AllowAny]
     def post(self, request):
         clean_data = custom_validation(request.data)
         serializer = UserSignupSerializers(data=clean_data)
@@ -64,20 +64,21 @@ class RoomView(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     queryset = Rooms.objects.all()
 
-class RoomRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-   permission_classes = [permissions.AllowAny]
+class RoomRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):   
    queryset = Rooms.objects.all()
    serializer_class = RoomSerializer
+   permission_classes = [permissions.AllowAny]
 
 class HotelView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = HotelSerializer
     queryset = Hotels.objects.all()
 
-class HotelRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.AllowAny]
+class HotelRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+   
     queryset = Hotels.objects.all()
     serializer_class = HotelSerializer
+    permission_classes = [permissions.AllowAny]
 
 class BookingView(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
@@ -91,7 +92,7 @@ class ListBookingView(generics.ListCreateAPIView):
         user_id = self.request.user.id
         return Booking.objects.filter(user_id=user_id)
 
-class BookingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+class BookingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     def create(self, request):
@@ -101,38 +102,8 @@ class BookingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
         user = request.user
         serializer.save(user_id=user)  
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    # def create(self, request):
-    #     # Trích xuất dữ liệu từ yêu cầu
-    #     hotel_id = request.data.get('hotel_id')
-    #     room_id = request.data.get('room_id')
-    #     name = request.data.get('name')
-    #     email = request.data.get('email')
-    #     phonenumber = request.data.get('phonenumber')
-    #     address = request.data.get('address')
-    #     checkin = request.data.get('checkin')
-    #     checkout = request.data.get('checkout')
-    #     total = request.data.get('total')
-    #     status = request.data.get('status')
-
-    #     # Tạo một bản ghi Booking mới
-    #     booking = Booking.objects.create(
-    #         hotel_id=hotel_id,
-    #         room_id=room_id,
-    #         name=name,
-    #         email=email,
-    #         phonenumber=phonenumber,
-    #         address=address,
-    #         checkin=checkin,
-    #         checkout=checkout,
-    #         total=total,
-    #         status=status
-    #     )
-
-    #     # Serialize dữ liệu và trả về
-    #     serializer = BookingSerializer(booking)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class HotelRoomsListView(APIView):
     permission_classes = [permissions.AllowAny]

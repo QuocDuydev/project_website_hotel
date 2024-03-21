@@ -12,13 +12,13 @@ import {
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
-function ListCustomer() {
+function ListBookings() {
     const [data, setData] = useState([]);
     const isConfirmed =  false;
     let token = useAccessToken()
     const refreshList = () => {
         axios
-            .get("http://localhost:8000/api/users/", {
+            .get("http://localhost:8000/api/bookings/", {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -31,7 +31,7 @@ function ListCustomer() {
         const isConfirmed = window.confirm("Are you sure you want to delete?");
         if (isConfirmed) {
             axios
-                .delete(`http://localhost:8000/api/users/${item.id}/`, {
+                .delete(`http://localhost:8000/api/bookings/${item.booking_id}/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -58,7 +58,7 @@ function ListCustomer() {
                    <Header_Admin/>
                    <div className=" container mb-6 text-red-500">
                    <Typography variant="h4" color="blue-gray">
-                       List Customers
+                       List Bookings
                    </Typography>
                    <div className=" max-w-full px-3 rounded-lg mt-2">      
                            <div class="container px-6 mx-auto grid relative ">
@@ -70,9 +70,9 @@ function ListCustomer() {
                                         class="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                                     >
                                         <th class="px-4 py-3">Name</th>
-                                        <th class="px-4 py-3">Username</th>
-                                        <th class="px-4 py-3">Email</th>
-                                        <th class="px-4 py-3">Account type</th>
+                                        <th class="px-4 py-3">Check in</th>
+                                        <th class="px-4 py-3">Check out</th>
+                                        <th class="px-4 py-3">Status</th>
                                         <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
@@ -82,26 +82,26 @@ function ListCustomer() {
                                      {data.map((item) => (
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         
-                                        <td class="px-4 py-3" key={item.id}>
+                                        <td class="px-4 py-3" key={item.booking_id}>
                                             <div class="flex items-center text-sm">
                                                 <div>
                                                     <p class="font-semibold">{item.name}</p>   
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.username}
+                                        <td class="px-4 py-3 text-sm" key={item.booking_id}>
+                                            {item.checkin}
                                         </td>
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.email}
+                                        <td class="px-4 py-3 text-sm" key={item.booking_id}>
+                                            {item.checkout}
                                         </td>
                                        
-                                        <td class="px-4 py-3 text-sm" key={item.id}>
-                                            {item.account_type}
+                                        <td class="px-4 py-3 text-sm" key={item.booking_id}>
+                                            {item.status}
                                         </td>
                                         <td class="px-4 py-3 ">
                                             <div class=" flex space-x-4 text-sm ml-10">
-                                                <Link to={`/admin/edit-customer/${item.id}`}>
+                                                <Link to={`/admin/edit-booking/${item.booking_id}`}>
                                                     <button
                                                         
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -254,4 +254,4 @@ function ListCustomer() {
               </div>
          </>
         )
-    } export default ListCustomer;
+    } export default ListBookings;

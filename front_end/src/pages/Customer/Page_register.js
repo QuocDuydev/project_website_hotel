@@ -1,111 +1,103 @@
-import React, { Component } from "react";
-import Home from "./Page_Home";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-class Registers extends Component {
+import { Link, useNavigate } from 'react-router-dom';
+import { postUser } from "../../api/user_API";
+import { useAccessToken } from "../../components/ultiti";
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeItem: {
-                username: "",
-                email: "",
-                password: "",
-            },
-            taskList: []
-        };
-    }
-    componentDidMount() {
-        this.refreshList();
-    }
+function Registers() {
+    const [activeItem, setActiveItem] = useState({
+        username: "",
+        email: "",
+        password: "",
+        repassword: "",
+    });
+    const token = useAccessToken();
+    const [passwordsMatch, setPasswordsMatch] = useState(true); 
+    const navigate = useNavigate()
 
-    refreshList = () => {
-        axios   //Axios to send and receive HTTP requests
-            .get("http://localhost:8000/api/users/")
-            .then(res => this.setState({ taskList: res.data }))
-            .catch(err => console.log(err));
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setActiveItem({ ...activeItem, [name]: value });
     };
 
-    handleChange = e => {
-        let { name, value } = e.target;
-        if (e.target.type === "checkbox") {
-            value = e.target.checked;
-        }
-        const activeItem = { ...this.state.activeItem, [name]: value };
-        this.setState({ activeItem })
-    };
-
-    handleCreate = item => {
-        axios
-            .post(`http://localhost:8000/apis/signup/`, item, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Add any other required headers
-                }
-            })
-            .then(res => {
-                this.refreshList();
+    const handleCreate = async (item) => {
+        if (activeItem.password === activeItem.repassword) {
+            // Mật khẩu khớp nhau, tiếp tục xử lý đăng nhập hoặc đăng ký
+            try {
+                await postUser(item.id, token);
                 alert("Register Successfully!");
-            });
-
+                setActiveItem({
+                    username: "",
+                    email: "",
+                    password: "",
+                    repassword: "",
+                });
+                navigate("/login")
+              } catch (error) {
+                console.error("Error create user failed:", error);
+              }
+        } else {
+            // Mật khẩu không khớp nhau, hiển thị thông báo lỗi
+            setPasswordsMatch(false);
+        }
     };
 
+    return (
+        <div className="bg-gradient-to-r from-purple-300 to-blue-200">
+            <div className="w-full mx-auto min-h-screen flex items-center justify-center">
+                <div className="w-[50%] bg-white shadow overflow-hidden sm:rounded-lg px-6 py-4 flex">
 
-    render() {
-        const onSave = this.handleCreate;
-        return (
-            <div className="max-w-md px-3 rounded-lg mx-auto overflow-hidden mt-4 bg-gray-200">
-                <h1 className="w-full px-4 mb-2 rounded border py-4  text-center text-4xl">REGISTER</h1>
-                <div className="flex flex-col mt-2 mb-5">
-                    <div className="relative" />
-                    <h2 className="text-sm text-rigth font-semibold">Username</h2>
-                    <input type="text"
-                        name="username"
-                        className="w-full px-4 mb-3 rounded border py-2"
-                        value={this.state.activeItem.username}
-                        onChange={this.handleChange}
-                        placeholder="Username..." />
-                    {/* <div className="relative" />
-                    <h2 className="text-sm text-rigth font-semibold">Name</h2>
-                    <input type="text"
-                        name="name"
-                        className="w-full px-4 mb-3 rounded border py-2"
-                        value={this.state.activeItem.name}
-                        onChange={this.handleChange}
-                        placeholder="Username..." /> */}
+                    <div className="w-full">
+                        <h3 className="mb-2 text-4xl font-extrabold text-red-500 text-center">Sign Up</h3>
+                        <p className="mb-4 italic font-thin text-center">Enter your necessary information!</p>
 
-                    <div className="relative mb-3" />
-                    <h2 className="text-sm text-rigth font-semibold" >Email</h2>
-                    <input type="text"
-                        name="email"
-                        className="w-full px-4 mb-3 rounded border py-2"
-                        value={this.state.activeItem.email}
-                        onChange={this.handleChange}
-                        placeholder="Email..." />
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-semibold mb-2 text-left">Username</label>
+                            <input type="username"
+                                name="username"
+                                value={activeItem.username}
+                                onChange={handleChange}
+                                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500" placeholder="Enter username ..." />
+                        </div>
 
-                    <div className="relative mb-3" />
-                    <h2 className="text-sm text-rigth font-semibold" >Password</h2>
-                    <input type="password"
-                        name="password"
-                        className="w-full px-4 mb-3 rounded border py-2"
-                        value={this.state.activeItem.password}
-                        onChange={this.handleChange}
-                        placeholder="Password..." />
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-semibold mb-2 text-left">Email</label>
+                            <input type="email"
+                                name="email"
+                                value={activeItem.email}
+                                onChange={handleChange}
+                                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500 " placeholder="Enter email ..." />
 
-                    <div className="relative mb-3" />
-                    <Link to={`/login`} className="py-1 mb-3 px-3 rounded text-center text-white bg-blue-500 shadow-lg shadow-blue-500/50">
-                        <button
-                            type="submit"
+                        </div>
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-semibold mb-2 text-left">Password</label>
+                            <input type="password"
+                                name="password"
+                                value={activeItem.password}
+                                onChange={handleChange}
+                                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500 " placeholder="Enter password ..." />
 
-                            onClick={() => onSave(this.state.activeItem)}
-                        >
-                            Register
-                        </button>
-                    </Link>
-                    <a href="" className="text-sm text-rigth font-semibold text-blue-500">Forgot Password?</a>
-                    <p className="text-sm text-rigth font-semibold"> Already have accounts <Link to={'/login'} class="text-sm text-rigth font-semibold text-red-500"> Login</Link>  nows</p>
+                        </div>
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-semibold mb-2 text-left">Repassword</label>
+                            <input type="password"
+                                name="repassword"
+                                value={activeItem.repassword}
+                                onChange={handleChange}
+                                className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500 " placeholder="Enter Repassword ..." />
+
+                        </div>
+                        {!passwordsMatch && <p className="text-red-500 mb-3">Passwords do not match</p>}
+                        <button type="button"
+                            onClick={handleCreate}
+                            className="w-full bg-blue-500 text-white px-4 mb-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 uppercase">Register</button>
+                        <div className="flex ">
+                            <p className="text-sm mx-auto text-right font-semibold"> Already have accounts <Link to={'/login'} className="text-sm text-right font-semibold text-red-500"> Login</Link> nows</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        )
-    }
-} export default Registers;
+        </div>
+    );
+};
+export default Registers;

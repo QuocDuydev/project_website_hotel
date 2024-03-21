@@ -16,16 +16,7 @@ import {
   Tooltip,
   Rating,
 } from "@material-tailwind/react";
-const isTotalRoomsInRange = (totalRooms, min, max) => {
-  if (min === '' && max === '') {
-    return true;
-  }
 
-  const minRange = parseInt(min) || 0;
-  const maxRange = parseInt(max) || Infinity;
-
-  return totalRooms >= minRange && totalRooms <= maxRange;
-};
 function ListSearch() {
   let token = useAccessToken()
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,13 +25,19 @@ function ListSearch() {
   const [selectedTotalRoomsMin, setSelectedTotalRoomsMin] = useState('');
   const [selectedTotalRoomsMax, setSelectedTotalRoomsMax] = useState('');
   const [selectedRating, setSelectedRating] = useState('');
+  const isTotalRoomsInRange = (totalRooms, min, max) => {
+    if (min === '' && max === '') {
+      return true;
+    }
+  
+    const minRange = parseInt(min) || 0;
+    const maxRange = parseInt(max) || Infinity;
+  
+    return totalRooms >= minRange && totalRooms <= maxRange;
+  };
   useEffect(() => {
     // Fetch hotels data here
-    axios.get("http://localhost:8000/api/hotels/", {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  } )
+    axios.get("http://localhost:8000/api/hotels/",)
       .then((res) => {
         setHotels(res.data);
       })
