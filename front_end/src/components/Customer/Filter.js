@@ -1,22 +1,22 @@
 import {
-    Checkbox,
-    Card,
-    List,
-    ListItem,
-    ListItemPrefix,
-    Typography,
-  } from "@material-tailwind/react";
-import {FaExpandArrowsAlt} from 'react-icons/fa'
-  export function Filters() {
-    return (
-      <Card className=" shadow-none  mt-4">
-        <Typography color="blue-gray" className="font-bold m-1 mb-3">
-                Filter by:
-        </Typography>
-        <Typography color="blue-gray" className="font-bold m-1">
-                Popular filter
-        </Typography>
-        <div className="border-2 rounded-md shadow-sm">
+  Checkbox,
+  Card,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Typography,
+} from "@material-tailwind/react";
+
+export function Filters() {
+  return (
+    <Card className=" shadow-none  mt-4">
+      <Typography color="blue-gray" className="font-bold m-1 mb-3">
+        Filter by:
+      </Typography>
+      <Typography color="blue-gray" className="font-bold m-1">
+        Popular filter
+      </Typography>
+      <div className="border-2 rounded-md shadow-sm">
         <List>
           <ListItem className="p-0">
             <label
@@ -79,12 +79,12 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
             </label>
           </ListItem>
         </List>
-        </div>
-       
-        <Typography color="blue-gray" className="font-bold m-1">
-                Total Room filter
-        </Typography>
-        <div className="border-2 rounded-md shadow-sm">
+      </div>
+
+      <Typography color="blue-gray" className="font-bold m-1">
+        Total Room filter
+      </Typography>
+      <div className="border-2 rounded-md shadow-sm">
         <List>
           <ListItem className="p-0">
             <label
@@ -102,7 +102,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              3 - rooms
+                3 - rooms
               </Typography>
             </label>
           </ListItem>
@@ -122,7 +122,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              5 - rooms
+                5 - rooms
               </Typography>
             </label>
           </ListItem>
@@ -142,16 +142,16 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              7 - rooms
+                7 - rooms
               </Typography>
             </label>
           </ListItem>
         </List>
-        </div>
-        <Typography color="blue-gray" className="font-bold m-1">
-                Rating filter
-        </Typography>
-        <div className="border-2 rounded-md shadow-sm">
+      </div>
+      <Typography color="blue-gray" className="font-bold m-1">
+        Rating filter
+      </Typography>
+      <div className="border-2 rounded-md shadow-sm">
         <List>
           <ListItem className="p-0">
             <label
@@ -169,7 +169,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              1 - start
+                1 - start
               </Typography>
             </label>
           </ListItem>
@@ -189,7 +189,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              2 - start
+                2 - start
               </Typography>
             </label>
           </ListItem>
@@ -209,7 +209,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              3 - start
+                3 - start
               </Typography>
             </label>
           </ListItem>
@@ -229,7 +229,7 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              4 - start
+                4 - start
               </Typography>
             </label>
           </ListItem>
@@ -249,13 +249,13 @@ import {FaExpandArrowsAlt} from 'react-icons/fa'
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-              5 - start
+                5 - start
               </Typography>
             </label>
           </ListItem>
         </List>
-        </div>
-      </Card>
-    );
-  }
-  export default Filters;
+      </div>
+    </Card>
+  );
+}
+export default Filters;

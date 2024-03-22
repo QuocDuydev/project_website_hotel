@@ -1,3 +1,4 @@
+
 import { Typography } from "@material-tailwind/react";
  
 const SITEMAP = [
@@ -19,12 +20,11 @@ const SITEMAP = [
   },
 ];
  
-const currentYear = new Date().getFullYear();
  
 export function FooterWithSitemap() {
   return (
     <footer className="relative w-full">
-      <div className="mx-auto w-full max-w-7xl px-8">
+      <div className="mx-auto w-full max-w-7xl px-8 text-center">
         <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
           {SITEMAP.map(({ title, links }, key) => (
             <div key={key} className="w-full">

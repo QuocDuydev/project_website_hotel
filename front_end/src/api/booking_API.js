@@ -16,6 +16,20 @@ export const getBooking = async (token) => {
         throw error;
     }
 };
+export const postBooking = async (token) => {
+    try {
+        const response = await axios.post(`${baseURL}/bookings/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching booking data:", error);
+        throw error;
+    }
+};
 
 export const deleteBooking = async (bookingId, token) => {
     try {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import { useAccessToken } from "./ultiti";
+import { useAccessToken } from "../ultiti";
+import { getHotel } from "../../api/hotel_API";
 import {
   Card,
   CardHeader,
@@ -12,32 +12,34 @@ import {
   Rating
 } from "@material-tailwind/react";
 
-function CardDefault() {
+function CardHotelHome() {
   let token = useAccessToken()
-  const [data, setData] = useState([]);
-  const isConfirmed = false;
-  const refreshList = () => {
-    axios
-      .get("http://localhost:8000/api/hotels/" ,  )
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  };
-
+  const [hotels, setHotel] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+      
+        const hotelData = await getHotel(token);
+        setHotel(hotelData);
 
-    refreshList();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [token]);
 
-  }, []);
-  const limitedData = data.slice(0, 4);
+  const limitedHotel = hotels.slice(0, 4);
+
   return (
     <>
       <div className=" container mt-6">
         <Typography variant="h4">List Hotel Suggested</Typography>
       </div>
-      <div className="grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
-        {limitedData.map((item) => (
-          <Card className="p-4 text-center bg-white shadow-md rounded-xl" key={item.id}>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
+        {limitedHotel.map((item) => (
+          <Card className="p-4 text-center bg-white shadow-md rounded-xl" key={item.hotel_id}>
             <CardHeader color="blue-gray" className="relative h-56 overflow-hidden">
               <img
                 src={item.hotelimage}
@@ -75,4 +77,4 @@ function CardDefault() {
 
   );
 }
-export default CardDefault;
+export default CardHotelHome;

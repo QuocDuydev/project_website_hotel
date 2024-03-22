@@ -13,7 +13,7 @@ import Error from "./pages/Page_Error.js";
 
 import Home from "./pages/Customer/Page_Home.js";
 import ListSearch from "./pages/Customer/Page_Search.js";
-import HotelDetails from "./pages/Customer/Page_HotelDetails.js";
+import ShowHotelDetails from "./pages/Customer/Page_HotelDetails.js";
 
 import Booking from "./pages/Customer/Page_Booking";
 import ListBooking from "./pages/Customer/Page_ListBooking.js";
@@ -50,7 +50,7 @@ function App() {
 
           <Route path="/" element={<Home />} />
           <Route path="/search-results" element={<ListSearch />} />
-          <Route path="/hotel/:hotel_id" element={<HotelDetails />} />
+          <Route path="/hotel/:hotel_id" element={<ShowHotelDetails />} />
           <Route path="/booking/:hotel_id/:room_id" element={<Booking />} />
           <Route path="/list-booking" element={<ListBooking />} />
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />

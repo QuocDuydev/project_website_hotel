@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../../context/AuthContext";
 import {
   Collapse, // == mobilenav
   Navbar,
@@ -61,33 +61,33 @@ export function Navbars() {
         <div className="flex items-center gap-4 ">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className=" flex items-center gap-4 ">
-          {!user && (
-                <>
-                    <Button
-                        variant="gradient"
-                        size="sm"
-                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                    >
-                        <Link to="/login">Log In</Link>
-                    </Button>
-                    <Button
-                        variant="gradient"
-                        size="sm"
-                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                    >
-                        <Link to="/register">Sign In</Link>
-                    </Button>
-                </>
+            {!user && (
+              <>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                  <Link to="/login">Log In</Link>
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                >
+                  <Link to="/register">Sign In</Link>
+                </Button>
+              </>
             )}
             {user && (
-                <Button
-                    onClick={logoutUser}
-                    variant="gradient"
-                    size="sm"
-                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                >
-                    <Link to="/">Log Out</Link>
-                </Button>
+              <Button
+                onClick={logoutUser}
+                variant="gradient"
+                size="sm"
+                className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+              >
+                <Link to="/">Log Out</Link>
+              </Button>
             )}
           </div>
           <IconButton
@@ -130,41 +130,43 @@ export function Navbars() {
         </div>
       </div>
       <Collapse open={openNav}>
-
-        <div className=" bg-slate-100">
+        <div className="bg-slate-100 ">
           {navList}
-        </div>
-        <div className="flex items-center gap-x-1">
-        {!user && (
-                <>
-                    <Button
-                        variant="gradient"
-                        size="sm"
-                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                    >
-                        <Link to="/login">Log In</Link>
-                    </Button>
-                    <Button
-                        variant="gradient"
-                        size="sm"
-                        className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                    >
-                        <Link to="/register">Sign In</Link>
-                    </Button>
-                </>
-            )}
-            {user && (
+          {!user && (
+            <>
+              <div className="flex justify-center mx-auto">
                 <Button
-                    onClick={logoutUser}
-                    variant="gradient"
-                    size="sm"
-                    className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
+                  color="blue"
+                  size="sm"
+                  className=" mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-blue-200"
                 >
-                    <Link to="/">Log Out</Link>
+                  <Link to="/login">Sign In</Link>
                 </Button>
-            )}
+              </div>
+              <div className="flex justify-center mx-auto">
+                <Button
+                  color="blue"
+                  size="sm"
+                  className=" mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-gray-200"
+                >
+                  <Link to="/register">Sign Up</Link>
+                </Button>
+              </div>
+            </>
+          )}
+          {user && (
+            <div className="flex justify-center mx-auto">
+              <Button
+                onClick={logoutUser}
+                color="blue"
+                size="sm"
+                className="mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-gray-200"
+              >
+                <Link to="/">Log Out</Link>
+              </Button>
+            </div>
+          )}
         </div>
-
       </Collapse>
     </Navbar>
 

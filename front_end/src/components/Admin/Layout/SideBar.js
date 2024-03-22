@@ -14,7 +14,7 @@ import {
     AccordionBody,
 } from "@material-tailwind/react";
 import { ChevronRightIcon, ChevronDownIcon, HomeIcon } from "@heroicons/react/24/outline";
-import { useAccessToken } from "../ultiti";
+import { useAccessToken } from "../../ultiti";
 
 
 function Sidebar_Admin() {
@@ -212,8 +212,6 @@ function Sidebar_Admin() {
 
                 </List>
             </Card>
-
-
         </div>
 
     );

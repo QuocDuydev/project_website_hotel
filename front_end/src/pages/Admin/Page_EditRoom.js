@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import  Header_Admin  from "../../components/Admin/Header";
-import  Sidebar_Admin  from "../../components/Admin/SideBar";
+import  Header_Admin  from "../../components/Admin/Layout/Header";
+import  Sidebar_Admin  from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
 import axios from "axios";
 import {

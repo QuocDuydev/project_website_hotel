@@ -2,11 +2,10 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:8000/api';
 
-export const getRoom = async (selectedHotelId,token) => {
+
+export const getRoominHotel = async (hotelId, token) => {
     try {
-        const response = await axios.get(`${baseURL}/rooms/`,{
-            params: { hotel: selectedHotelId }
-        });
+        const response = await axios.get(`${baseURL}/hotels/${hotelId}/rooms/`);
         return response.data;
 
     } catch (error) {

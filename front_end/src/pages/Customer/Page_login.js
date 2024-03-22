@@ -7,11 +7,9 @@ function Login() {
 
   return (
     <div className="bg-gradient-to-r from-purple-300 to-blue-200">
-      <div className="w-full mx-auto min-h-screen flex items-center justify-center">
-        <form onSubmit={loginUser} className="w-[50%] bg-white shadow overflow-hidden sm:rounded-lg px-6 py-4 ">
-
+      <div className="w-full mx-auto min-h-screen flex items-center justify-center p-3 rounded-lg">
+        <form onSubmit={loginUser} className="w-full bg-white shadow overflow-hidden rounded-xl px-6 py-4 lg:w-[50%] md:w-[70%] sm:w-[50%]">
           <div className="w-full">
-
             <h3 className="mb-2 text-4xl font-extrabold text-red-500 text-center">Sign In</h3>
             <p className="mb-4 italic font-thin text-center">Enter your username and password!</p>
 
@@ -30,9 +28,7 @@ function Login() {
               <a href="" className="text-sm text-left font-semibold mx-auto text-blue-500">Forgot Password?</a>
               <p className="text-sm mx-auto text-right font-semibold"> No account yet? <Link to={'/register'} className="text-sm text-right font-semibold text-red-500"> Register</Link> now</p>
             </div>
-
           </div>
-
         </form>
       </div>
     </div>

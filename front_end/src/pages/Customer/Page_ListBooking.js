@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { Navbars } from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import { Navbars } from "../../components/Customer/Layout/Navbar";
+import Footer from "../../components/Customer/Layout/Footer";
 
 import { useAccessToken } from "../../components/ultiti";
 import { getBooking } from "../../api/booking_API";

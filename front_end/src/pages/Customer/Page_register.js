@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 import { postUser } from "../../api/user_API";
-import { useAccessToken } from "../../components/ultiti";
 
 function Registers() {
     const [activeItem, setActiveItem] = useState({
@@ -11,7 +10,7 @@ function Registers() {
         password: "",
         repassword: "",
     });
-    const token = useAccessToken();
+
     const [passwordsMatch, setPasswordsMatch] = useState(true); 
     const navigate = useNavigate()
 
@@ -20,11 +19,11 @@ function Registers() {
         setActiveItem({ ...activeItem, [name]: value });
     };
 
-    const handleCreate = async (item) => {
+    const handleCreate = async () => {
         if (activeItem.password === activeItem.repassword) {
             // Mật khẩu khớp nhau, tiếp tục xử lý đăng nhập hoặc đăng ký
             try {
-                await postUser(item.id, token);
+                await postUser(activeItem.username, activeItem.email, activeItem.password);
                 alert("Register Successfully!");
                 setActiveItem({
                     username: "",
@@ -32,20 +31,19 @@ function Registers() {
                     password: "",
                     repassword: "",
                 });
-                navigate("/login")
-              } catch (error) {
+                navigate("/login");
+            } catch (error) {
                 console.error("Error create user failed:", error);
-              }
+            }
         } else {
             // Mật khẩu không khớp nhau, hiển thị thông báo lỗi
             setPasswordsMatch(false);
         }
     };
-
     return (
         <div className="bg-gradient-to-r from-purple-300 to-blue-200">
-            <div className="w-full mx-auto min-h-screen flex items-center justify-center">
-                <div className="w-[50%] bg-white shadow overflow-hidden sm:rounded-lg px-6 py-4 flex">
+            <div className="w-full mx-auto min-h-screen flex items-center justify-center p-3">
+                <div className="w-full bg-white shadow overflow-hidden rounded-xl px-6 py-4  lg:w-[50%] md:w-[70%] sm:w-[50%]">
 
                     <div className="w-full">
                         <h3 className="mb-2 text-4xl font-extrabold text-red-500 text-center">Sign Up</h3>
