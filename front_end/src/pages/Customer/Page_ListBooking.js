@@ -6,10 +6,9 @@ import Footer from "../../components/Customer/Layout/Footer";
 import { useAccessToken } from "../../components/ultiti";
 import { getBooking } from "../../api/booking_API";
 import { deleteBooking } from "../../api/booking_API";
-import BookingTable from "../../components/Customer/Booking_Table";
+import ListBookings from "../../components/Customer/List_Booking";
 
-
-function ListBooking() {
+function ShowListBooking() {
   const token = useAccessToken();
   const [booking, setBookings] = useState([]);
 
@@ -50,11 +49,11 @@ function ListBooking() {
       <Navbars />
       <main className="content">
         <div className=" container mx-auto">
-          <BookingTable booking={booking} handleDelete={handleDelete} />
+          <ListBookings booking={booking} handleDelete={handleDelete} />
           <Footer />
         </div>
       </main>
     </>
   );
-} export default ListBooking;
+} export default ShowListBooking;
 

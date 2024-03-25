@@ -36,9 +36,9 @@ function CreateHotelForm() {
     axios
       .get("http://localhost:8000/api/hotels/", {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    })
+      })
       .then((response) => setTaskList(response.data))
       .catch((error) => console.log(error));
   };
@@ -78,8 +78,10 @@ function CreateHotelForm() {
       method: 'post',
       url: `http://localhost:8000/api/hotels/`,
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`} 
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
     })
       .then((response) => {
         console.log("Update successful:", response.data);

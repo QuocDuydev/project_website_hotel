@@ -7,8 +7,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-export function Filters() {
+export function Filters( { handleLocationFilter, handleTotalRoomsFilter, handleRatingFilter }) {
   return (
+    <div className="grid gap-4 relative  col-span-1">
     <Card className=" shadow-none  mt-4">
       <Typography color="blue-gray" className="font-bold m-1 mb-3">
         Filter by:
@@ -27,6 +28,8 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-react"
                   ripple={false}
+                  // checked={selectedLocation === 'Ha Noi'}
+                  onClick={() => handleLocationFilter('Ha Noi')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -47,6 +50,9 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-vue"
                   ripple={false}
+                  // checked={selectedLocation === 'Ho Chi Minh'}
+
+                  onClick={() => handleLocationFilter('Ho Chi Minh')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -54,7 +60,7 @@ export function Filters() {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                Ho Chi Minh City
+                Ho Chi Minh
               </Typography>
             </label>
           </ListItem>
@@ -67,6 +73,8 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-svelte"
                   ripple={false}
+                  // checked={selectedLocation === 'Da Nang'}
+                  onClick={() => handleLocationFilter('Da Nang')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -95,6 +103,8 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-react"
                   ripple={false}
+                  // checked={selectedTotalRooms === '3'}
+                  onClick={() => handleTotalRoomsFilter('1-3')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -102,7 +112,7 @@ export function Filters() {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                3 - rooms
+                1 - 3 rooms
               </Typography>
             </label>
           </ListItem>
@@ -115,6 +125,8 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-vue"
                   ripple={false}
+                  // checked={selectedTotalRooms === '5'}
+                  onClick={() => handleTotalRoomsFilter('4-7')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -122,7 +134,7 @@ export function Filters() {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                5 - rooms
+                4 - 7 rooms
               </Typography>
             </label>
           </ListItem>
@@ -135,6 +147,8 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-svelte"
                   ripple={false}
+                  // checked={selectedTotalRooms === '7'}
+                  onClick={() => handleTotalRoomsFilter('8-10')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -142,7 +156,7 @@ export function Filters() {
                 />
               </ListItemPrefix>
               <Typography color="blue-gray" className="font-medium">
-                7 - rooms
+                8 - 10 rooms
               </Typography>
             </label>
           </ListItem>
@@ -162,6 +176,7 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-react"
                   ripple={false}
+                  onClick={() => handleRatingFilter('1')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -182,6 +197,7 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-vue"
                   ripple={false}
+                  onClick={() => handleRatingFilter('2')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -202,6 +218,7 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-svelte"
                   ripple={false}
+                  onClick={() => handleRatingFilter('3')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -222,6 +239,7 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-svelte"
                   ripple={false}
+                  onClick={() => handleRatingFilter('4')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -242,6 +260,7 @@ export function Filters() {
                 <Checkbox
                   id="vertical-list-svelte"
                   ripple={false}
+                  onClick={() => handleRatingFilter('5')}
                   className="hover:before:opacity-0"
                   containerProps={{
                     className: "p-0",
@@ -256,6 +275,7 @@ export function Filters() {
         </List>
       </div>
     </Card>
+  </div>
   );
 }
 export default Filters;

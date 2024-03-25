@@ -1,37 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Navbars } from "../../components/Customer/Layout/Navbar";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useAccessToken } from "../../components/ultiti";
+import { postBooking } from "../../api/booking_API";
+import { getHoteldetail } from "../../api/hotel_API";
+import { getRoomdetailinHotel } from "../../api/room_in_hotel_API";
 import {
-  Card,
-  Input,
-  Button,
-  Typography,
-  Rating,
   Alert
 } from "@material-tailwind/react";
+import CardLeftBooking from "../../components/Customer/Card_Left_Booking";
+import CardRightBooking from "../../components/Customer/Card_Right_Booking";
 
 function Booking() {
   const { hotel_id, room_id } = useParams();
-  const navigate = useNavigate();
-  const [rooms, setRooms] = useState([]);
-  const [hotels, setHotels] = useState({
-    hotelname: "",
-    hotelimage: null,
-    descriptions: "",
-    totalroom: "",
-    roommap: "",
-    location: "",
-    rating: "",
-    dateadded: "",
-  });
   const token = useAccessToken(); // Lấy token lưu trữ
   const decodedToken = jwt_decode(token);
   const userId = decodedToken.user_id;
+  const navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  const [hotels, setHotels] = useState([]);
   const [booking, setBooking] = useState({
     user: userId,
     hotel: hotel_id,
@@ -43,51 +32,9 @@ function Booking() {
     checkin: "",
     checkout: "",
     total: 0,
-    status: "",
   });
+
   const [CreateSuccess, setCreateSuccess] = useState(false);
-  // const history= useHistory();
-  const [totalPrice, setTotalPrice] = useState(0);
-
-
-  const handleCreate = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('user', booking.user);
-      formData.append('hotel', booking.hotel);
-      formData.append('room', booking.room);
-      formData.append('name', booking.name);
-      formData.append('email', booking.email);
-      formData.append('phonenumber', booking.phonenumber);
-      formData.append('address', booking.address);
-      formData.append('checkin', formatDate(booking.checkin));
-      formData.append('checkout', formatDate(booking.checkout));
-      formData.append('total', totalPrice);
-      formData.append('status', booking.status);
-
-      const response = await axios.post(
-        `http://localhost:8000/api/bookings/`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`,
-
-          },
-        }
-      );
-
-      console.log('Create successful:', response.data);
-      setCreateSuccess(true);
-      setTimeout(() => {
-        navigate('/list-booking');
-        setCreateSuccess(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Create failed:', error);
-      // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
-    }
-  };
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -110,49 +57,69 @@ function Booking() {
   };
 
   const calculateNumberOfDays = () => {
-    if (!booking.checkin || !booking.checkout) return 0;
+    // Kiểm tra xem booking có tồn tại không
+    if (!booking || !booking.checkin || !booking.checkout) return 0;
+
+    // Lấy giá trị checkin và checkout từ state booking
+    const { checkin, checkout } = booking;
+
+    // Tính số ngày giữa checkin và checkout
     const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-    const numberOfDays = Math.round(Math.abs((new Date(booking.checkout) - new Date(booking.checkin)) / oneDay));
+    const numberOfDays = Math.round(Math.abs((new Date(checkout) - new Date(checkin)) / oneDay));
+
     return numberOfDays;
   };
-  useEffect(() => {
-    const numberOfDays = calculateNumberOfDays();
-    const pricePerNight = rooms.roomprice;
-    const totalPrice = numberOfDays * pricePerNight;
-    setTotalPrice(totalPrice);
-  }, [booking.checkin, booking.checkout, rooms.roomprice]);
+  const totalPrice = rooms.reduce((acc, room) => acc + room.roomprice, 0) * calculateNumberOfDays();
+
+  const handleCreate = async () => {
+    try {
+      const bookingData = {
+        user: booking.user,
+        hotel: booking.hotel,
+        room: booking.room,
+        name: booking.name,
+        email: booking.email,
+        phonenumber: booking.phonenumber,
+        address: booking.address,
+        checkin: formatDate(booking.checkin),
+        checkout: formatDate(booking.checkout),
+        total: totalPrice,
+        status: booking.status,
+      };
+
+      const response = await postBooking(token, bookingData);
+
+      console.log('Create successful:', response.data);
+      setCreateSuccess(true);
+      setBooking(response.data);
+      setTimeout(() => {
+        navigate('/list-booking');
+        setCreateSuccess(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Create failed:', error);
+      // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
+    }
+  };
 
   useEffect(() => {
     // Fetch hotel details
-    axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        // console.log("Hotel Data:", response.data);
-        setHotels(response.data);
-        window.scrollTo(0, 0);
-        console.log(room_id)
-      })
-      .catch((error) => {
-        console.error("Error fetching hotel data:", error);
-      });
+    const fetchData = async () => {
+      try {
 
-    // Fetch rooms for the hotel
-    axios
-      .get(`http://localhost:8000/api/hotels/${hotel_id}/rooms/${room_id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        setRooms(response.data[0]);
-        console.log("Room Data:", response.data);
-      })
-      .catch((err) => console.log(err));
-  }, [hotel_id, room_id]);
+        const [hotelData, roomData] = await
+          Promise.all([getHoteldetail(hotel_id, token),
+          getRoomdetailinHotel(hotel_id, room_id, token)]);
+
+        setHotels(hotelData);
+        setRooms(roomData);
+        console.log(roomData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [hotel_id, room_id, token]);
 
   return (
     <>
@@ -166,303 +133,10 @@ function Booking() {
       )}
       <div className="grid grid-cols-6">
         <div className="grid gap-4 relative col-span-2  ">
-          <div className=" max-w-full px-3 rounded-lg mt-2 mb-3 ">
-            <div className="mb-1 w-full h-full p-4">
-              <div className=" border-2 px-3 py-3 rounded-md">
-                {hotels.rating && (
-                  <Rating
-                    value={hotels.rating}
-                    unratedColor="red"
-                    ratedColor="red"
-                    readonly
-                  />
-                )}
-                <Typography
-                  variant="h4"
-                  color="blue-gray"
-                  className="mb-2 text-blue-700"
-                >
-                  {hotels.hotelname}
-                </Typography>
-                <div className=" flex mt-1">
-
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                  </svg>
-
-                  <Typography variant="h6" color="blue-gray" className="ml-1">{hotels.roommap} - {hotels.location}</Typography>
-                </div>
-              </div>
-
-              <div className=" border-2 px-3 py-3 rounded-md mt-3">
-                <Typography
-                  variant="h5"
-                  color="blue-gray"
-                  className="mb-3"
-                >
-                  Your booking details
-                </Typography>
-                <div className=" ">
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2 text-blue-700"
-                  >
-                    Check in:
-                  </Typography>
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2  ml-2  "
-                  >
-                    <DatePicker className="text-black" name="checkin" selected={booking.checkin ? new Date(booking.checkin) : null} onChange={(date) => setBooking((prevBooking) => ({ ...prevBooking, checkin: date }))} dateFormat="dd/MM/yyyy" />
-                  </Typography>
-                </div>
-                <div className=" ">
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2 text-blue-700"
-                  >
-                    Check out:
-                  </Typography>
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2  ml-2"
-                  >
-                    <DatePicker name="checkout" selected={booking.checkout ? new Date(booking.checkout) : null} onChange={(date) => setBooking((prevBooking) => ({ ...prevBooking, checkout: date }))} dateFormat="dd/MM/yyyy" />
-                  </Typography>
-                </div>
-                <div class="border-b mb-2"></div>
-                <div className=" flex">
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2 text-blue-700"
-                  >
-                    Total length of stay:
-                  </Typography>
-                  <Typography
-                    variant="h3"
-                    color="blue-gray"
-                    className="mb-2  ml-2"
-                  >
-                    {calculateNumberOfDays()} nights
-                  </Typography>
-                </div>
-
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className=" text-red-600"
-
-                >
-                  Price room/nights: {rooms.roomprice}$
-                </Typography>
-
-
-              </div>
-
-              <div className=" border-2 px-3 py-3 rounded-md mt-3">
-
-                <Typography
-                  variant="h4"
-                  color="blue-gray"
-                  className="mb-2 uppercase"
-                >
-                  Totals
-                </Typography>
-                <div className="px-2 bg-slate-300 text-center">
-                  <Typography
-                    variant="h5"
-                    name="total"
-                    color="blue-gray"
-                    className="mb-2 uppercase"
-                  >
-                    {totalPrice} $
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </div>
+          <CardLeftBooking booking={booking} setBooking={setBooking} rooms={rooms} hotels={hotels} calculateNumberOfDays={calculateNumberOfDays} />
         </div>
         <div className="grid gap-4 relative col-span-4 ml-3 mb-3 mt-4">
-          <div className=" max-w-full px-3 rounded-lg mt-2 ">
-            <div className=" border-2 px-3 py-3 rounded-md ">
-              <Typography
-                variant="h5"
-                color="blue-gray"
-                className="mb-3"
-              >
-                Your rooms details
-              </Typography>
-              <div className="flex">
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2 text-blue-700"
-                >
-                  Rooms Name:
-                </Typography>
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2  ml-2 "
-                >
-                  {rooms.roomname}
-                </Typography>
-              </div>
-              <div className=" flex ">
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2 text-blue-700"
-                >
-                  Descriptions:
-                </Typography>
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2  ml-2"
-                >
-                  {typeof rooms.descriptions === 'string' ? rooms.descriptions.split(' ').slice(0, 25).join(' ') : ''}
-                </Typography>
-              </div>
-              <div class="border-b mb-2"></div>
-              <div className=" flex">
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2 text-blue-700"
-                >
-                  Number of guests
-                </Typography>
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="mb-2  ml-2"
-                >
-                  <span className="mx-auto px-2 py-1 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{rooms.roomoccupancy} - person</span>
-                </Typography>
-              </div>
-
-              <Typography
-                variant="h3"
-                color="blue-gray"
-                className=" text-red-600"
-
-              >
-                Price room/nights: {rooms.roomprice}$
-              </Typography>
-
-
-            </div>
-            <Card color="transparent" shadow={false}>
-              <form>
-                <div className="flex mx-auto ">
-                  <div className="mb-1 w-1/2 p-4">
-                    <div>
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="mb-2"
-                      >
-                        Full Name
-                      </Typography>
-
-                      <Input
-                        type="text"
-                        size="lg"
-                        name="name"
-                        value={booking.name}
-                        onChange={handleChange}
-                        placeholder="Enter  username..."
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
-
-                    </div>
-                    <div>
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="mb-2 mt-4"
-                      >
-                        Email
-                      </Typography>
-
-                      <Input
-                        type="email"
-                        multiple
-                        size="lg"
-                        name="email"
-                        value={booking.email}
-                        onChange={handleChange}
-                        placeholder="Enter email..."
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
-
-                      />
-                    </div>
-
-                  </div>
-                  <div className="mb-1 w-1/2 p-4 ">
-                    <div>
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="mb-2"
-                      >
-                        Phone number
-                      </Typography>
-
-                      <Input
-                        type="number"
-                        multiple
-                        size="lg"
-                        name="phonenumber"
-                        value={booking.phonenumber}
-                        onChange={handleChange}
-                        placeholder="Enter Phone number..."
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                      />
-                    </div>
-                    <div>
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="mb-2 mt-4"
-                      >
-                        Address
-                      </Typography>
-
-                      <Input
-                        type="text"
-                        multiple
-                        size="lg"
-                        name="address"
-                        value={booking.address}
-                        onChange={handleChange}
-                        placeholder="Enter your Address..."
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                      />
-                    </div>
-                  </div>
-                </div>
-                <Button
-                  onClick={handleCreate}
-                  className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
-                  Book nows
-                </Button>
-
-              </form>
-            </Card>
-          </div>
+          <CardRightBooking booking={booking} rooms={rooms} handleChange={handleChange} handleCreate={handleCreate} />
         </div>
       </div>
 

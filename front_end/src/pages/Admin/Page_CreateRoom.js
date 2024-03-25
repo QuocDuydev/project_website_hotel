@@ -100,8 +100,10 @@ function CreateRoomForm() {
       method: 'post',
       url: `http://localhost:8000/api/rooms/`,
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' ,
-            'Authorization': `Bearer ${token}`}, 
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      },
     })
       .then((response) => {
         console.log("Update successful:", response.data);

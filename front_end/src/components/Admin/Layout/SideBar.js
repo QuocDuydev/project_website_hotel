@@ -59,7 +59,7 @@ function Sidebar_Admin() {
 
     return (
         <div className="sticky top-0 z-10 h-max max-w-full rounded">
-            <Card className=" block max-w-[15rem] p-4 h-full bg-white rounded shadow-none" >
+            <Card className=" hidden lg:block max-w-[15rem] p-4 h-full bg-white rounded shadow-none sm:hidden" >
                 <List>
                     <Link to="/admin">
                         <ListItem>
@@ -80,7 +80,7 @@ function Sidebar_Admin() {
                                 <ListItem className="p-0" selected={open === 1}>
                                     <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
 
-                                        <Typography color="blue-gray" className="mr-auto font-normal">
+                                        <Typography color="blue-gray" className="-mr-3 font-normal text-lg">
                                             Manager Customer
                                         </Typography>
                                     </AccordionHeader>
@@ -110,7 +110,7 @@ function Sidebar_Admin() {
                         <ListItem className="p-0" selected={open === 2}>
                             <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
 
-                                <Typography color="blue-gray" className="mr-auto font-normal">
+                                <Typography color="blue-gray" className="mr-auto font-normal text-lg">
                                     Manager Hotel
                                 </Typography>
                             </AccordionHeader>
@@ -150,7 +150,7 @@ function Sidebar_Admin() {
                         <ListItem className="p-0" selected={open === 3}>
                             <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
 
-                                <Typography color="blue-gray" className="mr-auto font-normal">
+                                <Typography color="blue-gray" className="mr-auto font-normal text-lg">
                                     Manager Rooms
                                 </Typography>
                             </AccordionHeader>
@@ -190,7 +190,7 @@ function Sidebar_Admin() {
                         <ListItem className="p-0" selected={open === 4}>
                             <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
 
-                                <Typography color="blue-gray" className="mr-auto font-normal">
+                                <Typography color="blue-gray" className="mr-auto font-normal text-lg">
                                     Manager Booking
                                 </Typography>
                             </AccordionHeader>
@@ -199,7 +199,7 @@ function Sidebar_Admin() {
                             <List className="p-0">
                                 <Link to="/admin/list-booking">
                                     <ListItem>
-                                        <ListItemPrefix>
+                                        <ListItemPrefix >
                                             <ChevronRightIcon strokeWidth={4} className="h-3 w-5" />
                                         </ListItemPrefix>
                                         List Booking
