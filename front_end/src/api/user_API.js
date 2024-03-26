@@ -18,6 +18,21 @@ export const getUser = async (token) => {
     }
 };
 
+export const getUserId = async (userId, token) => {
+    try {
+        const response = await axios.get(`${baseURLs}/users/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user by id:", error);
+        throw error;
+    }
+};
+
 export const postUser = async (username, email, password) => {
     try {
         const response = await axios.post(`${baseURL}/signup/`, {
@@ -36,6 +51,21 @@ export const postUser = async (username, email, password) => {
     }
 };
 
+export const putUser = async (userId, token) => {
+    try {
+        const response = await axios.put(`${baseURLs}/users/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error updating user:", error);
+        throw error;
+    }
+};
+
 export const deleteUsers = async (userId, token) => {
     try {
         const response = await axios.delete(`${baseURLs}/users/${userId}/`, {
@@ -45,7 +75,7 @@ export const deleteUsers = async (userId, token) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error deleting booking:", error);
+        console.error("Error deleting user:", error);
         throw error;
     }
 };

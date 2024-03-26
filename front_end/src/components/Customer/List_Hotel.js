@@ -37,6 +37,7 @@ function ListHotel({ filteredHotels }) {
                                                 unratedColor="red"
                                                 ratedColor="red"
                                                 readonly
+                                                className="flex justify-end"
                                             />
                                         </>
                                     )}

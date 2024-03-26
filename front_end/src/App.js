@@ -25,19 +25,19 @@ import AdminHome from "./pages/Admin/Page_AdminHome.js";
 import ListCustomer from "./pages/Admin/Page_ListCustomer.js";
 import EditCustomer from "./pages/Admin/Page_EditCustomer.js";
 
-import CreateHotelForm from "./pages/Admin/Page_CreateHotel.js";
+import CreateHotel from "./pages/Admin/Page_CreateHotel.js";
 import ListHotelAdmin from "./pages/Admin/Page_ListHotel.js";
 import EditHotel from "./pages/Admin/Page_EditHotel.js";
 
-import CreateRoomForm from "./pages/Admin/Page_CreateRoom.js";
+import CreateRoom from "./pages/Admin/Page_CreateRoom.js";
 import ListRoom from "./pages/Admin/Page_ListRoom.js";
 import EditRoom from "./pages/Admin/Page_EditRoom.js";
 
 import ListBookings from "./pages/Admin/Page_ListBooking_Admin.js";
-import EditBookings from "./pages/Admin/Page_EditBooking.js";
+import EditBookings from "./pages/Admin/Page_EditBooking_Admin.js";
 
 function App() {
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin] = useState(true);
 
   return (
     <Router>
@@ -56,10 +56,10 @@ function App() {
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />
 
           <Route path="/admin" element={<AdminRoute element={<AdminHome />} isAdmin={isAdmin} />} />
-          <Route path="/admin/create-room" element={<AdminRoute element={<CreateRoomForm />} isAdmin={isAdmin} />} />
-          <Route path="/admin/list-room" element={<AdminRoute element={<ListRoom />} isAdmin={isAdmin} />} />
-          <Route path="/admin/edit-room/:room_id" element={<AdminRoute element={<EditRoom />} isAdmin={isAdmin} />} />
-          <Route path="/admin/create-hotel" element={<AdminRoute element={<CreateHotelForm />} isAdmin={isAdmin} />} />
+          <Route path="/admin/:hotel_id/create-rooms" element={<AdminRoute element={<CreateRoom />} isAdmin={isAdmin} />} />
+          <Route path="/admin/:hotel_id/list-rooms" element={<AdminRoute element={<ListRoom />} isAdmin={isAdmin} />} />
+          <Route path="/admin/:hotel_id/edit-room/:room_id" element={<AdminRoute element={<EditRoom />} isAdmin={isAdmin} />} />
+          <Route path="/admin/create-hotel" element={<AdminRoute element={<CreateHotel />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-hotel" element={<AdminRoute element={<ListHotelAdmin />} isAdmin={isAdmin} />} />
           <Route path="/admin/edit-hotel/:hotel_id" element={<AdminRoute element={<EditHotel />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-customer" element={<AdminRoute element={<ListCustomer />} isAdmin={isAdmin} />} />

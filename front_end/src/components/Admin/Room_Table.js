@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 
-function HotelTable({ hotels, handleDelete }) {
+function RoomTable({ rooms, handleDelete }) {
     return (
         <div className=" container mb-6 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                List Hotels
+            <Typography variant="h4" color="blue-gray" className="mr-7">
+                List Rooms
             </Typography>
             <div className=" max-w-full px-3 rounded-lg mt-2">
                 <div className="container px-6 mx-auto grid relative ">
@@ -17,10 +17,9 @@ function HotelTable({ hotels, handleDelete }) {
                                     <tr
                                         className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                                     >
-                                        <th className="px-4 py-3">Rooms</th>
                                         <th className="px-4 py-3">Name</th>
-                                        <th className="px-4 py-3">Location</th>
-                                        <th className="px-4 py-3">Total Rooms</th>
+                                        <th className="px-4 py-3">Price</th>
+                                        <th className="px-4 py-3">Occupancy</th>
                                         <th className="px-4 py-3">Date Added</th>
                                         <th className="px-4 py-3">Actions</th>
                                     </tr>
@@ -28,46 +27,24 @@ function HotelTable({ hotels, handleDelete }) {
                                 <tbody
                                     className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center"
                                 >
-                                    {hotels.map((item) => (
-                                        <tr className="text-gray-700 dark:text-gray-400" key={item.hotel_id}>
-                                            <td className="px-4 py-3" >
-                                                <Link to={`/admin/${item.hotel_id}/list-rooms/`}>
-                                                    <button
+                                    {rooms.map((item) => (
+                                        <tr className="text-gray-700 dark:text-gray-400" key={item.room_id}>
 
-                                                        className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5  rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                        aria-label="Edit"
-                                                    >
-                                                        <svg
-                                                            className="w-5 h-5"
-                                                            aria-hidden="true"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                        >
-                                                            <path
-                                                                fillRule="evenodd"
-                                                                d="M20 4H4C3.44771 4 3 4.44772 3 5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V5C21 4.44771 20.5523 4 20 4ZM4 2C2.34315 2 1 3.34315 1 5V19C1 20.6569 2.34315 22 4 22H20C21.6569 22 23 20.6569 23 19V5C23 3.34315 21.6569 2 20 2H4ZM6 7H8V9H6V7ZM11 7C10.4477 7 10 7.44772 10 8C10 8.55228 10.4477 9 11 9H17C17.5523 9 18 8.55228 18 8C18 7.44772 17.5523 7 17 7H11ZM8 11H6V13H8V11ZM10 12C10 11.4477 10.4477 11 11 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H11C10.4477 13 10 12.5523 10 12ZM8 15H6V17H8V15ZM10 16C10 15.4477 10.4477 15 11 15H17C17.5523 15 18 15.4477 18 16C18 16.5523 17.5523 17 17 17H11C10.4477 17 10 16.5523 10 16Z"
-                                                                clipRule="evenodd"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
-                                                </Link>
-                                               
-                                            </td>
                                             <td className="px-4 py-3" >
                                                 <div className="flex items-center text-sm">
                                                     <div>
-                                                        <p className="font-semibold">{item.hotelname}</p>
+                                                        <p className="font-semibold">{item.roomname}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3 text-sm" >
-                                                {item.location}
+                                                $ {item.roomprice}
                                             </td>
                                             <td className="px-4 py-3 text-xs" >
                                                 <span
                                                     className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
                                                 >
-                                                    {item.totalroom} - rooms
+                                                    {item.roomoccupancy} - person
                                                 </span>
                                             </td>
                                             <td className="px-4 py-3 text-sm" >
@@ -75,7 +52,7 @@ function HotelTable({ hotels, handleDelete }) {
                                             </td>
                                             <td className="px-4 py-3 ">
                                                 <div className=" flex space-x-4 text-sm ml-10">
-                                                    <Link to={`/admin/edit-hotel/${item.hotel_id}`}>
+                                                    <Link to={`/admin/${item.hotel}/edit-room/${item.room_id}`}>
                                                         <button
 
                                                             className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -95,7 +72,7 @@ function HotelTable({ hotels, handleDelete }) {
                                                     </Link>
 
                                                     <button
-                                                        onClick={() => handleDelete(item)}
+                                                        onClick={() => handleDelete(item.room_id)}
                                                         className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Delete"
                                                     >
@@ -127,4 +104,4 @@ function HotelTable({ hotels, handleDelete }) {
         </div>
     );
 }
-export default HotelTable;
+export default RoomTable;

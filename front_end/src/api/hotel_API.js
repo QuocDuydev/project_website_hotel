@@ -24,6 +24,45 @@ export const getHoteldetail = async (hotelId) => {
         throw error;
     }
 };
+export const postHotel = async (token, hotelData) => {
+    try {
+        const formData = new FormData();
+        Object.keys(hotelData).forEach(key => {
+            formData.append(key, hotelData[key]);
+        });
+
+        const response = await axios.post(`${baseURL}/hotels/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error putting hotel data:", error);
+        throw error;
+    }
+};
+
+export const putHotel = async (hotelId, token, hotelData) => {
+    try {
+        const formData = new FormData();
+        Object.keys(hotelData).forEach(key => {
+            formData.append(key, hotelData[key]);
+        });
+
+        const response = await axios.put(`${baseURL}/hotels/${hotelId}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error putting hotel data:", error);
+        throw error;
+    }
+};
 
 export const deleteHotel = async (hotelId, token) => {
     try {
@@ -34,7 +73,7 @@ export const deleteHotel = async (hotelId, token) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error deleting booking:", error);
+        console.error("Error deleting hotel:", error);
         throw error;
     }
 };

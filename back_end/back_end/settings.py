@@ -163,9 +163,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Replace with the actual origin of your frontend
-    # other allowed origins
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
 ]
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

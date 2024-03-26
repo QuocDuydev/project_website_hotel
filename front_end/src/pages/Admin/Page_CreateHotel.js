@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
-import axios from "axios";
 import { useAccessToken } from "../../components/ultiti";
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  Input,
-  Button,
-  Typography,
-  Textarea,
-  Alert
-} from "@material-tailwind/react";
+import { Alert } from "@material-tailwind/react";
+import { postHotel } from "../../api/hotel_API";
+import CreateHotelForm from "../../components/Admin/CreateHotel_Form";
 
-function CreateHotelForm() {
-  let token = useAccessToken()
-  const [activeItem, setActiveItem] = useState({
+function CreateHotel() {
+  const token = useAccessToken()
+  const [hotel, setHotels] = useState({
     hotelname: "",
     hotelimage: "",
     descriptions: "",
@@ -23,83 +17,50 @@ function CreateHotelForm() {
     roommap: "",
     location: "",
     rating: "",
-    dateadded: "",
+    dateadded: new Date().toISOString().split('T')[0],
   });
-  const [taskList, setTaskList] = useState([]);
+
   const navigate = useNavigate();
   const [CreateSuccess, setCreateSuccess] = useState(false);
-  useEffect(() => {
-    refreshList();
-  }, []);
 
-  const refreshList = () => {
-    axios
-      .get("http://localhost:8000/api/hotels/", {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then((response) => setTaskList(response.data))
-      .catch((error) => console.log(error));
-  };
+  const handleCreate = async () => {
+    try {
+      const hotelData = {
+        hotelname: hotel.hotelname,
+        hotelimage: hotel.hotelimage,
+        descriptions: hotel.descriptions,
+        totalroom: hotel.totalroom,
+        roommap: hotel.roommap,
+        location: hotel.location,
+        rating: hotel.rating,
+        dateadded: hotel.dateadded
+      };
 
-  const handleChange = (e) => {
-    const { name, type } = e.target;
-
-    if (type === "file" && e.target.files) {
-      const file = e.target.files[0];
-
-      setActiveItem({
-        ...activeItem,
-        [name]: file,
-      });
-    } else {
-      const value = e.target.value;
-
-      setActiveItem({
-        ...activeItem,
-        [name]: value,
-      });
+      const response = await postHotel( token, hotelData);
+      console.log("Create successful:", response.data);
+      setCreateSuccess(true);
+      setTimeout(() => {
+        setCreateSuccess(false);
+        navigate("/admin/list-hotel");
+      }, 1000);
+    } catch (error) {
+      console.error('Create failed:', error);
     }
   };
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
 
-  const handleCreate = () => {
-    const formData = new FormData();
-    formData.append("hotelname", activeItem.hotelname);
-    formData.append("hotelimage", activeItem.hotelimage);
-    formData.append("descriptions", activeItem.descriptions);
-    formData.append("totalroom", activeItem.totalroom);
-    formData.append("roommap", activeItem.roommap);
-    formData.append("location", activeItem.location);
-    formData.append("rating", activeItem.rating);
-    formData.append("dateadded", activeItem.dateadded);
+    if (name === "hotelimage" && files && files.length > 0) {
 
-    axios({
-      method: 'post',
-      url: `http://localhost:8000/api/hotels/`,
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then((response) => {
-        console.log("Update successful:", response.data);
-        setCreateSuccess(true);
-        setTimeout(() => {
-          setCreateSuccess(false);
-        }, 1000);
+      const file = files[0];
 
-        // Redirect to home page after 5 seconds
-        setTimeout(() => {
-          navigate("/admin/list-hotel");
-        }, 1000);
-        // Optionally, you can reset the form or perform additional actions after a successful update.
-      })
-      .catch((error) => {
-        console.error("Update failed:", error);
-        // Handle errors or provide feedback to the user
-      });
+      setHotels((prevHotel) => ({
+        ...prevHotel,
+        [name]: file,
+      }));
+    } else {
+      setHotels((prevHotel) => ({ ...prevHotel, [name]: value }));
+    };
   };
   return (
     <>
@@ -115,194 +76,10 @@ function CreateHotelForm() {
               Create successfuly !!
             </Alert>
           )}
-          <div className=" container m-4 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-              Create the Hotels
-            </Typography>
-            <div className=" max-w-full px-3 rounded-lg mt-2">
-
-              <Card color="transparent" shadow={false}>
-                <form className=" ">
-                  <div className="flex mx-auto ">
-                    <div className="mb-1 w-1/2 p-4">
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2"
-                        >
-                          Name Hotels
-                        </Typography>
-                        <Input
-                          type="text"
-                          size="lg"
-                          name="hotelname"
-                          value={activeItem.hotelname}
-                          onChange={handleChange}
-                          placeholder="Enter name hotels..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          Images Hotel
-                        </Typography>
-                        <Input
-                          type="file"
-                          multiple
-                          size="lg"
-                          name="hotelimage"
-                          onChange={handleChange}
-                          placeholder="Choose file image..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          Descriptions
-                        </Typography>
-                        <Textarea
-                          type="textarea"
-                          multiple
-                          size="lg"
-                          name="descriptions"
-                          value={activeItem.descriptions}
-                          onChange={handleChange}
-                          placeholder="Enter Descriptions about Rooms..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2"
-                        >
-                          Total Rooms
-                        </Typography>
-                        <Input
-                          type="number"
-                          multiple
-                          size="lg"
-                          name="totalroom"
-                          value={activeItem.totalroom}
-                          onChange={handleChange}
-                          placeholder="Enter total rooms..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
-
-                        />
-                      </div>
-                    </div>
-                    <div className="mb-1 w-1/2 p-4">
-
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          Rooms Maps
-                        </Typography>
-                        <Input
-                          type="text"
-                          multiple
-                          size="lg"
-                          name="roommap"
-                          value={activeItem.roommap}
-                          onChange={handleChange}
-                          placeholder="Enter Room Map..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          Location
-                        </Typography>
-                        <Input
-                          type="text"
-                          multiple
-                          size="lg"
-                          name="location"
-                          value={activeItem.location}
-                          onChange={handleChange}
-                          placeholder="Enter Location hotel..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          Ratings
-                        </Typography>
-                        <Input
-                          type="number"
-                          multiple
-                          size="lg"
-                          name="rating"
-                          value={activeItem.rating}
-                          onChange={handleChange}
-                          placeholder="Enter rating hotel..."
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="mb-2 mt-4"
-                        >
-                          DateAdded Rooms
-                        </Typography>
-                        <Input
-                          type="date"
-                          multiple
-                          size="lg"
-                          name="dateadded"
-                          value={activeItem.dateadded}
-                          onChange={handleChange}
-                          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={handleCreate}
-                    className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
-                    Add nows
-                  </Button>
-                </form>
-              </Card>
-            </div>
-          </div>
-
-
+          <CreateHotelForm hotel={hotel} handleChange={handleChange} handleCreate={handleCreate} />
         </div>
-
-        {/* <Headers/> */}
       </div>
     </>
 
   );
-} export default CreateHotelForm;
+} export default CreateHotel;

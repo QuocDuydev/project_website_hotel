@@ -151,46 +151,6 @@ function Sidebar_Admin() {
                             <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
 
                                 <Typography color="blue-gray" className="mr-auto font-normal text-lg">
-                                    Manager Rooms
-                                </Typography>
-                            </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1">
-                            <List className="p-0">
-                                <Link to="/admin/list-room">
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        List Rooms
-                                    </ListItem>
-                                </Link>
-
-                            </List>
-                            <List className="p-0">
-                                <Link to="/admin/create-room">
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Create Rooms
-                                    </ListItem>
-                                </Link>
-
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
-
-                    <Accordion
-                        open={open === 4}
-                        icon={<ChevronDownIcon
-                            strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`} />}
-                    >
-                        <ListItem className="p-0" selected={open === 4}>
-                            <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
-
-                                <Typography color="blue-gray" className="mr-auto font-normal text-lg">
                                     Manager Booking
                                 </Typography>
                             </AccordionHeader>
@@ -200,7 +160,7 @@ function Sidebar_Admin() {
                                 <Link to="/admin/list-booking">
                                     <ListItem>
                                         <ListItemPrefix >
-                                            <ChevronRightIcon strokeWidth={4} className="h-3 w-5" />
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                         </ListItemPrefix>
                                         List Booking
                                     </ListItem>

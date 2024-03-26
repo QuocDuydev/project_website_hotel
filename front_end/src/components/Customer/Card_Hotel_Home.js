@@ -53,7 +53,7 @@ function CardHotelHome() {
                   {item.hotelname}
                 </Typography>
 
-                <Rating value={item.rating} unratedColor="red" ratedColor="red" readonly />
+                <Rating value={item.rating} unratedColor="red" ratedColor="red" readonly className="flex justify-center" />
                 <div className=" flex mt-1">
 
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

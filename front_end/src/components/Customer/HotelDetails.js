@@ -54,6 +54,7 @@ function HotelDetails() {
                       unratedColor="red"
                       ratedColor="red"
                       readonly
+                      className="flex justify-center"
                     />
                   </>
                 )}
