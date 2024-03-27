@@ -13,6 +13,7 @@ function CardLeftBooking({ booking, setBooking, rooms, hotels, calculateNumberOf
                     value={hotels.rating}
                     unratedColor="red"
                     ratedColor="red"
+                    className="flex justify-center" 
                     readonly
                   />
                 )}

@@ -5,8 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
 import CreateRoomForm from "../../components/Admin/CreateRoom_Form";
-import { postRoom } from "../../api/room_in_hotel_API";
-import { getHotel, getHoteldetail } from "../../api/hotel_API";
+import { getRoominHotel, postRoom } from "../../api/room_in_hotel_API";
+import { getHoteldetail } from "../../api/hotel_API";
 
 function CreateRoom() {
   let token = useAccessToken()
@@ -65,26 +65,39 @@ function CreateRoom() {
 
   const handleCreate = async () => {
     try {
-      // const hotelDetail = await getHotelDetail(hotel_id);
-      // const totalRooms = hotelDetail.totalroom;
-      // const currentRooms = ;
-      const RoomData = {
-        hotel: room.hotel,
-        roomname: room.roomname,
-        roomimage: room.roomimage,
-        descriptions:  room.descriptions,
-        roomprice: room.roomprice,
-        roomnumber: room.roomnumber,
-        roomoccupancy: room.roomoccupancy,
-        dateadded: room.dateadded
-      };
-      const response = await postRoom( token, RoomData);
-      console.log("Create successful:", response.data);
-      setCreateSuccess(true);
-      setTimeout(() => {
-        setCreateSuccess(false);
-        navigate(`/admin/${hotel_id}/list-rooms/`);
-      }, 1000);
+      // Fetch hotel detail including total room count
+      const hotelDetail = await getHoteldetail(hotel_id);
+      const totalRoomsAllowed = hotelDetail.totalroom;
+
+      // Fetch current rooms in the hotel
+      const roomsInHotel = await getRoominHotel(hotel_id);
+      const currentRoomsCount = roomsInHotel.length;
+      console.log(currentRoomsCount);
+     
+      if (totalRoomsAllowed > currentRoomsCount) {
+       
+        const RoomData = {
+          hotel: room.hotel,
+          roomname: room.roomname,
+          roomimage: room.roomimage,
+          descriptions: room.descriptions,
+          roomprice: room.roomprice,
+          roomnumber: room.roomnumber,
+          roomoccupancy: room.roomoccupancy,
+          dateadded: room.dateadded
+        };
+        const response = await postRoom(token, RoomData);
+        console.log("Create successful:", response.data);
+        setCreateSuccess(true);
+        setTimeout(() => {
+          setCreateSuccess(false);
+          navigate(`/admin/${hotel_id}/list-rooms/`);
+        }, 1000);
+      } else {
+        alert("Cannot add room. Maximum room limit reached!");
+        // Display message indicating maximum rooms reached
+        console.log("Cannot add room. Maximum room limit reached.");
+      }
     } catch (error) {
       console.error('Create failed:', error);
     }

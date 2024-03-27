@@ -45,25 +45,12 @@ class Users(AbstractBaseUser, PermissionsMixin):
     objects = AppUserManager()
     def __str__(self):
         return self.username
-# class Users(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     username = models.CharField(max_length = 100)
-#     name = models.CharField(max_length = 100)
-#     email = models.CharField(max_length = 200)
-#     password = models.CharField(max_length = 100)
-#     joined = models.DateField()
-#     ACCOUNT_TYPES = [
-#         ('user', 'Người dùng'),
-#         ('admin', 'Quản trị viên'),
-#         ('superadmin', 'Quản trị viên cấp cao'),
-#     ]
-#     account_type = models.CharField(
-#         max_length=10,
-#         choices=ACCOUNT_TYPES,
-#         default='user',  # Giá trị mặc định có thể là 'user' hoặc 'admin'
-#     )
+# class HotelImage(models.Model):
+#     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='hotel_images/')
+
 #     def __str__(self):
-#         return f"{self.username}"
+#         return f"Image for {self.hotel.hotelname}"
 class Hotels(models.Model):
     hotel_id = models.AutoField(primary_key=True)
     hotelname = models.CharField(max_length = 100)
