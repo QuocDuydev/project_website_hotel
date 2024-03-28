@@ -25,10 +25,10 @@ function CustomerTable({ users, handleDelete }) {
                                     </tr>
                                 </thead>
                                 <tbody
-                                    className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center"
+                                    className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 "
                                 >
                                     {users.map((item) => (
-                                        <tr className="text-gray-700 dark:text-gray-400" key={item.id}>
+                                        <tr className="text-gray-700 dark:text-gray-400 text-center" key={item.id}>
 
                                             <td className="px-4 py-3" >
                                                 <div className="flex items-center text-sm">

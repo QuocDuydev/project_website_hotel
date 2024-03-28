@@ -71,6 +71,9 @@ function EditBooking() {
         return `${year}-${month}-${day}`;
     };
     const handleUpdate = async () => {
+        if (booking.status === "active") {
+            alert("Cannot update an active booking!");
+          } else {
         try {
             const bookingData = {
               user: booking.user,
@@ -99,6 +102,7 @@ function EditBooking() {
             console.error('Update failed:', error);
             // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
           }  
+        }
     };
     
     const selectedHotel = hotel.find((item) => item.hotel_id === booking.hotel);

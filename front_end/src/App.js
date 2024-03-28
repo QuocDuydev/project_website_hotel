@@ -10,6 +10,7 @@ import AdminRoute from "./context/PrivateRoute.js";
 import Login from "./pages/Customer/Page_Login.js";
 import Register from "./pages/Customer/Page_Register.js";
 import Error from "./pages/Page_Error.js";
+import ShowProfile from "./pages/Customer/Page_Profile.js";
 
 import Home from "./pages/Customer/Page_Home.js";
 import ListSearch from "./pages/Customer/Page_Search.js";
@@ -35,6 +36,8 @@ import EditRoom from "./pages/Admin/Page_EditRoom.js";
 
 import ListBookings from "./pages/Admin/Page_ListBooking_Admin.js";
 import EditBookings from "./pages/Admin/Page_EditBooking_Admin.js";
+import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.js";
+
 
 function App() {
   const [isAdmin] = useState(true);
@@ -47,6 +50,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/error" element={<Error />} />
+          <Route path="/profile/:id" element={<ShowProfile />} />
 
           <Route path="/" element={<Home />} />
           <Route path="/search-results" element={<ListSearch />} />
@@ -56,6 +60,7 @@ function App() {
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />
 
           <Route path="/admin" element={<AdminRoute element={<AdminHome />} isAdmin={isAdmin} />} />
+          <Route path="/admin/profile/:id" element={<AdminRoute element={<ProfileAdmin />} isAdmin={isAdmin} />} />
           <Route path="/admin/:hotel_id/create-rooms" element={<AdminRoute element={<CreateRoom />} isAdmin={isAdmin} />} />
           <Route path="/admin/:hotel_id/list-rooms" element={<AdminRoute element={<ListRoom />} isAdmin={isAdmin} />} />
           <Route path="/admin/:hotel_id/edit-room/:room_id" element={<AdminRoute element={<EditRoom />} isAdmin={isAdmin} />} />

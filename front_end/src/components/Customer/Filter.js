@@ -9,7 +9,7 @@ import {
 
 export function Filters( { handleLocationFilter, handleTotalRoomsFilter, handleRatingFilter }) {
   return (
-    <div className="grid gap-4 relative  col-span-1">
+    <div className=" gap-4 relative  col-span-1 hidden lg:block">
     <Card className=" shadow-none  mt-4">
       <Typography color="blue-gray" className="font-bold m-1 mb-3">
         Filter by:

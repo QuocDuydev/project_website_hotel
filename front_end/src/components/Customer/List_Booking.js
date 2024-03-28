@@ -31,7 +31,7 @@ function ListBookings({ booking, handleDelete }) {
                                 >
                                     {booking.length > 0 ? (
                                         booking.map((item) => (
-                                            <tr className="text-gray-700 dark:text-gray-400" >
+                                            <tr className="text-gray-700 dark:text-gray-400" key={item.booking_id} >
 
                                                 <td className="px-4 py-3" >
                                                     <div className="flex items-center text-sm">

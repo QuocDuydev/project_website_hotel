@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
+import { useAccessToken } from "../../ultiti";
+import jwt_decode from "jwt-decode";
 import {
   Navbar,
   Typography,
@@ -23,6 +25,13 @@ import {
 } from "@heroicons/react/24/solid";
 
 function Header_Admin() {
+  const token = useAccessToken();
+  let id = null;
+  if (token) {
+    const loggedInUser = jwt_decode(token);
+    id = loggedInUser.user_id; 
+  }
+  console.log(id);
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -39,7 +48,7 @@ function Header_Admin() {
         <div className="container mx-auto flex flex-wrap items-center justify-between text-gray-900">
           <Typography
             as="a"
-            href="#"
+            href="/admin"
             className="mr-4 cursor-pointer py-1.5 font-medium text-xl"
           >
             Material Tailwind
@@ -79,7 +88,7 @@ function Header_Admin() {
                     <ListItemPrefix>
                       <UserCircleIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    Profile
+                    <Link to={`/admin/profile/${id}`}>Profile</Link>
                   </ListItem>
                   <ListItem className="hover:bg-gray-200">
                     <ListItemPrefix>
@@ -158,7 +167,7 @@ function Header_Admin() {
                 Search
               </Button>
             </div>
-
+                  
             <List className="p-0 text-black">
               <ListItem className="hover:bg-gray-200">
                 <ListItemPrefix>

@@ -63,7 +63,7 @@ function RoominHotel() {
                                         <CardBody className="m-3 flex">
                                             <img
                                                 src={rooms.roomimage}
-                                                className="h-30 w-1/3 rounded-lg object-cover object-center"
+                                                className="h-30 w-1/3 rounded-lg object-cover object-center hidden lg:block md:block"
                                             />
                                             <div className="m-3">
                                                 <Typography variant="h5" color="blue-gray" className="mb-2 text-blue-800">

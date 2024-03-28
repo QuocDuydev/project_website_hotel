@@ -73,6 +73,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem('authTokens');
         navigate('/');
+        // window.location.reload();
         setLoggedIn(false);
 
     };

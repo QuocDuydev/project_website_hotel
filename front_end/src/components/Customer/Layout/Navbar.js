@@ -1,16 +1,40 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
+import { useAccessToken } from "../../ultiti";
+import jwt_decode from "jwt-decode";
 import {
-  Collapse, // == mobilenav
   Navbar,
   Typography,
   Button,
   IconButton,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+  Avatar,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Collapse,
 
 } from "@material-tailwind/react";
+import {
+  UserCircleIcon,
+  Cog6ToothIcon,
+  PowerIcon,
+  ArrowRightCircleIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/solid";
 
 export function Navbars() {
+  const token = useAccessToken();
+  let id = null;
+  if (token) {
+    const loggedInUser = jwt_decode(token);
+    id = loggedInUser.user_id; 
+  }
+  // console.log(id);
+
   let { user, logoutUser } = useContext(AuthContext)
   const [openNav, setOpenNav] = React.useState(false);
 
@@ -60,35 +84,62 @@ export function Navbars() {
         </Typography>
         <div className="flex items-center gap-4 ">
           <div className="mr-4 hidden lg:block">{navList}</div>
-          <div className=" flex items-center gap-4 ">
-            {!user && (
-              <>
-                <Button
-                  variant="gradient"
-                  size="sm"
-                  className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                >
-                  <Link to="/login">Log In</Link>
-                </Button>
-                <Button
-                  variant="gradient"
-                  size="sm"
-                  className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-                >
-                  <Link to="/register">Sign In</Link>
-                </Button>
-              </>
-            )}
-            {user && (
-              <Button
-                onClick={logoutUser}
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block pb-1 text-red-500 font-semibold rounded-xl hover:bg-gray-200"
-              >
-                <Link to="/">Log Out</Link>
-              </Button>
-            )}
+          <div className=" items-center gap-4 hidden lg:block">
+            <Popover>
+              <PopoverHandler>
+                <Avatar
+                  src="https://docs.material-tailwind.com/img/face-2.jpg"
+                  alt="avatar"
+                  withBorder={true}
+                  className="p-0.5 ml-4 relative bg-green-300 w-10"
+                />
+
+              </PopoverHandler>
+              <PopoverContent>
+                <List className="p-0 text-sm ">
+                  {!user && (
+                    <>
+                      <ListItem className="hover:bg-gray-200">
+                        <ListItemPrefix>
+                          <ArrowRightCircleIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        <Link to="/login"> Sign in </Link>
+                      </ListItem>
+                      <ListItem className="hover:bg-gray-200">
+                        <ListItemPrefix>
+                          <PencilSquareIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        <Link to="/register">Sign up </Link>
+                      </ListItem>
+                    </>
+                  )}
+                  {user && (
+                    <>
+                      <ListItem className="hover:bg-gray-200">
+                        <ListItemPrefix>
+                          <UserCircleIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        <Link to={`/profile/${id}`}>Profile</Link>
+                      </ListItem>
+                      <ListItem className="hover:bg-gray-200">
+                        <ListItemPrefix>
+                          <Cog6ToothIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Setting
+                      </ListItem>
+                      <ListItem className="hover:bg-gray-200">
+                        <ListItemPrefix>
+                          <PowerIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+
+                        <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold">Log Out</Link>
+
+                      </ListItem>
+                    </>
+                  )}
+                </List>
+              </PopoverContent>
+            </Popover>
           </div>
           <IconButton
             variant="text"
@@ -134,37 +185,45 @@ export function Navbars() {
           {navList}
           {!user && (
             <>
-              <div className="flex justify-center mx-auto">
-                <Button
-                  color="blue"
-                  size="sm"
-                  className=" mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-blue-200"
-                >
-                  <Link to="/login">Sign In</Link>
-                </Button>
-              </div>
-              <div className="flex justify-center mx-auto">
-                <Button
-                  color="blue"
-                  size="sm"
-                  className=" mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-gray-200"
-                >
-                  <Link to="/register">Sign Up</Link>
-                </Button>
-              </div>
+              <List className="p-0 text-black">
+                <ListItem className="hover:bg-gray-200">
+                  <ListItemPrefix>
+                    <ArrowRightCircleIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <Link to="/login"> Sign in </Link>
+                </ListItem>
+                <ListItem className="hover:bg-gray-200">
+                  <ListItemPrefix>
+                    <PencilSquareIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  <Link to="/register">Sign up </Link>
+                </ListItem>
+              </List>
             </>
           )}
           {user && (
-            <div className="flex justify-center mx-auto">
-              <Button
-                onClick={logoutUser}
-                color="blue"
-                size="sm"
-                className="mb-2 lg:hidden w-[90%] text-md text-white font-semibold rounded-xl hover:bg-gray-200"
-              >
-                <Link to="/">Log Out</Link>
-              </Button>
-            </div>
+
+            <List className="p-0 text-black">
+              <ListItem className="hover:bg-gray-200">
+                <ListItemPrefix>
+                  <UserCircleIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                <Link to={`/profile/${id}`}>Profile</Link>
+              </ListItem>
+              <ListItem className="hover:bg-gray-200">
+                <ListItemPrefix>
+                  <Cog6ToothIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Settings
+              </ListItem>
+              <ListItem className="hover:bg-gray-200">
+                <ListItemPrefix>
+                  <PowerIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Log Out</Link>
+              </ListItem>
+            </List>
+
           )}
         </div>
       </Collapse>

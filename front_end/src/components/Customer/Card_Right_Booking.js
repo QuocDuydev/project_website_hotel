@@ -7,10 +7,12 @@ import {
   } from "@material-tailwind/react";
 
 function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
+  const { name = '', email = '', phonenumber = '', address = '' } = booking || {};
+  
     return (
-        <div className=" max-w-full px-3 rounded-lg mt-2 ">
+        <div className=" max-w-full px-3 rounded-lg mt-2" >
         {rooms.map((item) => (
-          <div className=" border-2 px-3 py-3 rounded-md ">
+          <div className=" border-2 px-3 py-3 rounded-md"key={item.room_id}>
             <Typography
               variant="h5"
               color="blue-gray"
@@ -52,7 +54,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                 {typeof item.descriptions === 'string' ? item.descriptions.split(' ').slice(0, 25).join(' ') : ''}
               </Typography>
             </div>
-            <div class="border-b mb-2"></div>
+            <div className="border-b mb-2"></div>
             <div className=" flex">
               <Typography
                 variant="h3"
@@ -99,7 +101,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     type="text"
                     size="lg"
                     name="name"
-                    value={booking?.name}
+                    value={booking?.name || ''}
                     onChange={handleChange}
                     placeholder="Enter  username..."
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -123,7 +125,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     multiple
                     size="lg"
                     name="email"
-                    value={booking?.email}
+                    value={booking?.email || ''}
                     onChange={handleChange}
                     placeholder="Enter email..."
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
@@ -147,7 +149,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     multiple
                     size="lg"
                     name="phonenumber"
-                    value={booking?.phonenumber}
+                    value={booking?.phonenumber || ''}
                     onChange={handleChange}
                     placeholder="Enter Phone number..."
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -168,7 +170,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     multiple
                     size="lg"
                     name="address"
-                    value={booking?.address}
+                    value={booking?.address || ''}
                     onChange={handleChange}
                     placeholder="Enter your Address..."
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"

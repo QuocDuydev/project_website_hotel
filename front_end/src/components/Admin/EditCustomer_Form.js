@@ -4,7 +4,6 @@ import {
     Input,
     Button,
     Typography,
-    Select, Option
 } from "@material-tailwind/react";
 
 function EditCustomerForm({ user, handleChange, handleUpdate, }) {
@@ -25,7 +24,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         color="blue-gray"
                                         className="mb-2"
                                     >
-                                        Full Name
+                                        Username
                                     </Typography>
 
                                     <Input
@@ -33,7 +32,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="username"
                                         value={user.username}
-                                        readOnly
+                                        
                                         onChange={handleChange}
                                         placeholder="Enter  username..."
                                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -59,7 +58,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="name"
                                         value={user.name}
-                                        readOnly
+                                       
                                         onChange={handleChange}
                                         placeholder="Enter Full name..."
                                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -81,7 +80,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="email"
                                         value={user.email}
-                                        readOnly
+                                        
                                         onChange={handleChange}
                                         placeholder="Enter email..."
                                         className=" !border-t-blue-gray-200 focus:!border-t-gray-700"

@@ -101,7 +101,7 @@ function ListSearch() {
           <ButtonSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <div className="grid grid-cols-4">
             <Filters handleLocationFilter={handleLocationFilter} handleRatingFilter={handleRatingFilter} handleTotalRoomsFilter={handleTotalRoomsFilter} />
-            <div className="grid gap-4 relative col-span-3  m-4">
+            <div className="grid gap-4 relative col-span-5 m-4 md:col-span-5 lg:col-span-3">
               <ListHotel filteredHotels={filteredHotels} />
             </div>
           </div>

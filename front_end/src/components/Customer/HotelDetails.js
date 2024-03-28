@@ -23,7 +23,7 @@ function HotelDetails() {
 
         const hotelData = await getHoteldetail(hotel_id, token);
         setHotel(hotelData);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
 
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -40,25 +40,23 @@ function HotelDetails() {
         <CardBody className="m-3">
           <div className="m-3">
             <div className="flex">
-              <div className="flex">
-                <Typography variant="h4" color="blue-gray" className="flex mb-2 text-blue-800">
-                  {hotels.hotelname} - {hotels.location}
-                </Typography>
-              </div>
-
-              <Typography className="flex ml-4 mb-2">
-                {hotels.rating && (
-                  <>
-                    <Rating
-                      value={hotels.rating}
-                      unratedColor="red"
-                      ratedColor="red"
-                      readonly
-                      className="flex justify-center"
-                    />
-                  </>
-                )}
+              <Typography variant="h4" color="blue-gray" className="flex mb-2 text-blue-800">
+                {hotels.hotelname} - {hotels.location}
               </Typography>
+
+              <div className=" ml-4 mt-1">
+              {hotels.rating && (
+                  <Rating
+                    value={hotels.rating}
+                    unratedColor="red"
+                    ratedColor="red"
+                    readonly
+                    className="flex justify-center"
+                  />
+                )}
+              </div>
+                
+             
             </div>
 
             <div className=" flex">
@@ -93,11 +91,8 @@ function HotelDetails() {
               </div>
             </div>
             <div>
-              <Typography variant="h4" className=" text-justify mt-3">
-                Descriptions:
-              </Typography>
-              <Typography className=" text-justify mt-1">
-                {hotels.descriptions}
+              <Typography variant="h4" className=" text-justify mt-3 ">
+                Descriptions: <div className=" text-lg font-normal mt-2">{hotels.descriptions}</div>
               </Typography>
             </div>
           </div>
