@@ -16,36 +16,64 @@ import {
 
 function RoominHotel() {
     const { hotel_id } = useParams();
-    let token = useAccessToken()
+    const token = useAccessToken();
     const [rooms, setRooms] = useState([]);
     const [bookedRoomIds, setBookedRoomIds] = useState([]);
-    const [hotels, setHotel] = useState([]);
-    const [booking, setBooking] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // useEffect(() => {
+    //     setIsLoggedIn(!!token);
+    //     const fetchData = async () => {
+    //         try {
+    //             // Fetch hotel and booking data
+    //             const [hotelData, bookingData] = await Promise.all([getRoominHotel(hotel_id, token), getBooking(token)]);
+
+    //             // Extract booked room ids from booking data
+    //             const bookedRoomIds = bookingData.map(booking => booking.room);
+    //             setBookedRoomIds(bookedRoomIds);
+
+    //             // Filter available rooms
+    //             const availableRooms = hotelData.filter(room => !bookedRoomIds.includes(room.room_id));
+    //             setRooms(availableRooms);
+    //             console.log(availableRooms);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, [hotel_id, token]);
 
     useEffect(() => {
         setIsLoggedIn(!!token);
+
         const fetchData = async () => {
             try {
                 // Fetch hotel and booking data
-                const [hotelData, bookingData] = await Promise.all([getRoominHotel(hotel_id, token), getBooking(token)]);
-
+                const [hotelData, bookingData] = await Promise.all([
+                    getRoominHotel(hotel_id),
+                    getBooking(token)
+                ]);
+        
                 // Extract booked room ids from booking data
                 const bookedRoomIds = bookingData.map(booking => booking.room);
-                setBookedRoomIds(bookedRoomIds);
-
+        
                 // Filter available rooms
-                const availableRooms = hotelData.filter(room => !bookedRoomIds.includes(room.room_id));
+                const availableRooms = hotelData.filter(room => {
+                   
+                    return !bookedRoomIds.includes(room.room_id) || 
+                           (bookedRoomIds.includes(room.room_id) && room.status === 'hide');
+                });
+        
                 setRooms(availableRooms);
                 console.log(availableRooms);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        };
+        }
 
         fetchData();
     }, [hotel_id, token]);
-
 
     return (
         <>

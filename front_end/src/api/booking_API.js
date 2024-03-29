@@ -71,9 +71,11 @@ export const putBooking = async (bookingId,token, bookingData) => {
         throw error;
     }
 };
+const st = 'hide'
 export const deleteBooking = async (bookingId, token) => {
     try {
-        const response = await axios.delete(`${baseURL}/bookings/${bookingId}/`, {
+        const response = await axios.patch(`${baseURL}/bookings/${bookingId}/`, {status: st}, {
+            
             headers: {
                 'Authorization': `Bearer ${token}`
             }

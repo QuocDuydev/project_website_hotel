@@ -15,10 +15,12 @@ function ShowListBooking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      
         const bookingData = await getBooking(token);
-    
-        setBookings(bookingData);
+  
+        // Filter out bookings with status === "hide"
+        const visibleBookings = bookingData.filter(booking => booking.status !== "hide");
+        
+        setBookings(visibleBookings);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

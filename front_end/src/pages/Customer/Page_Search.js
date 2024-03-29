@@ -30,6 +30,7 @@ function ListSearch() {
       try {
 
         const hotelData = await getHotel(token);
+        hotelData.sort((a, b) => b.rating - a.rating);
         setHotels(hotelData);
         window.scrollTo(0, 0);
 

@@ -139,6 +139,8 @@ function EditBookingForm({ booking, handleUpdate, handleChange, selectedHotel, s
 
                                         <option value="processing">Processing </option>
                                         <option value="active">Active </option>
+                                        <option value="hide">Hide </option>
+
 
                                     </select>
                                 </div>

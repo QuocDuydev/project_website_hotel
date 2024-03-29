@@ -92,6 +92,7 @@ class Booking(models.Model):
     STATUS_TYPES = [
         ('active', 'Active'),
         ('processing', 'Processing'), 
+        ('hide', 'Hide'), 
     ]
     status = models.CharField(
         max_length=10,

@@ -19,10 +19,10 @@ function CardHotelHome() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      
         const hotelData = await getHotel(token);
+        // Sắp xếp mảng hotels theo số rating từ cao xuống thấp
+        hotelData.sort((a, b) => b.rating - a.rating);
         setHotel(hotelData);
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
