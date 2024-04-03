@@ -2,20 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 
-function CustomerTable({ users, handleDelete }) {
+function CustomerTable({ users, handleDelete, getUsersForPage, currentPage }) {
     return (
-        <div className=" container mb-6 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                List Customers
-            </Typography>
-            <div className=" max-w-full px-3 rounded-lg mt-2">
-                <div className="container px-6 mx-auto grid relative ">
-                    <div className="w-full overflow-hidden rounded-lg shadow-xs">
-                        <div className="w-full overflow-x-auto">
+        <>
+            <div className=" mx-auto mb-4 mt-4">
+                <Typography variant="h4" color="red">
+                    List Customers
+                </Typography>
+            </div>
+            <div className="max-w-full px-3 rounded-lg mt-2 overflow-hidden">
+                <div className="container px-6 mx-auto grid">
+                    <div className="w-full overflow-y-auto h-[360px]">
                             <table className="w-full whitespace-no-wrap">
                                 <thead>
                                     <tr
-                                        className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                                        className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-2 bg-gray-50"
                                     >
                                         <th className="px-4 py-3">Name</th>
                                         <th className="px-4 py-3">Username</th>
@@ -25,10 +26,10 @@ function CustomerTable({ users, handleDelete }) {
                                     </tr>
                                 </thead>
                                 <tbody
-                                    className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 "
+                                    className="bg-gray-100"
                                 >
-                                    {users.map((item) => (
-                                        <tr className="text-gray-700 dark:text-gray-400 text-center" key={item.id}>
+                                    {getUsersForPage(currentPage).map((item) => (
+                                        <tr className="text-gray-700 text-center border-2" key={item.id}>
 
                                             <td className="px-4 py-3" >
                                                 <div className="flex items-center text-sm">
@@ -48,7 +49,7 @@ function CustomerTable({ users, handleDelete }) {
                                                 {item.account_type}
                                             </td>
                                             <td className="px-4 py-3 ">
-                                                <div className=" flex space-x-4 text-sm ml-10">
+                                                <div className=" flex space-x-4 text-sm justify-center">
                                                     <Link to={`/admin/edit-customer/${item.id}`}>
                                                         <button
 
@@ -97,8 +98,7 @@ function CustomerTable({ users, handleDelete }) {
 
                     </div>
                 </div>
-            </div>
-        </div>
+        </>
     );
 }
 export default CustomerTable;

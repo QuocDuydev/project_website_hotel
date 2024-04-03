@@ -18,6 +18,7 @@ from rest_framework import generics
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from .serializers import UserSerializer, RoomSerializer, HotelSerializer, BookingSerializer, UserSignupSerializers
 from .models import Users, Rooms, Hotels, Booking
+from django.http import JsonResponse
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -118,3 +119,12 @@ class RoomstoHotelListView(APIView):
         rooms = Rooms.objects.filter(hotel_id=hotel_id, room_id=room_id)
         serializer = RoomSerializer(rooms, many=True, context={'request': request})
         return Response(serializer.data)
+    
+# def upload_image(request):
+#     if request.method == 'POST' and request.FILES.getlist('roomimage'):
+#         images = request.FILES.getlist('roomimage')
+#         # Xử lý và lưu trữ hình ảnh ở đây
+#         # Trả về URL của các hình ảnh đã tải lên
+#         image_urls = [handle_uploaded_image(image) for image in images]
+#         return JsonResponse({'image_urls': image_urls})
+#     return JsonResponse({'error': 'No image uploaded'})

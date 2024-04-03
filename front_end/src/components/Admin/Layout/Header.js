@@ -27,11 +27,13 @@ import {
 function Header_Admin() {
   const token = useAccessToken();
   let id = null;
+  let username = null;
   if (token) {
     const loggedInUser = jwt_decode(token);
-    id = loggedInUser.user_id; 
+    id = loggedInUser.user_id;
+    username = loggedInUser.username;
   }
-  console.log(id);
+  // console.log(id);
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -51,7 +53,7 @@ function Header_Admin() {
             href="/admin"
             className="mr-4 cursor-pointer py-1.5 font-medium text-xl"
           >
-            Material Tailwind
+            Website Booking
           </Typography>
           <div className="hidden lg:block"></div>
           <div className="hidden items-center gap-x-2 lg:flex">
@@ -74,13 +76,15 @@ function Header_Admin() {
             </div>
             <Popover>
               <PopoverHandler>
-                <Avatar
-                  src="https://docs.material-tailwind.com/img/face-2.jpg"
-                  alt="avatar"
-                  withBorder={true}
-                  className="p-0.5 ml-4 relative bg-green-300 w-10"
-                />
-
+                <div className="flex items-center">
+                  <Avatar
+                    src="http://127.0.0.1:8000/media/room_images/avatar.jpg"
+                    alt="avatar"
+                    withBorder={true}
+                    className="p-0.5 ml-4 relative bg-green-300"
+                  />
+                  <Typography variant="h6" className="ml-2 text-black">{username}</Typography>
+                </div>
               </PopoverHandler>
               <PopoverContent>
                 <List className="p-0 text-sm ">
@@ -101,7 +105,7 @@ function Header_Admin() {
                       <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>
 
-                    <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Log Out</Link>
+                    <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Sign Out</Link>
 
                   </ListItem>
                 </List>
@@ -167,7 +171,7 @@ function Header_Admin() {
                 Search
               </Button>
             </div>
-                  
+
             <List className="p-0 text-black">
               <ListItem className="hover:bg-gray-200">
                 <ListItemPrefix>
@@ -185,7 +189,7 @@ function Header_Admin() {
                 <ListItemPrefix>
                   <PowerIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Log Out</Link>
+                <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Sign Out</Link>
               </ListItem>
             </List>
 

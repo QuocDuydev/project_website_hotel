@@ -16,7 +16,7 @@ export const getlistBooking = async (token) => {
         throw error;
     }
 };
-export const getBooking = async (token) => {
+export const getBookingbyuserid = async (token) => {
     try {
         const response = await axios.get(`${baseURL}/list-booking/`, {
             headers: {
@@ -30,6 +30,7 @@ export const getBooking = async (token) => {
         throw error;
     }
 };
+
 export const getBookingId = async (bookingId, token) => {
     try {
         const response = await axios.get(`${baseURL}/bookings/${bookingId}/`, {
@@ -67,14 +68,29 @@ export const putBooking = async (bookingId,token, bookingData) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error posting booking data:", error);
+        console.error("Error putting booking data:", error);
         throw error;
     }
 };
 const st = 'hide'
-export const deleteBooking = async (bookingId, token) => {
+export const patchBooking = async (bookingId, token) => {
     try {
         const response = await axios.patch(`${baseURL}/bookings/${bookingId}/`, {status: st}, {
+            
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error patch booking:", error);
+        throw error;
+    }
+};
+
+export const deleteBooking = async (bookingId, token) => {
+    try {
+        const response = await axios.delete(`${baseURL}/bookings/${bookingId}/`, {
             
             headers: {
                 'Authorization': `Bearer ${token}`

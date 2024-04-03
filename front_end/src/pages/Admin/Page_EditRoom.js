@@ -20,7 +20,9 @@ function EditRoom () {
     roomprice: "",
     roomnumber: "",
     roomoccupancy: "",
+    room_type: "",
     dateadded: "",
+
   });
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ function EditRoom () {
         roomprice: room.roomprice,
         roomnumber: room.roomnumber,
         roomoccupancy: room.roomoccupancy,
+        room_type: room.room_type,
         dateadded: room.dateadded
       };
 
@@ -70,6 +73,7 @@ function EditRoom () {
     
   };
   const handleChange = (e) => {
+    
     const { name, value, files } = e.target;
   
     if (name === "roomimage" && files && files.length > 0) {
@@ -83,6 +87,11 @@ function EditRoom () {
     } else {
       setRooms((prevRoom) => ({ ...prevRoom, [name]: value }));
     };
+  };
+  const handleSelectChange = (value) => {
+
+    handleChange({ target: { name: "room_type", value } });
+  
   };
   const selectedHotel = hotel.find((item) => item.hotel_id === room.hotel);
   return (
@@ -99,7 +108,7 @@ function EditRoom () {
                 Update successfuly !!
           </Alert>
         )}
-             <EditRoomForm room={room} handleChange={handleChange} handleUpdate={handleUpdate} selectedHotel={selectedHotel}/>             
+             <EditRoomForm room={room} handleChange={handleChange} handleSelectChange={handleSelectChange} handleUpdate={handleUpdate} selectedHotel={selectedHotel}/>             
           </div>
       </div>
     </>

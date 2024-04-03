@@ -46,7 +46,7 @@ export const postUser = async (username, email, password) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error posting user:", error);
         throw error;
     }
 };
@@ -61,7 +61,7 @@ export const putUser = async (userId, token) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error updating user:", error);
+        console.error("Error putting user:", error);
         throw error;
     }
 };

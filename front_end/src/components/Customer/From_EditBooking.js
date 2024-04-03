@@ -4,26 +4,193 @@ import {
     Input,
     Button,
     Typography,
+    Select,
+    Option
 } from "@material-tailwind/react";
 
 function FormEditBooking({ selectedHotel, selectedRoom, booking, handleUpdate, handleChange }) {
     return (
         <>
-            <Typography variant="h4" color="blue-gray">
-                Edit the Bookings
-            </Typography>
+            <div className="mx-auto flex justify-center mb-3">
+                <Typography variant="h4" color="red">
+                    Edit the Bookings
+                </Typography>
+            </div>
             <div className=" max-w-full px-3 rounded-lg mt-2">
 
                 <Card color="transparent" shadow={false}>
                     <form>
-                        <div className="flex mx-auto ">
-                            <div className="mb-1 w-1/2 p-4">
+                        <div className="mx-auto p-4 bg-blue-100 rounded-lg">
+                            {/* <Typography
+                                variant="h5"
+                                color="blue-gray"
+                                className=" text-sm md:text-md lg:text-lg xl:text-lg"
+                            >
+                                Your informations your bookings
+                            </Typography> */}
+                            <div className=" grid grid-cols-6 ">
+                                <div className="grid gap-4 relative col-span-2 px-4">
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Hotel Name:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedHotel ? selectedHotel.hotelname : ''}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Hotels Address:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedHotel ? selectedHotel.roommap : ''}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Location:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedHotel ? selectedHotel.location : ''}
+                                        </Typography>
+                                    </div>
+                                </div>
 
+                                <div className=" grid gap-4 relative col-span-2 px-4">
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Room Name:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedRoom ? selectedRoom.roomname : ''}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Number of guests:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedRoom ? selectedRoom.roomoccupancy : ''} - person
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Room Price:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {selectedRoom ? selectedRoom.roomprice : ''} $
+                                        </Typography>
+                                    </div>
+                                </div>
+
+                                <div className=" grid gap-4 relative col-span-2 px-4">
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Total Amount:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {booking.total} $
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Check in:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {booking.checkin}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex">
+                                        <Typography
+                                            variant="h3"
+                                            color="blue-gray"
+                                            className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+                                        >
+                                            Check out:
+                                        </Typography>
+                                        <Typography
+                                            variant="h5"
+                                            color="blue-gray"
+                                            className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+                                        >
+                                            {booking.checkout}
+                                        </Typography>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex mx-auto">
+                            <div className="mb-1 w-1/2 p-4">
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Full Name
                                     </Typography>
@@ -36,14 +203,15 @@ function FormEditBooking({ selectedHotel, selectedRoom, booking, handleUpdate, h
                                         value={booking.name}
                                         onChange={handleChange}
                                         placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    // readOnly
                                     />
                                 </div>
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Email
                                     </Typography>
@@ -55,88 +223,33 @@ function FormEditBooking({ selectedHotel, selectedRoom, booking, handleUpdate, h
                                         value={booking.email}
                                         onChange={handleChange}
                                         placeholder="Enter price rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-3"
-                                    >
-                                        Hotel Name
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="hotel"
-                                        value={selectedHotel ? selectedHotel.hotelname : ''}
-                                        placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly // Make the input readOnly
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-3"
-                                    >
-                                        Occupancy Room
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="room"
-                                        value={selectedRoom ? selectedRoom.roomoccupancy : ''}
-                                        placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly // Make the input readOnly
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-3"
-                                    >
-                                        Check in
-                                    </Typography>
-
-                                    <Input
-                                        type="date"
-                                        multiple
-                                        size="lg"
-                                        name="checkin"
-                                        value={booking.checkin}
-                                        onChange={handleChange}
-                                        placeholder="Enter Occupancy rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    // readOnly
                                     />
                                 </div>
                             </div>
+
                             <div className="mb-1 w-1/2 p-4">
 
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Phone Number
                                     </Typography>
 
                                     <Input
-                                        type="number"
+                                        type="tel"
                                         multiple
                                         size="lg"
                                         name="phonenumber"
                                         value={booking.phonenumber}
                                         onChange={handleChange}
                                         placeholder="Enter Numbers rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    // readOnly
 
                                     />
 
@@ -145,7 +258,7 @@ function FormEditBooking({ selectedHotel, selectedRoom, booking, handleUpdate, h
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-3"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Address
                                     </Typography>
@@ -158,78 +271,19 @@ function FormEditBooking({ selectedHotel, selectedRoom, booking, handleUpdate, h
                                         value={booking.address}
                                         onChange={handleChange}
                                         placeholder="Enter Numbers rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    // readOnly
                                     />
-
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-3"
-                                    >
-                                        Number Rooms
-                                    </Typography>
-
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="room"
-                                        value={selectedRoom ? selectedRoom.roomnumber : ''}
-                                        onChange={handleChange}
-                                        placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly
-
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-3"
-                                    >
-                                        Total Amount
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="total"
-                                        value={booking.total}
-                                        placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly // Make the input readOnly
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4"
-                                    >
-                                        Check out
-                                    </Typography>
-
-                                    <Input
-                                        type="date"
-                                        multiple
-                                        size="lg"
-                                        name="checkout"
-                                        value={booking.checkout}
-                                        onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly
-                                    />
-
                                 </div>
                             </div>
                         </div>
                         <Button
+                            size="lg"
                             onClick={handleUpdate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
+                            className="mx-auto w-1/4 bg-red-600 uppercase mt-2" fullWidth>
                             Update nows
                         </Button>
+
 
                     </form>
                 </Card>

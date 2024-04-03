@@ -12,10 +12,10 @@ export function GridGallery() {
           Most popular choices for travellers from Vietnam
         </Typography>
       </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 mb-3 ">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mb-3">
         <div className="grid gap-4 relative transform transition-transform hover:scale-105 cursor-pointer">
           <img
-            className="h-auto max-w-full rounded-lg object-cover object-center "
+            className="h-auto w-full rounded-lg object-cover object-center "
             src="https://cf.bstatic.com/xdata/images/city/540x270/688844.jpg?k=02892d4252c5e4272ca29db5faf12104004f81d13ff9db724371de0c526e1e15&o="
             alt="gallery-photo"
           />
@@ -30,7 +30,7 @@ export function GridGallery() {
         </div>
         <div className="grid gap-4 relative  transform transition-transform hover:scale-105 cursor-pointer">
           <img
-            className="h-auto max-w-full rounded-lg object-cover object-center"
+            className="h-auto w-full rounded-lg object-cover object-center"
             src="https://cf.bstatic.com/xdata/images/city/540x270/688893.jpg?k=d32ef7ff94e5d02b90908214fb2476185b62339549a1bd7544612bdac51fda31&o="
             alt="gallery-photo"
           />

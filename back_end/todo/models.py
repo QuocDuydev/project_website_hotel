@@ -74,8 +74,24 @@ class Rooms(models.Model):
     roomnumber = models.IntegerField()
     roomoccupancy = models.IntegerField()
     dateadded = models.DateField()
+    ROOM_TYPES = [
+        ('simple_room', 'Simple Room'),
+        ('double_room', 'Double Room'), 
+        ('family_room', 'Family Room'), 
+    ]
+    room_type = models.CharField(
+        max_length=20,
+        choices=ROOM_TYPES,
+    )
     def __str__(self):
         return f"{self.roomname}"
+
+# class RoomImage(models.Model):
+#     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='room_images/')
+
+#     def __str__(self):
+#         return f"Image for {self.room.roomname}"
     
 class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
@@ -89,6 +105,7 @@ class Booking(models.Model):
     checkin = models.DateField()
     checkout = models.DateField()
     total = models.IntegerField()
+    datebooking = models.DateField()
     STATUS_TYPES = [
         ('active', 'Active'),
         ('processing', 'Processing'), 
@@ -100,4 +117,4 @@ class Booking(models.Model):
         default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
     )
     def __str__(self):
-        return f"{self.id},{self.user}, {self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.status}"   
+        return f"{self.id},{self.user}, {self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.datebooking}, {self.status}"   

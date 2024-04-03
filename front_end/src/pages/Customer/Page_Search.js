@@ -3,7 +3,7 @@ import { Navbars } from "../../components/Customer/Layout/Navbar";
 import Footer from "../../components/Customer/Layout/Footer";
 import { useAccessToken } from "../../components/ultiti";
 import { getHotel } from "../../api/hotel_API";
-import Filters from "../../components/Customer/Filter";
+import Filters from "../../components/Customer/Filter_Hotel";
 import ListHotel from "../../components/Customer/List_Hotel";
 import ButtonSearch from "../../components/Customer/Button_Search";
 
@@ -47,7 +47,20 @@ function ListSearch() {
   }
 
   const handleLocationFilter = (location) => {
-    setSelectedLocation((prevLocation) => (prevLocation === location ? '' : location));
+    setSelectedLocation((prevLocations) => {
+      // Kiểm tra xem vị trí đã được chọn chưa
+      const index = prevLocations.indexOf(location);
+
+      // Nếu vị trí đã được chọn, loại bỏ nó khỏi danh sách
+      if (index !== -1) {
+        const updatedLocations = [...prevLocations];
+        updatedLocations.splice(index, 1);
+        return updatedLocations;
+      } else {
+        // Nếu vị trí chưa được chọn, thêm nó vào danh sách
+        return [...prevLocations, location];
+      }
+    });
   };
 
   const handleTotalRoomsFilter = (totalRooms) => {
@@ -84,14 +97,14 @@ function ListSearch() {
     const matchesSearchTerm = hotelNameWithoutAccents.includes(searchTermWithoutAccents) ||
       locationWithoutAccents.includes(searchTermWithoutAccents);
 
-    const matchesLocation = selectedLocation ? locationWithoutAccents === removeAccents(selectedLocation.toLowerCase()) : true;
+    // Kiểm tra xem vị trí của khách sạn có trùng khớp với vị trí được chọn hay không
+    const matchesLocation = selectedLocation.length > 0 ? selectedLocation.includes(hotel.location) : true;
 
     const matchesTotalRooms = isTotalRoomsInRange(hotel.totalroom, selectedTotalRoomsMin, selectedTotalRoomsMax);
     const matchesRating = selectedRating ? hotel.rating.toString() === selectedRating : true;
 
     return matchesSearchTerm && matchesLocation && matchesTotalRooms && matchesRating;
   });
-
 
 
   return (

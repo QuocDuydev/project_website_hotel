@@ -7,12 +7,14 @@ import {
     Textarea
 } from "@material-tailwind/react";
 
-function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
+function EditHotelForm({ hotel, handleChange, handleUpdate, }) {
     return (
-        <div className=" container m-4 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                Edit the Hotels
-            </Typography>
+        <>
+            <div className="mx-auto mt-4">
+                <Typography variant="h4" color="red">
+                    Edit the Hotels
+                </Typography>
+            </div>
             <div className=" max-w-full px-3 rounded-lg mt-2">
 
                 <Card color="transparent" shadow={false}>
@@ -23,7 +25,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Name Hotels
                                     </Typography>
@@ -34,7 +36,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.hotelname}
                                         onChange={handleChange}
                                         placeholder="Enter name hotels..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -42,7 +44,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Images Hotel
                                     </Typography>
@@ -53,7 +55,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         name="hotelimage"
                                         onChange={handleChange}
                                         placeholder="Choose file image..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 
                                     />
                                 </div>
@@ -61,7 +63,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Descriptions
                                     </Typography>
@@ -73,7 +75,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.descriptions}
                                         onChange={handleChange}
                                         placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 
                                     />
                                 </div>
@@ -81,7 +83,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Total Rooms
                                     </Typography>
@@ -93,7 +95,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.totalroom}
                                         onChange={handleChange}
                                         placeholder="Enter total rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -104,7 +106,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Rooms Maps
                                     </Typography>
@@ -116,7 +118,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.roommap}
                                         onChange={handleChange}
                                         placeholder="Enter Room Map..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -124,7 +126,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Location
                                     </Typography>
@@ -136,7 +138,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.location}
                                         onChange={handleChange}
                                         placeholder="Enter Location hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -144,7 +146,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Ratings
                                     </Typography>
@@ -156,7 +158,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         value={hotel.rating}
                                         onChange={handleChange}
                                         placeholder="Enter rating hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -164,7 +166,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         DateAdded Rooms
                                     </Typography>
@@ -175,7 +177,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                                         name="dateadded"
                                         value={hotel.dateadded}
                                         onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
                                         readOnly
                                     />
 
@@ -191,7 +193,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate,}) {
                     </form>
                 </Card>
             </div>
-        </div>
+        </>
     );
 }
 export default EditHotelForm;

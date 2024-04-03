@@ -8,7 +8,7 @@ import AdminRoute from "./context/PrivateRoute.js";
 
 // url interface Customer
 import Login from "./pages/Customer/Page_Login.js";
-import Register from "./pages/Customer/Page_Register.js";
+import Registers from "./pages/Customer/Page_Register.js";
 import Error from "./pages/Page_Error.js";
 import ShowProfile from "./pages/Customer/Page_Profile.js";
 
@@ -48,7 +48,7 @@ function App() {
         <Routes>
 
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Registers />} />
           <Route path="/error" element={<Error />} />
           <Route path="/profile/:id" element={<ShowProfile />} />
 

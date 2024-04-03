@@ -6,36 +6,10 @@ html {
   scroll-behavior: smooth;
 }
 
-@layer base {
-    body {
-      @apply font-secondary text-primary;
-    }
-    input::placeholder {
-      @apply text-primary;
-    }
-    .h2 {
-      @apply font-primary text-[45px] mb-4;
-    }
-    .h3 {
-      @apply text-2xl font-primary font-semibold tracking-[1px] mb-2;
-    }
-    .btn {
-      @apply text-[15px] tracking-[2px] font-tertiary uppercase text-white  transition-all px-8 flex justify-center items-center;
-    }
-    .btn-sm {
-      @apply h-[48px];
-    }
-    .btn-lg {
-      @apply h-[60px];
-    }
-    .btn-primary {
-      @apply bg-accent hover:bg-accent-hover;
-    }
-    .btn-secondary {
-      @apply bg-primary hover:bg-accent;
-    }
-    .btn-white {
-      @apply bg-white text-[#0a0a0a];
-    }
+@media (min-width: 1280px) {
+  /* Tất cả các phần tử trên trang sẽ có chiều rộng tối đa là 1280px */
+  body {
+    max-width: 1280px;
+    margin: 0 auto; /* Canh giữa nội dung trên màn hình lớn hơn 1280px */
   }
-  
+}

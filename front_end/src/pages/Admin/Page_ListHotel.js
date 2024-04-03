@@ -5,6 +5,7 @@ import { useAccessToken } from "../../components/ultiti";
 import { getHotel } from "../../api/hotel_API";
 import { deleteHotel } from "../../api/hotel_API";
 import HotelTable from "../../components/Admin/Hotel_Table";
+import Pagination from "../../components/Customer/Layout/Panination";
 
 function ListHotelAdmin() {
     const token = useAccessToken()
@@ -37,6 +38,24 @@ function ListHotelAdmin() {
             }
         };
     }
+    const [currentPage, setCurrentPage] = useState(1);
+    // Giả sử danh sách khách sạn là một mảng hotels
+    const hotelsPerPage = 5;
+    const totalHotels = hotels.length;
+    const totalPages = Math.ceil(totalHotels / hotelsPerPage);
+
+    // Hàm xử lý để lấy danh sách khách sạn cho trang hiện tại
+    const getHotelsForPage = (pageNumber) => {
+        const startIndex = (pageNumber - 1) * hotelsPerPage;
+        const endIndex = startIndex + hotelsPerPage;
+        return hotels.slice(startIndex, endIndex);
+    };
+
+    // Xử lý khi chuyển tới một số trang mới
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
 
     return (
         <>
@@ -44,7 +63,8 @@ function ListHotelAdmin() {
                 <Sidebar_Admin />
                 <div className="flex flex-col flex-1 w-full">
                     <Header_Admin />
-                    <HotelTable hotels={hotels} handleDelete={handleDelete} />
+                    <HotelTable hotels={hotels} handleDelete={handleDelete} getHotelsForPage={getHotelsForPage} currentPage={currentPage}/>
+                    <Pagination handlePageChange={handlePageChange} totalPages={totalPages} />
                 </div>
             </div>
         </>

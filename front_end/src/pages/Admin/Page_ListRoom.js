@@ -5,6 +5,7 @@ import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { deleteRoominHotel, getRoominHotel } from "../../api/room_in_hotel_API";
 import RoomTable from "../../components/Admin/Room_Table";
+import Pagination from "../../components/Customer/Layout/Panination";
 
 function ListRoom() {
     const { hotel_id } = useParams();
@@ -36,6 +37,23 @@ function ListRoom() {
             }
         }
     };
+    const [currentPage, setCurrentPage] = useState(1);
+    // Giả sử danh sách khách sạn là một mảng hotels
+    const roomsPerPage = 5;
+    const totalRooms = rooms.length;
+    const totalPages = Math.ceil(totalRooms / roomsPerPage);
+
+    // Hàm xử lý để lấy danh sách khách sạn cho trang hiện tại
+    const getRoomsForPage = (pageNumber) => {
+        const startIndex = (pageNumber - 1) * roomsPerPage;
+        const endIndex = startIndex + roomsPerPage;
+        return rooms.slice(startIndex, endIndex);
+    };
+
+    // Xử lý khi chuyển tới một số trang mới
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <>
@@ -44,14 +62,8 @@ function ListRoom() {
                 <Sidebar_Admin />
                 <div className="flex flex-col flex-1 w-full">
                     <Header_Admin />
-
-                    <div className=" flex mx-auto justify-center mb-4 mt-4">
-                        <Link to={`/admin/${hotel_id}/create-rooms/`}>
-                            <Button className=" bg-red-500"> Create Rooms</Button>
-                        </Link>
-                    </div>
-
-                    <RoomTable rooms={rooms} handleDelete={handleDelete} />
+                    <RoomTable hotel_id={hotel_id} rooms={rooms} handleDelete={handleDelete} getRoomsForPage={getRoomsForPage} currentPage={currentPage}/>
+                    <Pagination handlePageChange={handlePageChange} totalPages={totalPages}/>
                 </div>
             </div>
         </>

@@ -5,6 +5,7 @@ import { useAccessToken } from "../../components/ultiti";
 import { getUser } from "../../api/user_API";
 import CustomerTable from "../../components/Admin/Customer_Table";
 import { deleteUsers } from "../../api/user_API";
+import Pagination from "../../components/Customer/Layout/Panination";
 
 function ListCustomer() {
     const [users, setUser] = useState([]);
@@ -39,6 +40,23 @@ function ListCustomer() {
             }
         }
     };
+    const [currentPage, setCurrentPage] = useState(1);
+    // Giả sử danh sách khách sạn là một mảng hotels
+    const usersPerPage = 5;
+    const totalUsers = users.length;
+    const totalPages = Math.ceil(totalUsers / usersPerPage);
+
+    // Hàm xử lý để lấy danh sách khách sạn cho trang hiện tại
+    const getUsersForPage = (pageNumber) => {
+        const startIndex = (pageNumber - 1) * usersPerPage;
+        const endIndex = startIndex + usersPerPage;
+        return users.slice(startIndex, endIndex);
+    };
+
+    // Xử lý khi chuyển tới một số trang mới
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <>
@@ -48,7 +66,8 @@ function ListCustomer() {
                 <Sidebar_Admin />
                 <div className="flex flex-col flex-1 w-full">
                     <Header_Admin />
-                    <CustomerTable users={users} handleDelete={handleDelete} />
+                    <CustomerTable users={users} handleDelete={handleDelete} getUsersForPage={getUsersForPage} currentPage={currentPage}/>
+                    <Pagination handlePageChange={handlePageChange} totalPages={totalPages}/>
                 </div>
             </div>
         </>

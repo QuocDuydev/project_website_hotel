@@ -29,9 +29,11 @@ import {
 export function Navbars() {
   const token = useAccessToken();
   let id = null;
+  let username = null;
   if (token) {
     const loggedInUser = jwt_decode(token);
-    id = loggedInUser.user_id; 
+    id = loggedInUser.user_id;
+    username = loggedInUser.username;
   }
   // console.log(id);
 
@@ -52,7 +54,7 @@ export function Navbars() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200"
+        className="px-2 py-2 font-normal text-2xl rounded-xl hover:bg-gray-200 hover:px-2 hover:py-2"
       >
         <Link to="/list-booking" className="flex items-center">
           Bookings
@@ -62,7 +64,7 @@ export function Navbars() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-2xl rounded-xl hover:bg-gray-200"
+        className="px-2 py-2 font-normal text-2xl rounded-xl hover:bg-gray-200 hover:px-2 hover:py-2"
       >
         <Link to="/search-results" className="flex items-center">
           Search
@@ -73,7 +75,7 @@ export function Navbars() {
 
   return (
     // <div className="-m-6 max-h-[768px] w-[calc(100%+48px)] overflow-scroll">
-    <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none border-0 px-4 py-2 lg:px-8 lg:py-4">
+    <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 lg:px-8 lg:py-4">
       <div className="flex items-center justify-between  ">
         <Typography
           as="a"
@@ -86,14 +88,17 @@ export function Navbars() {
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className=" items-center gap-4 hidden lg:block">
             <Popover>
-              <PopoverHandler>
-                <Avatar
-                  src="https://docs.material-tailwind.com/img/face-2.jpg"
-                  alt="avatar"
-                  withBorder={true}
-                  className="p-0.5 ml-4 relative bg-green-300 w-10"
-                />
 
+              <PopoverHandler>
+                <div className="flex items-center">
+                  <Avatar
+                    src="http://127.0.0.1:8000/media/room_images/avatar.jpg"
+                    alt="avatar"
+                    withBorder={true}
+                    className="p-0.5 ml-4 relative bg-green-300"
+                  />
+                  <Typography variant="h6" className="ml-2 text-black">{username}</Typography>
+                </div>
               </PopoverHandler>
               <PopoverContent>
                 <List className="p-0 text-sm ">
@@ -132,7 +137,7 @@ export function Navbars() {
                           <PowerIcon className="h-5 w-5" />
                         </ListItemPrefix>
 
-                        <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold">Log Out</Link>
+                        <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold">Sign Out</Link>
 
                       </ListItem>
                     </>
@@ -220,7 +225,7 @@ export function Navbars() {
                 <ListItemPrefix>
                   <PowerIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Log Out</Link>
+                <Link to="/" onClick={logoutUser} className=" text-red-500 font-bold -mr-2">Sign Out</Link>
               </ListItem>
             </List>
 

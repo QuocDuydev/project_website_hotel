@@ -8,7 +8,7 @@ export const getRoom = async () => {
         return response.data;
 
     } catch (error) {
-        console.error("Error fetching hotel data:", error);
+        console.error("Error fetching room data:", error);
         throw error;
     }
 };
@@ -19,7 +19,7 @@ export const getRoominHotel = async (hotelId) => {
         return response.data;
 
     } catch (error) {
-        console.error("Error fetching hotel data:", error);
+        console.error("Error fetching room in hotel data:", error);
         throw error;
     }
 };
@@ -30,7 +30,26 @@ export const getRoomdetailinHotel = async (hotelId, roomId) => {
         return response.data;
 
     } catch (error) {
-        console.error("Error fetching hotel data:", error);
+        console.error("Error fetching room detail data:", error);
+        throw error;
+    }
+};
+export const postRoom = async ( token, roomData) => {
+    try {
+        const formData = new FormData();
+        Object.keys(roomData).forEach(key => {
+            formData.append(key, roomData[key]);
+        });
+
+        const response = await axios.post(`${baseURL}/rooms/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error posting hotel data:", error);
         throw error;
     }
 };
@@ -50,29 +69,11 @@ export const putRoom = async (roomId, token, roomData) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error putting hotel data:", error);
+        console.error("Error putting room data:", error);
         throw error;
     }
 };
-export const postRoom = async ( token, roomData) => {
-    try {
-        const formData = new FormData();
-        Object.keys(roomData).forEach(key => {
-            formData.append(key, roomData[key]);
-        });
 
-        const response = await axios.post(`${baseURL}/rooms/`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error putting hotel data:", error);
-        throw error;
-    }
-};
 
 export const deleteRoominHotel = async (roomId) => {
     try {

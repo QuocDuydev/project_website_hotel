@@ -20,7 +20,7 @@ export const getHoteldetail = async (hotelId) => {
         return response.data;
 
     } catch (error) {
-        console.error("Error fetching hotel data:", error);
+        console.error("Error fetching hotel detail data:", error);
         throw error;
     }
 };
@@ -39,7 +39,7 @@ export const postHotel = async (token, hotelData) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Error putting hotel data:", error);
+        console.error("Error posting hotel data:", error);
         throw error;
     }
 };

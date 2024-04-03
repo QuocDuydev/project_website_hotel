@@ -10,29 +10,29 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
   const { name = '', email = '', phonenumber = '', address = '' } = booking || {};
   
     return (
-        <div className=" max-w-full px-3 rounded-lg mt-2" >
+        <div className=" max-w-full px-3 rounded-lg mt-2 " >
         {rooms.map((item) => (
           <div className=" border-2 px-3 py-3 rounded-md"key={item.room_id}>
             <Typography
               variant="h5"
               color="blue-gray"
-              className="mb-3"
+              className="mb-3 text-sm md:text-md lg:text-lg xl:text-lg"
             >
               Your rooms details
             </Typography>
 
             <div className="flex">
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2 text-blue-700"
+                className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
               >
                 Rooms Name:
               </Typography>
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2  ml-2 "
+                className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
               >
                 {item.roomname}
               </Typography>
@@ -40,16 +40,16 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
 
             <div className=" flex ">
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2 text-blue-700"
+                className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
               >
                 Descriptions:
               </Typography>
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2  ml-2"
+                className="mb-2  ml-2 font-normal text-justify text-sm md:text-md lg:text-lg xl:text-lg"
               >
                 {typeof item.descriptions === 'string' ? item.descriptions.split(' ').slice(0, 25).join(' ') : ''}
               </Typography>
@@ -57,25 +57,25 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
             <div className="border-b mb-2"></div>
             <div className=" flex">
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2 text-blue-700"
+                className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
               >
                 Number of guests
               </Typography>
               <Typography
-                variant="h3"
+                variant="h5"
                 color="blue-gray"
-                className="mb-2  ml-2"
+                className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl"
               >
-                <span className="mx-auto px-2 py-1 text-center text-lg leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">{item.roomoccupancy} - person</span>
+                <span className="mx-auto px-2 py-1 text-center leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600 text-sm md:text-md lg:text-lg xl:text-xl">{item.roomoccupancy} - person</span>
               </Typography>
             </div>
 
             <Typography
-              variant="h3"
+              variant="h5"
               color="blue-gray"
-              className=" text-red-600"
+              className=" mt-2 text-red-600 text-sm md:text-md lg:text-lg xl:text-xl"
 
             >
               Price room/nights: {item.roomprice}$
@@ -92,7 +92,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                   <Typography
                     variant="h6"
                     color="blue-gray"
-                    className="mb-2"
+                    className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                   >
                     Full Name
                   </Typography>
@@ -104,10 +104,8 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     value={booking?.name || ''}
                     onChange={handleChange}
                     placeholder="Enter  username..."
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
+                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                    
                   />
 
                 </div>
@@ -115,7 +113,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                   <Typography
                     variant="h6"
                     color="blue-gray"
-                    className="mb-2 mt-4"
+                    className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                   >
                     Email
                   </Typography>
@@ -128,7 +126,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     value={booking?.email || ''}
                     onChange={handleChange}
                     placeholder="Enter email..."
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
+                    className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 
                   />
                 </div>
@@ -139,20 +137,20 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                   <Typography
                     variant="h6"
                     color="blue-gray"
-                    className="mb-2"
+                    className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                   >
                     Phone number
                   </Typography>
 
                   <Input
-                    type="number"
+                    type="tel"
                     multiple
                     size="lg"
                     name="phonenumber"
                     value={booking?.phonenumber || ''}
                     onChange={handleChange}
                     placeholder="Enter Phone number..."
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                   />
                 </div>
@@ -160,7 +158,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                   <Typography
                     variant="h6"
                     color="blue-gray"
-                    className="mb-2 mt-4"
+                    className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                   >
                     Address
                   </Typography>
@@ -173,7 +171,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                     value={booking?.address || ''}
                     onChange={handleChange}
                     placeholder="Enter your Address..."
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                   />
                 </div>

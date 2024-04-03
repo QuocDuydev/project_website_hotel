@@ -11,7 +11,6 @@ import { getHoteldetail } from "../../api/hotel_API";
 function CreateRoom() {
   let token = useAccessToken()
   const { hotel_id } = useParams();
-  const [hotel, setHotel] = useState([]);
   const [room, setRoom] = useState({
     hotel: hotel_id,
     roomname: "",
@@ -20,47 +19,35 @@ function CreateRoom() {
     roomprice: "",
     roomnumber: "",
     roomoccupancy: "",
+    room_type: "",
     dateadded: new Date().toISOString().split('T')[0],
+
   });
   const navigate = useNavigate();
   const [CreateSuccess, setCreateSuccess] = useState(false);
 
-  useEffect(() => {
-    // Fetch hotel details
-    const fetchData = async () => {
-      try {
-        const hotelData = await getHoteldetail(hotel_id);
-
-        setHotel(hotelData);
-        // console.log(selectedHotel);
-      }
-      catch (error) {
-        console.error("Error fetching data:");
-      }
-    };
-    fetchData();
-  }, [hotel_id]);
-
-  // const selectedHotel = hotel.find(hotel => hotel.hotel_id === hotel_id);
-
   const handleChange = (e) => {
+   
     const { name, type } = e.target;
-
+    let value;
+  
     if (type === "file" && e.target.files) {
-      const file = e.target.files[0];
-
-      setRoom({
-        ...room,
-        [name]: file,
-      });
+      // Xử lý trường hợp là file input
+      value = e.target.files[0];
     } else {
-      const value = e.target.value;
-
-      setRoom({
-        ...room,
-        [name]: value,
-      });
+      // Xử lý trường hợp là input hoặc select
+      value = e.target.value;
     }
+  
+    setRoom({
+      ...room,
+      [name]: value,
+    });
+  };
+  const handleSelectChange = (value) => {
+    
+    handleChange({ target: { name: "room_type", value } });
+  
   };
 
   const handleCreate = async () => {
@@ -73,9 +60,9 @@ function CreateRoom() {
       const roomsInHotel = await getRoominHotel(hotel_id);
       const currentRoomsCount = roomsInHotel.length;
       console.log(currentRoomsCount);
-     
+
       if (totalRoomsAllowed > currentRoomsCount) {
-       
+
         const RoomData = {
           hotel: room.hotel,
           roomname: room.roomname,
@@ -84,7 +71,8 @@ function CreateRoom() {
           roomprice: room.roomprice,
           roomnumber: room.roomnumber,
           roomoccupancy: room.roomoccupancy,
-          dateadded: room.dateadded
+          dateadded: room.dateadded,
+          room_type: room.room_type
         };
         const response = await postRoom(token, RoomData);
         console.log("Create successful:", response.data);
@@ -117,7 +105,7 @@ function CreateRoom() {
               Create successfuly !!
             </Alert>
           )}
-          <CreateRoomForm room={room} handleChange={handleChange} handleCreate={handleCreate} />
+          <CreateRoomForm room={room} handleChange={handleChange} handleSelectChange={handleSelectChange} handleCreate={handleCreate} />
         </div>
       </div>
     </>

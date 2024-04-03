@@ -29,7 +29,9 @@ function EditBookings() {
         checkin: "",
         checkout: "",
         total: 0,
+        datebooking: "",
         status: "",
+
     });
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const navigate = useNavigate();
@@ -80,10 +82,12 @@ function EditBookings() {
                 checkin: formatDate(new Date(booking.checkin)),
                 checkout: formatDate(new Date(booking.checkout)),
                 total: booking.total,
+                datebooking: booking.datebooking,
                 status: booking.status,
             };
 
             const response = await putBooking(booking_id, token, bookingData);
+            console.log(booking.status);
             console.log("Update successful:", response.data);
             setUpdateSuccess(true);
             setTimeout(() => {
@@ -95,8 +99,7 @@ function EditBookings() {
             // Hiển thị thông báo lỗi hoặc xử lý lỗi khác
         }
     };
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (value, name) => {
         setBooking((prevBooking) => ({ ...prevBooking, [name]: value }));
     };
     const selectedHotel = hotel.find((item) => item.hotel_id === booking.hotel);

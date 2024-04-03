@@ -41,7 +41,7 @@ export function GridLocation() {
         <Typography variant="h4">
           Explore Vietnam
         </Typography>
-        <Typography variant="h5" className=" font-normal">
+        <Typography variant="h5" className=" font-normal mt-2">
           These popular destinations have a lot to offer
         </Typography>
       </div>
@@ -55,7 +55,7 @@ export function GridLocation() {
                 src={item.hotelimage}
                 alt="gallery-photo"
               />
-              <p className="text-black font-bold">{item.location}</p>
+              <p className="text-black font-bold mt-2">{item.location}</p>
 
               <p>{`${locationCounts[item.location] || 0} properties`}</p>
             </div>

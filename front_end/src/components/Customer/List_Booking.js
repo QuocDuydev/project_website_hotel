@@ -16,7 +16,7 @@ function ListBookings({ booking, handleDelete }) {
                             <table className="w-full whitespace-no-wrap">
                                 <thead>
                                     <tr
-                                        className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                                        className=" border-[1px] text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                                     >
                                         <th className="px-4 py-3">Your Name</th>
                                         <th className="px-4 py-3">Check in</th>
@@ -27,11 +27,11 @@ function ListBookings({ booking, handleDelete }) {
                                     </tr>
                                 </thead>
                                 <tbody
-                                    className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center"
+                                    className="  bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-center"
                                 >
                                     {booking.length > 0 ? (
                                         booking.map((item) => (
-                                            <tr className="text-gray-700 dark:text-gray-400" key={item.booking_id} >
+                                            <tr className="text-gray-700 bg-gray-100" key={item.booking_id} >
 
                                                 <td className="px-4 py-3" >
                                                     <div className="flex items-center text-sm">
@@ -57,7 +57,7 @@ function ListBookings({ booking, handleDelete }) {
                                                     {item.status}
                                                 </td>
                                                 <td className="px-4 py-3 ">
-                                                    <div className=" flex space-x-4 text-sm ml-10">
+                                                    <div className=" flex space-x-4 mx-auto justify-center">
                                                         <Link to={`/edit-booking/${item.booking_id}`}>
                                                             <button
 

@@ -4,14 +4,18 @@ import {
     Input,
     Button,
     Typography,
+    Select,
+    Option
 } from "@material-tailwind/react";
 
-function EditCustomerForm({ user, handleChange, handleUpdate, }) {
+function EditCustomerForm({ user, handleChange, handleSelectChange, handleUpdate }) {
     return (
-        <div className=" container m-4 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                Edit the Users
-            </Typography>
+        <>
+            <div className=" mx-auto mt-4">
+                <Typography variant="h4" color="red">
+                    Edit the Users
+                </Typography>
+            </div>
             <div className=" max-w-full px-3 rounded-lg mt-2">
 
                 <Card color="transparent" shadow={false}>
@@ -22,7 +26,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Username
                                     </Typography>
@@ -32,13 +36,10 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="username"
                                         value={user.username}
-                                        
+
                                         onChange={handleChange}
                                         placeholder="Enter  username..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        labelProps={{
-                                            className: "before:content-none after:content-none",
-                                        }}
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
                                     />
 
                                 </div>
@@ -47,7 +48,7 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Full name
                                     </Typography>
@@ -58,18 +59,21 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="name"
                                         value={user.name}
-                                       
+
                                         onChange={handleChange}
                                         placeholder="Enter Full name..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
+
+                            </div>
+                            <div className="mb-1 w-1/2 p-4">
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2  text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Email
                                     </Typography>
@@ -80,74 +84,50 @@ function EditCustomerForm({ user, handleChange, handleUpdate, }) {
                                         size="lg"
                                         name="email"
                                         value={user.email}
-                                        
+
                                         onChange={handleChange}
                                         placeholder="Enter email..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
 
                                 </div>
-                            </div>
-                            <div className="mb-1 w-1/2 p-4">
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Account type
                                     </Typography>
-                                    <select
+                                    <Select
                                         name="account_type"
-                                        size="md"
-                                        value={user?.account_type || ""}
-
-                                        onChange={handleChange}
-                                        className="!border-t-blue-gray-200 focus:!border-t-gray-900 w-[100%] border-2 px-2 py-2 rounded-md">
-
-                                        <option value="user">User </option>
-                                        <option value="admin">Admin </option>
-                                        <option value="superadmin">Super Admin </option>
-
-                                    </select>
-
-                                </div>
-
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4"
-                                    >
-                                        Joined Account
-                                    </Typography>
-
-                                    <Input
-                                        type="date"
-                                        multiple
                                         size="lg"
-                                        name="joined"
-                                        readOnly
-                                        value={user.joined}
-                                        onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        value={user?.account_type || ""}
+                                        onChange={handleSelectChange}
+                                        className="text-sm md:text-md lg:text-lg xl:text-lg"
+                                    >
+                                        <Option value="user">User</Option>
+                                        <Option value="admin">Admin</Option>
+                                        <Option value="superadmin">Super Admin</Option>
 
-                                    />
-
+                                    </Select>
                                 </div>
+
+
                             </div>
                         </div>
                         <Button
+                            size="lg"
                             onClick={handleUpdate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
+                            className="mx-auto w-2/4 bg-red-600 uppercase mt-5 " fullWidth>
                             Update nows
                         </Button>
 
                     </form>
                 </Card>
             </div>
-        </div>
+        </>
     );
 }
 export default EditCustomerForm;

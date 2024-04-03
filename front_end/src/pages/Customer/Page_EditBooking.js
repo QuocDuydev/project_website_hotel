@@ -27,6 +27,7 @@ function EditBooking() {
         checkin: "",
         checkout: "",
         total: 0,
+        datebooking: "",
         status: "",
     });
     const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -86,6 +87,7 @@ function EditBooking() {
               checkin:  formatDate(new Date(booking.checkin)),
               checkout: formatDate(new Date(booking.checkout)),
               total: booking.total,
+              datebooking: booking.datebooking,
               status: booking.status,
             };
       
@@ -107,7 +109,6 @@ function EditBooking() {
     
     const selectedHotel = hotel.find((item) => item.hotel_id === booking.hotel);
     const selectedRoom = room.find((items) => items.room_id === booking.room);
-
     return (
         <>
             <Navbars />

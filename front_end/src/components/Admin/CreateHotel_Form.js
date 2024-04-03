@@ -9,10 +9,12 @@ import {
 
 function CreateHotelForm({ hotel, handleChange, handleCreate }) {
     return (
-        <div className=" container m-4 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                Create the Hotels
-            </Typography>
+        <>
+            <div className=" mx-auto mt-2">
+                <Typography variant="h4" color="red">
+                    Create the Hotels
+                </Typography>
+            </div>
             <div className=" max-w-full px-3 rounded-lg mt-2">
 
                 <Card color="transparent" shadow={false}>
@@ -23,7 +25,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Name Hotels
                                     </Typography>
@@ -34,7 +36,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                         value={hotel.hotelname}
                                         onChange={handleChange}
                                         placeholder="Enter name hotels..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -42,7 +44,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Images Hotel
                                     </Typography>
@@ -53,7 +55,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                         name="hotelimage"
                                         onChange={handleChange}
                                         placeholder="Choose file image..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 
                                     />
                                 </div>
@@ -61,7 +63,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Descriptions
                                     </Typography>
@@ -73,7 +75,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                         value={hotel.descriptions}
                                         onChange={handleChange}
                                         placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 
                                     />
                                 </div>
@@ -81,50 +83,29 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
-                                        Total Rooms
+                                        DateAdded Rooms
                                     </Typography>
                                     <Input
-                                        type="number"
+                                        type="date"
                                         multiple
                                         size="lg"
-                                        name="totalroom"
-                                        value={hotel.totalroom}
+                                        name="dateadded"
+                                        defaultValue={hotel.dateadded}
                                         onChange={handleChange}
-                                        placeholder="Enter total rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
-
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                                        disabled
                                     />
                                 </div>
+
                             </div>
                             <div className="mb-1 w-1/2 p-4">
-
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
-                                    >
-                                        Rooms Maps
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        multiple
-                                        size="lg"
-                                        name="roommap"
-                                        value={hotel.roommap}
-                                        onChange={handleChange}
-                                        placeholder="Enter Room Map..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Location
                                     </Typography>
@@ -136,7 +117,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                         value={hotel.location}
                                         onChange={handleChange}
                                         placeholder="Enter Location hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -144,7 +125,28 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    >
+                                        Rooms Maps
+                                    </Typography>
+                                    <Input
+                                        type="text"
+                                        multiple
+                                        size="lg"
+                                        name="roommap"
+                                        value={hotel.roommap}
+                                        onChange={handleChange}
+                                        placeholder="Enter Room Map..."
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+
+                                    />
+                                </div>
+
+                                <div>
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Ratings
                                     </Typography>
@@ -156,7 +158,7 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                         value={hotel.rating}
                                         onChange={handleChange}
                                         placeholder="Enter rating hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -164,32 +166,34 @@ function CreateHotelForm({ hotel, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
-                                        DateAdded Rooms
+                                        Total Rooms
                                     </Typography>
                                     <Input
-                                        type="date"
+                                        type="number"
                                         multiple
                                         size="lg"
-                                        name="dateadded"
-                                        defaultValue={hotel.dateadded}
+                                        name="totalroom"
+                                        value={hotel.totalroom}
                                         onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        disabled
+                                        placeholder="Enter total rooms..."
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
+
                                     />
                                 </div>
                             </div>
                         </div>
                         <Button
+                            size="lg"
                             onClick={handleCreate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
+                            className="mx-auto w-2/4 bg-red-600 uppercase mt-2" fullWidth>
                             Add nows
                         </Button>
                     </form>
                 </Card>
             </div>
-        </div>
+        </>
     );
 }
 export default CreateHotelForm;

@@ -32,6 +32,7 @@ function Booking() {
     checkin: "",
     checkout: "",
     total: 0,
+    datebooking: new Date().toISOString().split('T')[0],
   });
 
   const [CreateSuccess, setCreateSuccess] = useState(false);
@@ -84,6 +85,7 @@ function Booking() {
         checkin: formatDate(booking.checkin),
         checkout: formatDate(booking.checkout),
         total: totalPrice,
+        datebooking: booking.datebooking,
         status: booking.status,
       };
 

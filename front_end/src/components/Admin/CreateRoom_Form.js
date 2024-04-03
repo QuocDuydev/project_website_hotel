@@ -4,16 +4,20 @@ import {
     Input,
     Button,
     Typography,
-    Textarea
+    Textarea,
+    Select,
+    Option
 } from "@material-tailwind/react";
 
-function CreateRoomForm({ room, handleChange, handleCreate }) {
+function CreateRoomForm({ room, handleChange,handleSelectChange, handleCreate }) {
     return (
-        <div className=" container m-4 text-red-500">
-            <Typography variant="h4" color="blue-gray">
-                Create the Rooms
-            </Typography>
-            <div className=" max-w-full px-3 rounded-lg mt-2">
+        <>
+            <div className="mx-auto mt-2">
+                <Typography variant="h4" color="red">
+                    Create the Rooms
+                </Typography>
+            </div>
+            <div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
 
                 <Card color="transparent" shadow={false}>
                     <form className=" ">
@@ -23,7 +27,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Name Hotel
                                     </Typography>
@@ -33,7 +37,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         name="hotel"
                                         value={room.hotel} // Display hotel name
                                         placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
                                         readOnly // Make the input readOnly
                                     />
                                 </div>
@@ -41,7 +45,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Name Rooms
                                     </Typography>
@@ -52,7 +56,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         value={room.roomname}
                                         onChange={handleChange}
                                         placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -62,26 +66,25 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Images Rooms
                                     </Typography>
                                     <Input
                                         type="file"
-                                        multiple
+                                        multiple  // Cho phép người dùng chọn nhiều tệp hình ảnh
                                         size="lg"
                                         name="roomimage"
-                                        onChange={handleChange}
+                                        onChange={handleChange} // Xử lý sự kiện khi có thay đổi trong tệp được chọn
                                         placeholder="Choose file image..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
                                     />
                                 </div>
                                 <div>
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Descriptions
                                     </Typography>
@@ -93,9 +96,30 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         value={room.descriptions}
                                         onChange={handleChange}
                                         placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
+                                </div>
+                                <div>
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+                                    >
+                                        Room type
+                                    </Typography>
+                                    <Select
+                                        name="room_type"
+                                        size="lg"
+                                        value={room.room_type}
+                                        onChange={handleSelectChange}
+                                        className="text-sm md:text-md lg:text-lg xl:text-lg"
+                                    >
+                                        <Option value="simple_room">Simple Room</Option>
+                                        <Option value="double_room">Double Room</Option>
+                                        <Option value="family_room">Family Room</Option>
+
+                                    </Select>
                                 </div>
                             </div>
                             <div className="mb-1 w-1/2 p-4">
@@ -103,7 +127,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2"
+                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Price Rooms
                                     </Typography>
@@ -115,7 +139,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         value={room.roomprice}
                                         onChange={handleChange}
                                         placeholder="Enter price rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -123,7 +147,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Numbers Rooms
                                     </Typography>
@@ -135,7 +159,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         value={room.roomnumber}
                                         onChange={handleChange}
                                         placeholder="Enter Numbers rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -143,7 +167,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         Occupancy Rooms
                                     </Typography>
@@ -155,7 +179,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         value={room.roomoccupancy}
                                         onChange={handleChange}
                                         placeholder="Enter Occupancy rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 
                                     />
                                 </div>
@@ -163,7 +187,7 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                     <Typography
                                         variant="h6"
                                         color="blue-gray"
-                                        className="mb-2 mt-4"
+                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
                                     >
                                         DateAdded Rooms
                                     </Typography>
@@ -174,21 +198,22 @@ function CreateRoomForm({ room, handleChange, handleCreate }) {
                                         name="dateadded"
                                         value={room.dateadded}
                                         onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                        readOnly
+                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+                                        disabled
                                     />
                                 </div>
                             </div>
                         </div>
                         <Button
+                            size="lg"
                             onClick={handleCreate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
+                            className="mx-auto w-2/4 bg-red-600 uppercase" fullWidth>
                             Add nows
                         </Button>
                     </form>
                 </Card>
             </div>
-        </div>
+        </>
     );
 }
 export default CreateRoomForm;
