@@ -16,8 +16,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework import generics
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from .serializers import UserSerializer, RoomSerializer, HotelSerializer, BookingSerializer, UserSignupSerializers
-from .models import Users, Rooms, Hotels, Booking
+from .serializers import UserSerializer, RoomSerializer, HotelSerializer, BookingSerializer, UserSignupSerializers, RecommentSerializer
+from .models import Users, Rooms, Hotels, Booking, Recomments
 from django.http import JsonResponse
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -119,6 +119,21 @@ class RoomstoHotelListView(APIView):
         rooms = Rooms.objects.filter(hotel_id=hotel_id, room_id=room_id)
         serializer = RoomSerializer(rooms, many=True, context={'request': request})
         return Response(serializer.data)
+    
+class RecommentListView(generics.ListCreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RecommentSerializer
+
+    def get_queryset(self):
+        hotel_id = self.kwargs.get('hotel_id')
+        queryset = Recomments.objects.filter(hotel_id=hotel_id)
+        return queryset
+    
+class RecommentRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+   
+    queryset = Recomments.objects.all()
+    serializer_class = RecommentSerializer
+    permission_classes = [permissions.AllowAny]
     
 # def upload_image(request):
 #     if request.method == 'POST' and request.FILES.getlist('roomimage'):

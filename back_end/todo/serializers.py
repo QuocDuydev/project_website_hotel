@@ -1,7 +1,7 @@
 
 from django.conf import Settings
 from rest_framework import serializers
-from .models import Users, Rooms, Hotels, Booking
+from .models import Users, Rooms, Hotels, Booking, Recomments
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 class UserSignupSerializers(serializers.ModelSerializer):
@@ -36,6 +36,13 @@ class RoomSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
+        fields = '__all__'
+        user_id = serializers.PrimaryKeyRelatedField(read_only=True)
+
+class RecommentSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Recomments
         fields = '__all__'
         user_id = serializers.PrimaryKeyRelatedField(read_only=True)
         

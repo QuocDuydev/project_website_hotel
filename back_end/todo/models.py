@@ -117,4 +117,15 @@ class Booking(models.Model):
         default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
     )
     def __str__(self):
-        return f"{self.id},{self.user}, {self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.datebooking}, {self.status}"   
+        return f"{self.booking_id},{self.user}, {self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.datebooking}, {self.status}"   
+
+class Recomments(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    descriptions = models.TextField()
+    rating = models.IntegerField()
+    datecommented = models.DateField()
+    
+    def __str__(self):
+        return f"{self.user}"

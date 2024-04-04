@@ -29,6 +29,7 @@ router.register(r'users', views.UserView, 'user')
 router.register(r'rooms', views.RoomView, 'room')
 router.register(r'hotels', views.HotelView, 'hotel')
 router.register(r'bookings', views.BookingView, 'booking')
+router.register(r'recomments', views.BookingView, 'reconment')
 
 
 urlpatterns = [
@@ -43,5 +44,7 @@ urlpatterns = [
     path('api/bookings/<int:booking_id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
     path('api/hotels/<int:hotel_id>/rooms/', views.HotelRoomsListView.as_view(), name='hotel-rooms'),
     path('api/hotels/<int:hotel_id>/rooms/<int:room_id>', views.RoomstoHotelListView.as_view(), name='rooms-to-hotels'),
+    path('api/hotels/<int:hotel_id>/recomments', views.RecommentListView.as_view(), name='recomment'),
+    path('api/hotels/<int:hotel_id>/recomments/<int:comment_id>/', views.RecommentRetrieveUpdateDestroyView.as_view(), name='comment-detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

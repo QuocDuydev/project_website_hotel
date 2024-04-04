@@ -3,40 +3,40 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // url config
-import { AuthProvider } from "./context/AuthContext.js";
-import AdminRoute from "./context/PrivateRoute.js";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import AdminRoute from "./context/PrivateRoute.jsx";
 
 // url interface Customer
-import Login from "./pages/Customer/Page_Login.js";
-import Registers from "./pages/Customer/Page_Register.js";
-import Error from "./pages/Page_Error.js";
-import ShowProfile from "./pages/Customer/Page_Profile.js";
+import Login from "./pages/Customer/Page_Login.jsx";
+import Registers from "./pages/Customer/Page_Register.jsx";
+import Error from "./pages/Page_Error.jsx";
+import ShowProfile from "./pages/Customer/Page_Profile.jsx";
 
-import Home from "./pages/Customer/Page_Home.js";
-import ListSearch from "./pages/Customer/Page_Search.js";
-import ShowHotelDetails from "./pages/Customer/Page_HotelDetails.js";
+import Home from "./pages/Customer/Page_Home.jsx";
+import ListSearch from "./pages/Customer/Page_Search.jsx";
+import ShowHotelDetails from "./pages/Customer/Page_HotelDetails.jsx";
 
-import Booking from "./pages/Customer/Page_Booking";
-import ShowListBooking from "./pages/Customer/Page_ListBooking.js";
-import EditBooking from "./pages/Customer/Page_EditBooking.js";
+import Booking from "./pages/Customer/Page_Booking.jsx";
+import ShowListBooking from "./pages/Customer/Page_ListBooking.jsx";
+import EditBooking from "./pages/Customer/Page_EditBooking.jsx";
 
 // url interface Admin
-import AdminHome from "./pages/Admin/Page_AdminHome.js";
+import AdminHome from "./pages/Admin/Page_AdminHome.jsx";
 
-import ListCustomer from "./pages/Admin/Page_ListCustomer.js";
-import EditCustomer from "./pages/Admin/Page_EditCustomer.js";
+import ListCustomer from "./pages/Admin/Page_ListCustomer.jsx";
+import EditCustomer from "./pages/Admin/Page_EditCustomer.jsx";
 
-import CreateHotel from "./pages/Admin/Page_CreateHotel.js";
-import ListHotelAdmin from "./pages/Admin/Page_ListHotel.js";
-import EditHotel from "./pages/Admin/Page_EditHotel.js";
+import CreateHotel from "./pages/Admin/Page_CreateHotel.jsx";
+import ListHotelAdmin from "./pages/Admin/Page_ListHotel.jsx";
+import EditHotel from "./pages/Admin/Page_EditHotel.jsx";
 
-import CreateRoom from "./pages/Admin/Page_CreateRoom.js";
-import ListRoom from "./pages/Admin/Page_ListRoom.js";
-import EditRoom from "./pages/Admin/Page_EditRoom.js";
+import CreateRoom from "./pages/Admin/Page_CreateRoom.jsx";
+import ListRoom from "./pages/Admin/Page_ListRoom.jsx";
+import EditRoom from "./pages/Admin/Page_EditRoom.jsx";
 
-import ListBookings from "./pages/Admin/Page_ListBooking_Admin.js";
-import EditBookings from "./pages/Admin/Page_EditBooking_Admin.js";
-import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.js";
+import ListBookings from "./pages/Admin/Page_ListBooking_Admin.jsx";
+import EditBookings from "./pages/Admin/Page_EditBooking_Admin.jsx";
+import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.jsx";
 
 
 function App() {
