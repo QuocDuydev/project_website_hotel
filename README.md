@@ -26,6 +26,10 @@ Project using React with Django
 - [x] Xem Chi tiết khách sạn
     - Khi người dùng chọn một khách sạn từ danh sách tìm kiếm hoặc chọn 1 khách sạn ngẫu nhiên ở trang chủ họ có thể xem thông tin chi tiết về từng khách sạn.
     - Thông tin chi tiết bao gồm tên, địa chỉ, hình ảnh, mô tả.
+      
+- [x] Đánh giá khách sạn
+    - Người dùng có thể thêm đánh giá phía dưới phần thông tin khách sạn.
+    - Thông tin chi tiết bài đánh giá bao gồm tên, xếp hạng, nội dung đánh giá, ngày đánh giá.
 
 - [x] Đặt Phòng
     - Tại trang đặt phòng người dùng sẽ cần chọn ngày nhận phòng, ngày trả phòng và nhập các thông tin cá nhân trước khi đặt phòng. trong đó số ngày dự kiến người dùng ở tại khách sạn và giá tiền sẽ tính dựa theo ngày nhận phòng, ngày trả phòng đã chọn ở trên.
